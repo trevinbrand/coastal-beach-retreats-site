@@ -1,4 +1,6 @@
-/* Global link styling */
+/* ------------------------------
+   Global link styling
+-------------------------------- */
 a {
   color: #1a73e8; /* clean, familiar blue */
   text-decoration: underline;
@@ -18,36 +20,54 @@ nav a,
   text-decoration: none;
 }
 
-/* Optional: smoother font rendering */
+/* ------------------------------
+   Global font + rendering
+-------------------------------- */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* Brand color for headings & navigation */
+
+/* ------------------------------
+   Brand variables
+-------------------------------- */
 :root {
   --brand-blue: #193e7f;
+  --font-heading: "Dancing Script", cursive;
+  --font-nav: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* Top navigation links */
-header .nav a,
-header .dropbtn,
-header .menu a {
+/* ------------------------------
+   HEADER (entire nav bar)
+   Force EVERYTHING in header
+   to use Quicksand
+-------------------------------- */
+header,
+header * {
+  font-family: var(--font-nav);
   color: var(--brand-blue);
 }
 
-/* Property titles (h2/h3 headings used in property blocks) */
-h1,
-h2,
-h3 {
-  color: var(--brand-blue);
-}
 /* Keep buttons styled as buttons */
 a.btn,
 a.quote,
 .btn.primary {
   color: inherit;
 }
-/* Ensure heading links use brand blue, not link blue */
+
+/* ------------------------------
+   HEADINGS / PROPERTY TITLES
+-------------------------------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--brand-blue);
+  font-weight: 600;
+}
+
+/* Ensure heading links stay brand blue */
 h1 a,
 h2 a,
 h3 a {
