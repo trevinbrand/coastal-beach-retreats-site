@@ -23,3 +23,40 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* Brand color for headings & navigation */
+:root {
+  --brand-blue: #193e7f;
+}
+
+/* Top navigation links */
+header .nav a,
+header .dropbtn,
+header .menu a {
+  color: var(--brand-blue);
+}
+
+/* Property titles (h2/h3 headings used in property blocks) */
+h1,
+h2,
+h3 {
+  color: var(--brand-blue);
+}
+/* Keep buttons styled as buttons */
+a.btn,
+a.quote,
+.btn.primary {
+  color: inherit;
+}
+/* Ensure heading links use brand blue, not link blue */
+h1 a,
+h2 a,
+h3 a {
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+h1 a:hover,
+h2 a:hover,
+h3 a:hover {
+  opacity: 0.85;
+}
