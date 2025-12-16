@@ -1,0 +1,41 @@
+---
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Guest Reviews | Coastal Beach Retreats</title>
+    <meta
+      name="description"
+      content="Read verified guest reviews for Coastal Beach Retreats vacation rentals."
+    />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main style="max-width:1120px;margin:0 auto;padding:18px;">
+      <h1>Guest Reviews</h1>
+      <p style="opacity:.75;">
+        We’re proud of the experiences our guests have shared. Below are verified
+        reviews from recent stays across our properties.
+      </p>
+
+      <!-- OwnerRez Reviews widget -->
+      <div
+        class="ownerrez-widget"
+        data-widget-type="Reviews - Reviews"
+        data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
+      ></div>
+
+      <!-- Load OwnerRez widget script (once per page) -->
+      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+  </body>
+</html>
