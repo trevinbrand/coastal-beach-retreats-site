@@ -33,6 +33,7 @@ body {
 -------------------------------- */
 :root {
   --brand-blue: #193e7f;
+  --accent-teal: #058789;
   --font-heading: "Dancing Script", cursive;
   --font-nav: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
@@ -79,4 +80,11 @@ h1 a:hover,
 h2 a:hover,
 h3 a:hover {
   opacity: 0.85;
+}
+h4 {
+  color: var(--accent-teal);
+}
+.meta strong {
+  color: var(--accent-teal);
+  font-weight: 600;
 }
