@@ -1,0 +1,75 @@
+---
+const { phone = "(918) 734-3331" } = Astro.props;
+
+const propertyLinks = [
+  { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL" },
+  { href: "/properties/sailors-delight/", label: "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL" },
+  { href: "/properties/red-sky-nights/", label: "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL" },
+  { href: "/properties/destin-dreams/", label: "Destin Dreams @ Sterling Shores 311 Destin, FL" }
+];
+---
+
+<header class="hdr">
+  <div class="bar">
+    <div class="nav">
+      <a class="link" href="/">Home</a>
+
+      <div class="dropdown">
+        <button class="link dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
+          Properties ▾
+        </button>
+        <div class="menu" role="menu">
+          {propertyLinks.map(p => (
+            <a role="menuitem" href={p.href}>{p.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <a class="link" href="/3d-condo-tours/">3D CONDO TOURS</a>
+      <a class="link" href="/map/">Map</a>
+      <a class="link" href="/availability/">Availability</a>
+      <a class="link" href="/reviews/">Reviews</a>
+    </div>
+
+    <div class="right">
+      <a class="quote" href="/quote/">QUOTE/PRICING</a>
+      <span class="pipe">|</span>
+      <a class="phone" href={`tel:${phone.replace(/[^0-9]/g, "")}`}>{phone}</a>
+    </div>
+  </div>
+
+  <style>
+    .hdr { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom: 1px solid rgba(0,0,0,.12); }
+    .bar { max-width: 1120px; margin: 0 auto; padding: 10px 14px; display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .nav { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .link { text-decoration:none; padding:8px 10px; border-radius:10px; }
+    .link:hover { background: rgba(0,0,0,.04); }
+    .right { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .quote { text-decoration:none; padding:8px 10px; border-radius:10px; border: 1px solid rgba(0,0,0,.18); font-weight:600; }
+    .phone { text-decoration:none; opacity:.9; }
+    .pipe { opacity:.45; }
+
+    .dropdown { position: relative; }
+    .dropbtn { border: 0; background: transparent; cursor: pointer; font: inherit; }
+    .menu {
+      display:none;
+      position:absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 360px;
+      background:#fff;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.10);
+    }
+    .menu a { display:block; padding:10px 10px; border-radius:10px; text-decoration:none; }
+    .menu a:hover { background: rgba(0,0,0,.04); }
+    .dropdown:focus-within .menu,
+    .dropdown:hover .menu { display:block; }
+
+    @media (max-width: 640px) {
+      .menu { min-width: 280px; }
+    }
+  </style>
+</header>

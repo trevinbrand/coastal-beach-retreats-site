@@ -1,0 +1,56 @@
+---
+const { p } = Astro.props;
+---
+
+<section class="block" aria-label={p.name}>
+  <div class="head">
+    <h2><a href={p.href}>{p.name}</a></h2>
+  </div>
+
+  <div class="body">
+    <div class="img">
+      <img src={p.image} alt={p.name} loading="lazy" />
+    </div>
+
+    <div class="text">
+      <h3 class="title"><a href={p.href}>{p.name}</a></h3>
+
+      <div class="meta">
+        <div><strong>Size –</strong> <span>{p.sizeLine}</span></div>
+        <div><strong>Amenities –</strong> <span>{p.amenitiesLine}</span></div>
+      </div>
+
+      <p>{p.blurb}</p>
+
+      {p.noteBold && <p><strong>{p.noteBold}</strong></p>}
+
+      <div class="actions">
+        <a class="btn" href={p.photosHref}>Photos</a>
+        <a class="btn" href={p.availabilityHref}>Availability</a>
+        <a class="btn primary" href={p.detailsHref}>Details</a>
+        <a class="btn" href={p.inquireHref}>Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <style>
+    .block { max-width: 1120px; margin: 0 auto; padding: 14px; }
+    .head h2 { margin: 0 0 10px; font-size: 22px; }
+    .head a { text-decoration: none; }
+    .body { display: grid; grid-template-columns: 360px 1fr; gap: 16px; align-items: start; }
+    .img img { width: 100%; height: 240px; object-fit: cover; border-radius: 16px; border: 1px solid rgba(0,0,0,.12); background: rgba(0,0,0,.04); }
+    .title { margin: 0 0 8px; font-size: 22px; }
+    .meta { display: grid; gap: 6px; margin: 6px 0 10px; opacity: .9; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .btn { text-decoration: none; border: 1px solid rgba(0,0,0,.18); padding: 8px 12px; border-radius: 12px; }
+    .btn.primary { background: #111; color: #fff; border-color: #111; }
+    hr { border: 0; border-top: 1px solid rgba(0,0,0,.10); margin-top: 18px; }
+
+    @media (max-width: 860px) {
+      .body { grid-template-columns: 1fr; }
+      .img img { height: 220px; }
+    }
+  </style>
+</section>

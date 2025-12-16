@@ -1,11 +1,49 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import SiteHeader from "../components/SiteHeader.astro";
+import HeroCarousel from "../components/HeroCarousel.astro";
+import PropertyBlock from "../components/PropertyBlock.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { properties } from "../data/properties.js";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Coastal Beach Retreats</title>
+    <meta name="description" content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin." />
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.5; }
+    </style>
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <HeroCarousel />
+
+    {properties.map((p) => <PropertyBlock p={p} />)}
+
+    <section
+  style="max-width:1120px;margin:0 auto;padding:14px;"
+  id="reviews"
+>
+  <h2 style="margin:0 0 8px;">Guest Reviews</h2>
+  <hr style="border:0;border-top:1px solid rgba(0,0,0,.10);margin:12px 0 16px;" />
+
+  <!-- OwnerRez Reviews widget -->
+  <div
+    class="ownerrez-widget"
+    data-widget-type="Reviews - Reviews"
+    data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
+  ></div>
+
+  <!-- Load OwnerRez widget script -->
+  <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+</section>
+
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+  </body>
+</html>

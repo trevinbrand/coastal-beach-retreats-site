@@ -1,0 +1,19 @@
+---
+const { phone="(918) 734-3331", email="coastalbeachretreats@gmail.com" } = Astro.props;
+---
+
+<footer class="f">
+  <div class="wrap">
+    <p>
+      © {new Date().getFullYear()} Coastal Beach Retreats | {phone} | {email}
+    </p>
+    <p class="muted">www.coastalbeachretreats.com</p>
+  </div>
+
+  <style>
+    .f { border-top: 1px solid rgba(0,0,0,.12); margin-top: 10px; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px 14px; }
+    .muted { opacity: .75; }
+    p { margin: 6px 0; }
+  </style>
+</footer>

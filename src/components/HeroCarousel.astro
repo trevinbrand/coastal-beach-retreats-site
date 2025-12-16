@@ -1,0 +1,64 @@
+---
+const slides = [
+  "/images/hero/01.jpg",
+  "/images/hero/02.jpg",
+  "/images/hero/03.jpg"
+];
+---
+
+<section class="hero" aria-label="Homepage photos">
+  <div class="frame">
+    {slides.map((src, i) => (
+      <img class={`slide ${i === 0 ? "active" : ""}`} src={src} alt="Coastal Beach Retreats hero image" loading={i === 0 ? "eager" : "lazy"} />
+    ))}
+
+    <div class="controls">
+      <button class="btn" type="button" data-dir="-1">Previous</button>
+      <button class="btn" type="button" data-dir="1">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const root = document.currentScript?.closest(".hero");
+    if (!root) {}
+    else {
+      const slides = Array.from(root.querySelectorAll(".slide"));
+      const btns = Array.from(root.querySelectorAll("button[data-dir]"));
+      let idx = 0;
+
+      const show = (n) => {
+        slides[idx]?.classList.remove("active");
+        idx = (n + slides.length) % slides.length;
+        slides[idx]?.classList.add("active");
+      };
+
+      btns.forEach(b => b.addEventListener("click", () => show(idx + Number(b.dataset.dir))));
+
+      // optional: auto-advance every 6s
+      setInterval(() => show(idx + 1), 6000);
+    }
+  </script>
+
+  <style>
+    .hero { max-width: 1120px; margin: 0 auto; padding: 14px; }
+    .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); }
+    .slide { display:none; width:100%; height: clamp(220px, 38vw, 520px); object-fit: cover; }
+    .slide.active { display:block; }
+    .controls {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      border: 1px solid rgba(255,255,255,.55);
+      background: rgba(0,0,0,.35);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .btn:hover { background: rgba(0,0,0,.5); }
+  </style>
+</section>
