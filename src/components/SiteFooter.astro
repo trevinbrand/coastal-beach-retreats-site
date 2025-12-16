@@ -1,37 +1,42 @@
 ---
-const { phone="(918) 734-3331", email="coastalbeachretreats@gmail.com", website="www.coastalbeachretreats.com" } = Astro.props;
+const {
+  phone="(918) 734-3331",
+  email="coastalbeachretreats@gmail.com",
+  website="www.coastalbeachretreats.com"
+} = Astro.props;
 
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 const mailHref = `mailto:${email}`;
-const webHref = website.startsWith("http") ? website : `https://${website.replace(/^www\./, "www.")}`;
+const webHref = website.startsWith("http") ? website : `https://${website}`;
 ---
 
 <footer class="f">
   <div class="wrap">
-    <p class="line">
+    <p class="top">
       © {new Date().getFullYear()} Coastal Beach Retreats
+      <span class="sep">|</span>
+      <a class="lnk" href={telHref}>{phone}</a>
+      <span class="sep">|</span>
+      <a class="lnk" href={mailHref}>{email}</a>
     </p>
 
-    <p class="line links">
-      <a href={telHref}>{phone}</a>
-      <span class="sep">|</span>
-      <a href={mailHref}>{email}</a>
-      <span class="sep">|</span>
-      <a href={webHref} target="_blank" rel="noopener">{website}</a>
+    <p class="bottom">
+      <a class="lnk" href={webHref} target="_blank" rel="noopener">{website}</a>
     </p>
   </div>
 
   <style>
     .f { border-top: 1px solid rgba(0,0,0,.12); margin-top: 10px; }
     .wrap { max-width: 1120px; margin: 0 auto; padding: 18px 14px; text-align: center; }
-    .line { margin: 6px 0; }
-    .links { opacity: .9; }
-    a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-    a:hover { opacity: .8; }
-    .sep { margin: 0 8px; opacity: .45; }
-    @media (max-width: 520px) {
+    p { margin: 6px 0; }
+    .sep { margin: 0 10px; opacity: .45; }
+    .lnk { color: #1a73e8; text-decoration: underline; text-underline-offset: 3px; }
+    .lnk:hover { opacity: .85; }
+
+    /* Keep the first line readable on small screens */
+    @media (max-width: 560px) {
       .sep { display: none; }
-      .links a { display: inline-block; margin: 6px 8px; }
+      .top { display: flex; flex-direction: column; gap: 6px; }
     }
   </style>
 </footer>
