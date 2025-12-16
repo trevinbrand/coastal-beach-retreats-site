@@ -1,0 +1,40 @@
+---
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quote & Pricing | Coastal Beach Retreats</title>
+    <meta
+      name="description"
+      content="Check availability, pricing, and request a quote for all Coastal Beach Retreats properties."
+    />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main style="max-width:1120px;margin:0 auto;padding:18px;">
+      <h1>Quote & Pricing</h1>
+      <p style="opacity:.75;">
+        Select your dates and property below to see live pricing and availability.
+      </p>
+
+      <!-- OwnerRez Booking/Inquiry widget -->
+      <div
+        class="ownerrez-widget"
+        data-widgetId="3c35d18f0b814b78a74c10f7ea832119"
+        data-widget-type="Booking/Inquiry"
+      ></div>
+
+      <!-- Load OwnerRez widget script -->
+      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+  </body>
+</html>
