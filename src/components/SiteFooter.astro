@@ -1,19 +1,37 @@
 ---
-const { phone="(918) 734-3331", email="coastalbeachretreats@gmail.com" } = Astro.props;
+const { phone="(918) 734-3331", email="coastalbeachretreats@gmail.com", website="www.coastalbeachretreats.com" } = Astro.props;
+
+const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
+const mailHref = `mailto:${email}`;
+const webHref = website.startsWith("http") ? website : `https://${website.replace(/^www\./, "www.")}`;
 ---
 
 <footer class="f">
   <div class="wrap">
-    <p>
-      © {new Date().getFullYear()} Coastal Beach Retreats | {phone} | {email}
+    <p class="line">
+      © {new Date().getFullYear()} Coastal Beach Retreats
     </p>
-    <p class="muted">www.coastalbeachretreats.com</p>
+
+    <p class="line links">
+      <a href={telHref}>{phone}</a>
+      <span class="sep">|</span>
+      <a href={mailHref}>{email}</a>
+      <span class="sep">|</span>
+      <a href={webHref} target="_blank" rel="noopener">{website}</a>
+    </p>
   </div>
 
   <style>
     .f { border-top: 1px solid rgba(0,0,0,.12); margin-top: 10px; }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px 14px; }
-    .muted { opacity: .75; }
-    p { margin: 6px 0; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px 14px; text-align: center; }
+    .line { margin: 6px 0; }
+    .links { opacity: .9; }
+    a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { opacity: .8; }
+    .sep { margin: 0 8px; opacity: .45; }
+    @media (max-width: 520px) {
+      .sep { display: none; }
+      .links a { display: inline-block; margin: 6px 8px; }
+    }
   </style>
 </footer>
