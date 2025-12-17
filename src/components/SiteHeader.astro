@@ -46,7 +46,7 @@ const logoSrc = "/images/logo.png";
       </nav>
     </div>
 
-    <!-- RIGHT: quote on desktop + phone always + logo only when collapsed -->
+    <!-- RIGHT: quote on desktop + phone (desktop) + logo only when collapsed -->
     <div class="right">
       <!-- Quote button that appears on full width (desktop) -->
       <a class="quote quoteRight" href="/quote/">QUOTE / PRICING</a>
@@ -54,13 +54,13 @@ const logoSrc = "/images/logo.png";
       <span class="pipe hideOnCollapse">|</span>
       <a class="contact hideOnCollapse" href={telHref}>{phone}</a>
 
-
       <a class="logo" href="/" aria-label="Home">
         <img src={logoSrc} alt="Coastal Beach Retreats" />
       </a>
     </div>
   </div>
 
+  <!-- Divet/cutout under header (only on collapse) -->
   <div class="cutout" aria-hidden="true"></div>
 
   <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
@@ -84,7 +84,6 @@ const logoSrc = "/images/logo.png";
   </div>
 
   <script>
-    // Find the nearest header for THIS component without using document.currentScript
     const header = document.querySelector("header.hdr[data-header]") || document.querySelector("header.hdr");
     if (!header) {
       console.warn("Hamburger menu: header not found");
@@ -124,40 +123,9 @@ const logoSrc = "/images/logo.png";
   </script>
 
   <style>
-    /* Divet/cutout that aligns to the logo (only visible when collapsed) */
-    .cutout {
-    display: none;
-    max-width: 1120px;
-    margin: 0 auto;
-    height: 56px;
-    position: relative;
-    }
-
-    /* The actual “shape” sits on the RIGHT and lines up with the logo */
-    .cutout::after {
-    content: "";
-    position: absolute;
-    right: 14px;              /* matches .bar padding-right */
-    top: -1px;                /* overlap the header border so it looks connected */
-    width: 240px;             /* divet width (adjust to match your logo area) */
-    height: 56px;
-    background: #fff;
-
-    border-left: 1px solid rgba(0,0,0,.12);
-    border-bottom: 1px solid rgba(0,0,0,.12);
-    border-right: 1px solid rgba(0,0,0,.12);
-
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
-
-    /* angled cut on the LEFT edge like your screenshot */
-    clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
-
-    box-shadow: 0 6px 12px rgba(0,0,0,.06);
-    }
-
-    @media (max-width: 1100px) {
-    .cutout { display: block; }
+    :root {
+      --cutout-w: 240px; /* divet width: adjust this to match logo area */
+      --cutout-h: 56px;
     }
 
     .hdr {
@@ -167,17 +135,6 @@ const logoSrc = "/images/logo.png";
       background: #fff;
       border-bottom: 1px solid rgba(0,0,0,.12);
     }
-
-    .hideOnCollapse { display: inline; }
-
-    @media (max-width: 1100px) {
-    .hideOnCollapse { display: none; }
-    }
-
-    @media (max-width: 1100px) {
-        .hdr { border-bottom: 0; }
-    }
-
 
     .bar {
       max-width: 1120px;
@@ -209,7 +166,6 @@ const logoSrc = "/images/logo.png";
       padding: 8px 10px;
       border-radius: 10px;
     }
-
     .link:hover { background: rgba(0,0,0,.04); }
 
     .right {
@@ -233,6 +189,8 @@ const logoSrc = "/images/logo.png";
     .quoteLeft { display: none; }
     .quoteRight { display: inline-flex; }
 
+    .hideOnCollapse { display: inline; }
+
     .contact {
       text-decoration: underline;
       text-underline-offset: 3px;
@@ -243,7 +201,12 @@ const logoSrc = "/images/logo.png";
 
     /* Logo: hidden normally, shown when collapsed */
     .logo { display: none; text-decoration: none; }
-    .logo img { height: 44px; width: auto; display: block; }
+    .logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
 
     /* Hamburger: hidden normally, shown when collapsed */
     .hamburger {
@@ -312,8 +275,42 @@ const logoSrc = "/images/logo.png";
     .dprops summary::-webkit-details-marker { display: none; }
     .dmenu { padding-left: 10px; }
 
-    /* Collapse breakpoint */
+    /* Divet/cutout (right-aligned, lines up with logo slot) */
+    .cutout {
+      display: none;
+      max-width: 1120px;
+      margin: 0 auto;
+      height: var(--cutout-h);
+      position: relative;
+      background: transparent;
+    }
+
+    .cutout::after {
+      content: "";
+      position: absolute;
+      right: 14px; /* matches .bar padding-right */
+      top: -1px;   /* overlap header border for a continuous look */
+      width: var(--cutout-w);
+      height: var(--cutout-h);
+      background: #fff;
+
+      border-left: 1px solid rgba(0,0,0,.12);
+      border-right: 1px solid rgba(0,0,0,.12);
+      border-bottom: 1px solid rgba(0,0,0,.12);
+
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+
+      /* angled “divet” cut on the LEFT edge */
+      clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
+
+      box-shadow: 0 6px 12px rgba(0,0,0,.06);
+    }
+
+    /* Collapse breakpoint (everything in one place) */
     @media (max-width: 1100px) {
+      .hdr { border-bottom: 0; }
+
       .nav { display: none; }
       .hamburger { display: inline-flex; align-items: center; justify-content: center; }
       .logo { display: inline-flex; align-items: center; }
@@ -321,6 +318,16 @@ const logoSrc = "/images/logo.png";
       /* Swap quote position ONLY when collapsed */
       .quoteLeft { display: inline-flex; }
       .quoteRight { display: none; }
+
+      /* Hide phone/pipe when collapsed */
+      .hideOnCollapse { display: none; }
+
+      /* Show divet */
+      .cutout { display: block; }
+
+      /* Align logo to divet width */
+      .right { min-width: var(--cutout-w); justify-content: flex-end; }
+      .logo img { max-width: calc(var(--cutout-w) - 24px); }
     }
 
     @media (max-width: 520px) {
