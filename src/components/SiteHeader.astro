@@ -1,11 +1,7 @@
 ---
-const {
-  phone = "(918) 734-3331",
-  email = "coastalbeachretreats@gmail.com"
-} = Astro.props;
+const { phone = "(918) 734-3331" } = Astro.props;
 
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
-const mailHref = `mailto:${email}`;
 
 const propertyLinks = [
   { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL" },
@@ -13,38 +9,98 @@ const propertyLinks = [
   { href: "/properties/red-sky-nights/", label: "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL" },
   { href: "/properties/destin-dreams/", label: "Destin Dreams @ Sterling Shores 311 Destin, FL" }
 ];
+
+// Update this to your actual logo path:
+const logoSrc = "/images/logo.png";
 ---
 
-<header class="hdr">
+<header class="hdr" data-header>
   <div class="bar">
-    <div class="nav">
-      <a class="link" href="/">Home</a>
+    <!-- LEFT: full nav (hidden when collapsed) + hamburger (shown when collapsed) -->
+    <div class="left">
+      <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+        ☰
+      </button>
 
-      <div class="dropdown">
-        <button class="link dropbtn" type="button">
-          Properties ▾
-        </button>
-        <div class="menu">
-          {propertyLinks.map(p => (
-            <a href={p.href}>{p.label}</a>
-          ))}
+      <nav class="nav" aria-label="Primary">
+        <a class="link" href="/">Home</a>
+
+        <div class="dropdown">
+          <button class="link dropbtn" type="button">
+            Properties ▾
+          </button>
+          <div class="menu">
+            {propertyLinks.map(p => (
+              <a href={p.href}>{p.label}</a>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <a class="link" href="/3d-condo-tours/">3D Condo Tours</a>
-      <a class="link" href="/map/">Map</a>
-      <a class="link" href="/availability/">Availability</a>
-      <a class="link" href="/reviews/">Reviews</a>
+        <a class="link" href="/3d-condo-tours/">3D Condo Tours</a>
+        <a class="link" href="/map/">Map</a>
+        <a class="link" href="/availability/">Availability</a>
+        <a class="link" href="/reviews/">Reviews</a>
+      </nav>
     </div>
 
+    <!-- RIGHT: quote always + phone always + logo only when collapsed -->
     <div class="right">
       <a class="quote" href="/quote/">QUOTE / PRICING</a>
       <span class="pipe">|</span>
       <a class="contact" href={telHref}>{phone}</a>
-      <span class="pipe">|</span>
-      <a class="contact email" href={mailHref}>{email}</a>
+
+      <a class="logo" href="/" aria-label="Home">
+        <img src={logoSrc} alt="Coastal Beach Retreats" />
+      </a>
     </div>
   </div>
+
+  <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
+  <div class="drawer" aria-label="Collapsed menu">
+    <a class="dlink" href="/">Home</a>
+
+    <details class="dprops">
+      <summary>Properties</summary>
+      <div class="dmenu">
+        {propertyLinks.map(p => (
+          <a class="dlink" href={p.href}>{p.label}</a>
+        ))}
+      </div>
+    </details>
+
+    <a class="dlink" href="/3d-condo-tours/">3D Condo Tours</a>
+    <a class="dlink" href="/map/">Map</a>
+    <a class="dlink" href="/availability/">Availability</a>
+    <a class="dlink" href="/reviews/">Reviews</a>
+  </div>
+
+  <script>
+    const header = document.currentScript.closest("[data-header]");
+    const btn = header.querySelector(".hamburger");
+    const drawer = header.querySelector(".drawer");
+
+    const setOpen = (open) => {
+      drawer.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "✕" : "☰";
+    };
+
+    btn.addEventListener("click", () => {
+      setOpen(!drawer.classList.contains("open"));
+    });
+
+    // Close drawer when a link is clicked
+    drawer.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (a) setOpen(false);
+    });
+
+    // Close drawer if window is resized wider than breakpoint
+    const mq = window.matchMedia("(min-width: 1101px)");
+    mq.addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  </script>
 
   <style>
     .hdr {
@@ -63,7 +119,13 @@ const propertyLinks = [
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      flex-wrap: wrap;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
 
     .nav {
@@ -71,6 +133,7 @@ const propertyLinks = [
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
+      min-width: 0;
     }
 
     .link {
@@ -79,15 +142,13 @@ const propertyLinks = [
       border-radius: 10px;
     }
 
-    .link:hover {
-      background: rgba(0,0,0,.04);
-    }
+    .link:hover { background: rgba(0,0,0,.04); }
 
     .right {
       display: flex;
       gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       font-size: 14px;
     }
 
@@ -97,6 +158,7 @@ const propertyLinks = [
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,.18);
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .contact {
@@ -105,15 +167,26 @@ const propertyLinks = [
       white-space: nowrap;
     }
 
-    .email {
-      opacity: .85;
+    .pipe { opacity: .4; }
+
+    /* Logo: hidden normally, shown when collapsed */
+    .logo { display: none; text-decoration: none; }
+    .logo img { height: 44px; width: auto; display: block; }
+
+    /* Hamburger: hidden normally, shown when collapsed */
+    .hamburger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.18);
+      background: rgba(0,0,0,.04);
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
     }
 
-    .pipe {
-      opacity: .4;
-    }
-
-    /* Dropdown */
+    /* Dropdown (desktop/full nav) */
     .dropdown { position: relative; }
     .dropbtn { background: none; border: 0; cursor: pointer; font: inherit; }
     .menu {
@@ -128,27 +201,55 @@ const propertyLinks = [
       padding: 6px;
       box-shadow: 0 12px 28px rgba(0,0,0,.10);
     }
-
     .menu a {
       display: block;
       padding: 10px;
       border-radius: 10px;
       text-decoration: none;
     }
+    .menu a:hover { background: rgba(0,0,0,.04); }
+    .dropdown:hover .menu { display: block; }
 
-    .menu a:hover {
-      background: rgba(0,0,0,.04);
+    /* Drawer (collapsed menu) */
+    .drawer {
+      display: none;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 14px 14px;
+      border-top: 1px solid rgba(0,0,0,.12);
+      background: #fff;
     }
-
-    .dropdown:hover .menu {
+    .drawer.open { display: block; }
+    .dlink {
       display: block;
+      padding: 10px 6px;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+    .dlink:hover { background: rgba(0,0,0,.04); }
+
+    .dprops summary {
+      cursor: pointer;
+      padding: 10px 6px;
+      border-radius: 10px;
+      list-style: none;
+    }
+    .dprops summary:hover { background: rgba(0,0,0,.04); }
+    .dprops summary::-webkit-details-marker { display: none; }
+    .dmenu { padding-left: 10px; }
+
+    /* Collapse breakpoint (adjust as desired) */
+    @media (max-width: 1100px) {
+      .nav { display: none; }        /* hide full nav */
+      .hamburger { display: inline-flex; align-items: center; justify-content: center; }
+      .logo { display: inline-flex; align-items: center; }
     }
 
-    /* Mobile cleanup */
-    @media (max-width: 720px) {
-      .email {
-        display: none;
-      }
+    @media (max-width: 520px) {
+      .pipe { display: none; }
+      .right { gap: 8px; }
+      .quote { padding: 8px 10px; }
+      .logo img { height: 40px; }
     }
   </style>
 </header>
