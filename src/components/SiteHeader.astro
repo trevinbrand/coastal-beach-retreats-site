@@ -51,14 +51,17 @@ const logoSrc = "/images/logo.png";
       <!-- Quote button that appears on full width (desktop) -->
       <a class="quote quoteRight" href="/quote/">QUOTE / PRICING</a>
 
-      <span class="pipe">|</span>
-      <a class="contact" href={telHref}>{phone}</a>
+      <span class="pipe hideOnCollapse">|</span>
+      <a class="contact hideOnCollapse" href={telHref}>{phone}</a>
+
 
       <a class="logo" href="/" aria-label="Home">
         <img src={logoSrc} alt="Coastal Beach Retreats" />
       </a>
     </div>
   </div>
+
+  <div class="cutout" aria-hidden="true"></div>
 
   <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
   <div class="drawer" aria-label="Collapsed menu">
@@ -121,12 +124,38 @@ const logoSrc = "/images/logo.png";
   </script>
 
   <style>
+    .cutout {
+        display: none;
+        max-width: 1120px;
+        margin: 0 auto;
+        height: 64px;
+        background: #fff;
+        border-left: 1px solid rgba(0,0,0,.12);
+        border-right: 1px solid rgba(0,0,0,.12);
+        border-bottom: 1px solid rgba(0,0,0,.12);
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+
+        /* angled “divet” look */
+        clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
+        }
+
+    @media (max-width: 1100px) {
+        .cutout { display: block; }
+    }
+
     .hdr {
       position: sticky;
       top: 0;
       z-index: 50;
       background: #fff;
       border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+
+    .hideOnCollapse { display: inline; }
+
+    @media (max-width: 1100px) {
+    .hideOnCollapse { display: none; }
     }
 
     .bar {
