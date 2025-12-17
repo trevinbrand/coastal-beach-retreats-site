@@ -24,29 +24,79 @@ const slides = [
   </div>
 
   <script>
-    const root = document.currentScript?.closest(".hero");
-    if (!root) {}
-    else {
-      const slides = Array.from(root.querySelectorAll(".slide"));
-      const btns = Array.from(root.querySelectorAll("button[data-dir]"));
-      let idx = 0;
+  const root = document.currentScript?.closest(".hero");
+  if (!root) {}
+  else {
+    const slides = Array.from(root.querySelectorAll(".slide"));
+    const btns = Array.from(root.querySelectorAll("button[data-dir]"));
+    const frame = root.querySelector(".frame");
 
-      const show = (n) => {
-        slides[idx]?.classList.remove("active");
-        idx = (n + slides.length) % slides.length;
-        slides[idx]?.classList.add("active");
-      };
+    let idx = 0;
 
-      btns.forEach(b => b.addEventListener("click", () => show(idx + Number(b.dataset.dir))));
+    const show = (n) => {
+      slides[idx]?.classList.remove("active");
+      idx = (n + slides.length) % slides.length;
+      slides[idx]?.classList.add("active");
+    };
 
-      // optional: auto-advance every 6s
-      setInterval(() => show(idx + 1), 6000);
-    }
-  </script>
+    // Button clicks (arrows)
+    btns.forEach((b) =>
+      b.addEventListener("click", () => show(idx + Number(b.dataset.dir)))
+    );
+
+    // Auto-advance every 6s (optional)
+    const timer = setInterval(() => show(idx + 1), 6000);
+
+    // ---- Swipe support ----
+    let startX = 0;
+    let startY = 0;
+    let dragging = false;
+
+    const SWIPE_MIN_X = 50;      // pixels
+    const SWIPE_MAX_Y = 60;      // allow some vertical movement
+
+    frame?.addEventListener("touchstart", (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      dragging = true;
+    }, { passive: true });
+
+    frame?.addEventListener("touchmove", (e) => {
+      // If swipe is clearly horizontal, prevent page scroll while swiping
+      if (!dragging || !e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    frame?.addEventListener("touchend", (e) => {
+      if (!dragging) return;
+      dragging = false;
+
+      const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+      if (!t) return;
+
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+
+      // Only treat as swipe if mostly horizontal and far enough
+      if (Math.abs(dx) >= SWIPE_MIN_X && Math.abs(dy) <= SWIPE_MAX_Y) {
+        if (dx < 0) show(idx + 1);   // swipe left -> next
+        else show(idx - 1);          // swipe right -> prev
+      }
+    }, { passive: true });
+  }
+</script>
 
   <style>
     .hero { max-width: 1120px; margin: 0 auto; padding: 14px; }
-    .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); }
+    .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); touch-action: pan-y; }
     .slide { display:none; width:100%; height: clamp(220px, 38vw, 520px); object-fit: cover; }
     .slide.active { display:block; }
     .arrows {
