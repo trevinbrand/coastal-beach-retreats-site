@@ -76,42 +76,45 @@ const logoSrc = "/images/logo.png";
     </div>
 
   <script>
-    const header = document.currentScript.closest("header");
-    const btn = header.querySelector(".hamburger");
-    const drawer = header.querySelector(".drawer");
-
-    if (!btn || !drawer) {
-        console.warn("Hamburger menu: missing .hamburger or .drawer");
+    // Find the nearest header for THIS component without using document.currentScript
+    const header = document.querySelector("header.hdr[data-header]") || document.querySelector("header.hdr");
+    if (!header) {
+        console.warn("Hamburger menu: header not found");
     } else {
+        const btn = header.querySelector(".hamburger");
+        const drawer = header.querySelector(".drawer");
+
+        if (!btn || !drawer) {
+        console.warn("Hamburger menu: missing .hamburger or .drawer");
+        } else {
         const setOpen = (open) => {
-        drawer.classList.toggle("open", open);
-        btn.setAttribute("aria-expanded", String(open));
-        btn.textContent = open ? "✕" : "☰";
+            drawer.classList.toggle("open", open);
+            btn.setAttribute("aria-expanded", String(open));
+            btn.textContent = open ? "✕" : "☰";
         };
 
         btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        setOpen(!drawer.classList.contains("open"));
+            e.preventDefault();
+            setOpen(!drawer.classList.contains("open"));
         });
 
-        // Close drawer when any link inside it is clicked
         drawer.addEventListener("click", (e) => {
-        const a = e.target.closest("a");
-        if (a) setOpen(false);
+            const a = e.target.closest("a");
+            if (a) setOpen(false);
         });
 
-        // Close with Escape
         document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") setOpen(false);
+            if (e.key === "Escape") setOpen(false);
         });
 
-        // If you resize back to wide, close it
         const mq = window.matchMedia("(min-width: 1101px)");
         mq.addEventListener("change", (e) => {
-        if (e.matches) setOpen(false);
+            if (e.matches) setOpen(false);
         });
+        }
     }
     </script>
+
 
   <style>
     .hdr {
