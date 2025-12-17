@@ -13,9 +13,13 @@ const slides = [
       <img class={`slide ${i === 0 ? "active" : ""}`} src={src} alt="Coastal Beach Retreats hero image" loading={i === 0 ? "eager" : "lazy"} />
     ))}
 
-    <div class="controls">
-      <button class="btn" type="button" data-dir="-1">Previous</button>
-      <button class="btn" type="button" data-dir="1">Next</button>
+    <div class="arrows">
+        <button class="arrow left" type="button" data-dir="-1" aria-label="Previous image">
+            ‹
+         </button>
+         <button class="arrow right" type="button" data-dir="1" aria-label="Next image">
+            ›
+        </button>
     </div>
   </div>
 
@@ -45,21 +49,48 @@ const slides = [
     .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); }
     .slide { display:none; width:100%; height: clamp(220px, 38vw, 520px); object-fit: cover; }
     .slide.active { display:block; }
-    .controls {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      display: flex;
-      gap: 8px;
-    }
-    .btn {
-      border: 1px solid rgba(255,255,255,.55);
-      background: rgba(0,0,0,.35);
-      color: #fff;
-      padding: 8px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    .btn:hover { background: rgba(0,0,0,.5); }
+    .arrows {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none; /* allow clicks only on buttons */
+}
+
+.arrow {
+  pointer-events: auto;
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 26px;
+  line-height: 1;
+  margin: 0 12px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity .2s ease, background .2s ease, transform .15s ease;
+}
+
+.arrow:hover {
+  opacity: 0.9;
+  background: rgba(0,0,0,.45);
+  transform: scale(1.05);
+}
+
+.arrow:active {
+  transform: scale(0.95);
+}
+
+/* Mobile: slightly smaller */
+@media (max-width: 640px) {
+  .arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+}
   </style>
 </section>
