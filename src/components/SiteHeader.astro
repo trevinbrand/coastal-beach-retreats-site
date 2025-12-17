@@ -124,24 +124,40 @@ const logoSrc = "/images/logo.png";
   </script>
 
   <style>
+    /* Divet/cutout that aligns to the logo (only visible when collapsed) */
     .cutout {
-        display: none;
-        max-width: 1120px;
-        margin: 0 auto;
-        height: 64px;
-        background: #fff;
-        border-left: 1px solid rgba(0,0,0,.12);
-        border-right: 1px solid rgba(0,0,0,.12);
-        border-bottom: 1px solid rgba(0,0,0,.12);
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
+    display: none;
+    max-width: 1120px;
+    margin: 0 auto;
+    height: 56px;
+    position: relative;
+    }
 
-        /* angled “divet” look */
-        clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
-        }
+    /* The actual “shape” sits on the RIGHT and lines up with the logo */
+    .cutout::after {
+    content: "";
+    position: absolute;
+    right: 14px;              /* matches .bar padding-right */
+    top: -1px;                /* overlap the header border so it looks connected */
+    width: 220px;             /* divet width (adjust to match your logo area) */
+    height: 56px;
+    background: #fff;
+
+    border-left: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12);
+
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+
+    /* angled cut on the LEFT edge like your screenshot */
+    clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
+
+    box-shadow: 0 6px 12px rgba(0,0,0,.06);
+    }
 
     @media (max-width: 1100px) {
-        .cutout { display: block; }
+    .cutout { display: block; }
     }
 
     .hdr {
@@ -157,6 +173,11 @@ const logoSrc = "/images/logo.png";
     @media (max-width: 1100px) {
     .hideOnCollapse { display: none; }
     }
+    
+    @media (max-width: 1100px) {
+        .hdr { border-bottom: 0; }
+    }
+
 
     .bar {
       max-width: 1120px;
