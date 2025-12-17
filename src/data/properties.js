@@ -13,7 +13,7 @@ export const properties = [
     availabilityHref: "/properties/heavenly-hideaway/#availability",
     detailsHref: "/properties/heavenly-hideaway/",
     inquireHref: "/contact/?property=heavenly-hideaway",
-    image: "/images/props/heavenly.jpg"
+    image: "/images/props/heavenly-1106.jpg"
   },
   {
     id: "sailors-delight",
