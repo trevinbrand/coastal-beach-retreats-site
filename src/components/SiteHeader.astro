@@ -60,47 +60,58 @@ const logoSrc = "/images/logo.png";
     <a class="dlink" href="/">Home</a>
 
     <details class="dprops">
-      <summary>Properties</summary>
-      <div class="dmenu">
+        <summary>Properties</summary>
+        <div class="dmenu">
         {propertyLinks.map(p => (
-          <a class="dlink" href={p.href}>{p.label}</a>
+            <a class="dlink" href={p.href}>{p.label}</a>
         ))}
-      </div>
+        </div>
     </details>
 
     <a class="dlink" href="/3d-condo-tours/">3D Condo Tours</a>
     <a class="dlink" href="/map/">Map</a>
     <a class="dlink" href="/availability/">Availability</a>
     <a class="dlink" href="/reviews/">Reviews</a>
-  </div>
+    <a class="dlink" href="/quote/">Quote / Pricing</a>
+    </div>
 
   <script>
-    const header = document.currentScript.closest("[data-header]");
+    const header = document.currentScript.closest("header");
     const btn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
 
-    const setOpen = (open) => {
-      drawer.classList.toggle("open", open);
-      btn.setAttribute("aria-expanded", String(open));
-      btn.textContent = open ? "✕" : "☰";
-    };
+    if (!btn || !drawer) {
+        console.warn("Hamburger menu: missing .hamburger or .drawer");
+    } else {
+        const setOpen = (open) => {
+        drawer.classList.toggle("open", open);
+        btn.setAttribute("aria-expanded", String(open));
+        btn.textContent = open ? "✕" : "☰";
+        };
 
-    btn.addEventListener("click", () => {
-      setOpen(!drawer.classList.contains("open"));
-    });
+        btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        setOpen(!drawer.classList.contains("open"));
+        });
 
-    // Close drawer when a link is clicked
-    drawer.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (a) setOpen(false);
-    });
+        // Close drawer when any link inside it is clicked
+        drawer.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (a) setOpen(false);
+        });
 
-    // Close drawer if window is resized wider than breakpoint
-    const mq = window.matchMedia("(min-width: 1101px)");
-    mq.addEventListener("change", (e) => {
-      if (e.matches) setOpen(false);
-    });
-  </script>
+        // Close with Escape
+        document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+        });
+
+        // If you resize back to wide, close it
+        const mq = window.matchMedia("(min-width: 1101px)");
+        mq.addEventListener("change", (e) => {
+        if (e.matches) setOpen(false);
+        });
+    }
+    </script>
 
   <style>
     .hdr {
@@ -212,6 +223,8 @@ const logoSrc = "/images/logo.png";
 
     /* Drawer (collapsed menu) */
     .drawer {
+      position: relative;
+      z-index: 60;
       display: none;
       max-width: 1120px;
       margin: 0 auto;
