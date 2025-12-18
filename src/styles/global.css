@@ -286,3 +286,37 @@ h4 {
 #location-select {
   scroll-margin-top: 90px;
 }
+/* ==============================
+   HEADINGS (entire site)
+============================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #193e7f;
+}
+
+/* Ensure heading LINKS stay brand blue */
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: #193e7f;
+}
+
+/* ==============================
+   TOP NAV BAR ONLY
+============================== */
+.site-header,
+.site-header a,
+.site-header button,
+.site-header span,
+.site-header nav,
+.site-header .link,
+.site-header .contact {
+  color: #193e7f;
+}
