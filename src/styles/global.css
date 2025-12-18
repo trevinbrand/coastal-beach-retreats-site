@@ -37,9 +37,20 @@ body {
 :root {
   --brand-blue: #193e7f;
   --accent-teal: #058789;
+  --page-pad: 12px; 
   --font-heading: "Dancing Script", cursive;
   --font-nav: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding-left: var(--page-pad);
+  padding-right: var(--page-pad);
+}
+
 
 /* ------------------------------
    HEADER (TOP NAV ONLY)
@@ -320,3 +331,4 @@ h6 a {
 .site-header .contact {
   color: #193e7f;
 }
+

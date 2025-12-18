@@ -1,37 +1,29 @@
 ---
 const { phone = "(918) 734-3331" } = Astro.props;
-
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 
 const propertyLinks = [
-  { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL" },
-  { href: "/properties/sailors-delight/", label: "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL" },
-  { href: "/properties/red-sky-nights/", label: "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL" },
-  { href: "/properties/destin-dreams/", label: "Destin Dreams @ Sterling Shores 311 Destin, FL" }
+  { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
+  { href: "/properties/sailors-delight/", label: "Sailor's Delight" },
+  { href: "/properties/red-sky-nights/", label: "Red Sky Nights" },
+  { href: "/properties/destin-dreams/", label: "Destin Dreams" }
 ];
-
-// Update this to your actual logo path:
-const logoSrc = "/images/logo.png";
 ---
 
 <header class="hdr site-header" data-header>
   <div class="bar">
-    <!-- LEFT: full nav (hidden when collapsed) + hamburger (shown when collapsed) -->
+
+    <!-- LEFT: navigation -->
     <div class="left">
       <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
         ☰
       </button>
 
-      <!-- Quote button that ONLY appears when collapsed -->
-      <a class="quote quoteLeft" href="/quote/">QUOTE / PRICING</a>
-
       <nav class="nav" aria-label="Primary">
         <a class="link" href="/">Home</a>
 
         <div class="dropdown">
-          <button class="link dropbtn" type="button">
-            Properties ▾
-          </button>
+          <button class="link dropbtn" type="button">Properties ▾</button>
           <div class="menu">
             {propertyLinks.map(p => (
               <a href={p.href}>{p.label}</a>
@@ -46,31 +38,22 @@ const logoSrc = "/images/logo.png";
       </nav>
     </div>
 
-    <!-- RIGHT: quote on desktop + phone (desktop) + logo only when collapsed -->
+    <!-- RIGHT: phone + quote -->
     <div class="right">
-      <!-- Quote button that appears on full width (desktop) -->
-      <a class="quote quoteRight" href="/quote/">QUOTE / PRICING</a>
-
-      <span class="pipe hideOnCollapse">|</span>
-      <a class="contact hideOnCollapse" href={telHref}>{phone}</a>
-
-      <a class="logo" href="/" aria-label="Home">
-        <img src={logoSrc} alt="Coastal Beach Retreats" />
-      </a>
+      <a class="contact" href={telHref}>{phone}</a>
+      <a class="quote" href="/quote/">QUOTE / PRICING</a>
     </div>
   </div>
 
-  <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
-  <div class="drawer" aria-label="Collapsed menu">
+  <!-- MOBILE DRAWER -->
+  <div class="drawer">
     <a class="dlink" href="/">Home</a>
 
-    <details class="dprops">
+    <details>
       <summary>Properties</summary>
-      <div class="dmenu">
-        {propertyLinks.map(p => (
-          <a class="dlink" href={p.href}>{p.label}</a>
-        ))}
-      </div>
+      {propertyLinks.map(p => (
+        <a class="dlink" href={p.href}>{p.label}</a>
+      ))}
     </details>
 
     <a class="dlink" href="/3d-condo-tours/">3D Condo Tours</a>
@@ -81,261 +64,173 @@ const logoSrc = "/images/logo.png";
   </div>
 
   <script is:inline>
-    // Drawer + hamburger
-    const header = document.querySelector("header.hdr[data-header]") || document.querySelector("header.hdr");
-    if (!header) {
-      console.warn("Hamburger menu: header not found");
-    } else {
-      const btn = header.querySelector(".hamburger");
-      const drawer = header.querySelector(".drawer");
+    const header = document.querySelector("[data-header]");
+    const btn = header.querySelector(".hamburger");
+    const drawer = header.querySelector(".drawer");
 
-      const setOpen = (open) => {
-        drawer.classList.toggle("open", open);
-        btn.setAttribute("aria-expanded", String(open));
-        btn.textContent = open ? "✕" : "☰";
-      };
+    btn.addEventListener("click", () => {
+      drawer.classList.toggle("open");
+      btn.textContent = drawer.classList.contains("open") ? "✕" : "☰";
+    });
 
-      if (!btn || !drawer) {
-        console.warn("Hamburger menu: missing .hamburger or .drawer");
-      } else {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          setOpen(!drawer.classList.contains("open"));
-        });
-
-        drawer.addEventListener("click", (e) => {
-          const a = e.target.closest("a");
-          if (a) setOpen(false);
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") setOpen(false);
-        });
-
-        const mq = window.matchMedia("(min-width: 1101px)");
-        mq.addEventListener("change", (e) => {
-          if (e.matches) setOpen(false);
-        });
-      }
-
-      // Translucent-on-scroll (adds .is-scrolled)
-      const setHeaderScrolled = () => {
-        const y = window.scrollY || 0;
-        header.classList.toggle("is-scrolled", y > 10);
-      };
-      setHeaderScrolled();
-      window.addEventListener("scroll", setHeaderScrolled, { passive: true });
-    }
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 10);
+    });
   </script>
 
   <style>
-    /* =========================
-       NAV FONT + COLOR (LOCKED)
-       This prevents the header text turning black due to other styles.
-    ========================== */
-    .hdr,
-    .hdr * {
-      font-family: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    /* ===== BASE HEADER ===== */
+    .hdr {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,.1);
+      font-family: "Quicksand", system-ui, sans-serif;
       color: #193e7f;
     }
 
-    /* Keep key buttons readable (optional) */
-    /* Quote button hover – inverse colors */
-    .quote {
-      background: #fff;
+    .hdr.is-scrolled {
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .bar {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 18px 12px; /* ⬅️ reduced side padding by ~40% */
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+
+    /* ===== LEFT ===== */
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .link {
+      text-decoration: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 600;
       color: #193e7f;
-      border-color: #193e7f;
-      transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .link:hover {
+      background: rgba(0,0,0,.05);
+    }
+
+    /* ===== DROPDOWN ===== */
+    .dropdown { position: relative; }
+    .dropbtn {
+      background: none;
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+      padding: 8px;
+      min-width: 220px;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      text-decoration: none;
+      border-radius: 10px;
+      color: #193e7f;
+    }
+
+    .menu a:hover {
+      background: rgba(0,0,0,.05);
+    }
+
+    .dropdown:hover .menu {
+      display: block;
+    }
+
+    /* ===== RIGHT ===== */
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact {
+      font-weight: 600;
+      text-decoration: underline;
+      color: #193e7f;
+    }
+
+    .quote {
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 2px solid #193e7f;
+      font-weight: 700;
+      text-decoration: none;
+      color: #193e7f;
+      transition: all .2s ease;
     }
 
     .quote:hover {
       background: #193e7f;
       color: #fff;
-      border-color: #193e7f;
     }
 
-    .hdr {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: #fff;
-      border-bottom: 1px solid rgba(0,0,0,.12);
-      transition: background-color .2s ease, backdrop-filter .2s ease, border-color .2s ease;
-    }
-
-    /* You'll tweak these values in CSS to get the translucency you want */
-    .hdr.is-scrolled {
-      background: rgba(255,255,255,.78);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,0,0,.08);
-    }
-
-    .bar {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .nav {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      min-width: 0;
-    }
-
-    .link {
-      text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 10px;
-    }
-    .link:hover { background: rgba(0,0,0,.04); }
-
-    .right {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: nowrap;
-      font-size: 14px;
-    }
-
-    .quote {
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,.18);
-      font-weight: 600;
-      white-space: nowrap;
-      background: rgba(255,255,255,.85);
-    }
-
-    /* Default: quote on RIGHT, hidden on LEFT */
-    .quoteLeft { display: none; }
-    .quoteRight { display: inline-flex; }
-
-    .hideOnCollapse { display: inline; }
-
-    .contact {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      white-space: nowrap;
-    }
-
-    .pipe { opacity: .4; }
-
-    /* Logo: hidden normally, shown when collapsed */
-    .logo { display: none; text-decoration: none; }
-    .logo img {
-      height: 44px;
-      width: auto;
-      display: block;
-      object-fit: contain;
-    }
-
-    /* Hamburger: hidden normally, shown when collapsed */
+    /* ===== HAMBURGER ===== */
     .hamburger {
       display: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      border: 1px solid rgba(0,0,0,.18);
-      background: rgba(0,0,0,.04);
+      width: 56px;
+      height: 56px;
+      font-size: 28px;
+      border-radius: 14px;
+      border: 2px solid rgba(25,62,127,.3);
+      background: rgba(0,0,0,.05);
       cursor: pointer;
-      font-size: 22px;
-      line-height: 1;
     }
 
-    /* Dropdown (desktop/full nav) */
-    .dropdown { position: relative; }
-    .dropbtn { background: none; border: 0; cursor: pointer; font: inherit; }
-    .menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      min-width: 360px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.12);
-      border-radius: 12px;
-      padding: 6px;
-      box-shadow: 0 12px 28px rgba(0,0,0,.10);
-    }
-    .menu a {
-      display: block;
-      padding: 10px;
-      border-radius: 10px;
-      text-decoration: none;
-    }
-    .menu a:hover { background: rgba(0,0,0,.04); }
-    .dropdown:hover .menu { display: block; }
-
-    /* Drawer (collapsed menu) */
+    /* ===== MOBILE ===== */
     .drawer {
-      position: relative;
-      z-index: 60;
       display: none;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 10px 14px 14px;
-      border-top: 1px solid rgba(0,0,0,.12);
+      padding: 16px 20px;
       background: #fff;
+      border-top: 1px solid rgba(0,0,0,.1);
     }
-    .drawer.open { display: block; }
+
+    .drawer.open {
+      display: block;
+    }
+
     .dlink {
       display: block;
-      padding: 10px 6px;
-      border-radius: 10px;
+      padding: 12px 6px;
+      font-weight: 600;
       text-decoration: none;
+      color: #193e7f;
     }
-    .dlink:hover { background: rgba(0,0,0,.04); }
 
-    .dprops summary {
-      cursor: pointer;
-      padding: 10px 6px;
-      border-radius: 10px;
-      list-style: none;
-    }
-    .dprops summary:hover { background: rgba(0,0,0,.04); }
-    .dprops summary::-webkit-details-marker { display: none; }
-    .dmenu { padding-left: 10px; }
-
-    /* Collapse breakpoint (everything in one place) */
     @media (max-width: 1100px) {
-      .hdr { border-bottom: 0; }
-
       .nav { display: none; }
       .hamburger { display: inline-flex; align-items: center; justify-content: center; }
-      .logo { display: inline-flex; align-items: center; }
-
-      /* Swap quote position ONLY when collapsed */
-      .quoteLeft { display: inline-flex; }
-      .quoteRight { display: none; }
-
-      /* Hide phone/pipe when collapsed */
-      .hideOnCollapse { display: none; }
-
-      /* Align logo to divet width */
-      .right { min-width: var(--cutout-w); justify-content: flex-end; }
-      .logo img { max-width: calc(var(--cutout-w) - 24px); }
-    }
-
-    @media (max-width: 520px) {
-      .pipe { display: none; }
-      .right { gap: 8px; }
-      .quote { padding: 8px 10px; }
-      .logo img { height: 40px; }
+      .contact { display: none; }
     }
   </style>
 </header>
