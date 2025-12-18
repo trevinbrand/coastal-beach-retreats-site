@@ -60,10 +60,7 @@ const logoSrc = "/images/logo.png";
     </div>
   </div>
 
-  <!-- Divet/cutout under header (only on collapse) -->
-  <div class="cutout" aria-hidden="true"></div>
-
-  <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
+    <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
   <div class="drawer" aria-label="Collapsed menu">
     <a class="dlink" href="/">Home</a>
 
@@ -123,11 +120,6 @@ const logoSrc = "/images/logo.png";
   </script>
 
   <style>
-    :root {
-      --cutout-w: 240px; /* divet width: adjust this to match logo area */
-      --cutout-h: 56px;
-    }
-
     .hdr {
       position: sticky;
       top: 0;
@@ -274,38 +266,6 @@ const logoSrc = "/images/logo.png";
     .dprops summary:hover { background: rgba(0,0,0,.04); }
     .dprops summary::-webkit-details-marker { display: none; }
     .dmenu { padding-left: 10px; }
-
-    /* Divet/cutout (right-aligned, lines up with logo slot) */
-    .cutout {
-      display: none;
-      max-width: 1120px;
-      margin: 0 auto;
-      height: var(--cutout-h);
-      position: relative;
-      background: transparent;
-    }
-
-    .cutout::after {
-      content: "";
-      position: absolute;
-      right: 14px; /* matches .bar padding-right */
-      top: -1px;   /* overlap header border for a continuous look */
-      width: var(--cutout-w);
-      height: var(--cutout-h);
-      background: #fff;
-
-      border-left: 1px solid rgba(0,0,0,.12);
-      border-right: 1px solid rgba(0,0,0,.12);
-      border-bottom: 1px solid rgba(0,0,0,.12);
-
-      border-bottom-left-radius: 14px;
-      border-bottom-right-radius: 14px;
-
-      /* angled “divet” cut on the LEFT edge */
-      clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
-
-      box-shadow: 0 6px 12px rgba(0,0,0,.06);
-    }
 
     /* Collapse breakpoint (everything in one place) */
     @media (max-width: 1100px) {
