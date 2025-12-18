@@ -3,15 +3,21 @@ const { p } = Astro.props;
 ---
 
 <section class="block" aria-label={p.name}>
+  <div class="head">
+    <h2><a href={p.href}>{p.name}</a></h2>
+  </div>
+
   <div class="body">
     <div class="img">
-      <img src={p.image} alt={p.name} loading="lazy" />
+      <img
+        src={p.image}
+        alt={p.name}
+        loading={p.id === "destin-dreams" ? "eager" : "lazy"}
+      />
     </div>
 
     <div class="text">
-      <h3 class="title">
-        <a href={p.href}>{p.name}</a>
-      </h3>
+      <h3 class="title"><a href={p.href}>{p.name}</a></h3>
 
       <div class="meta">
         <div><strong>Size –</strong> <span>{p.sizeLine}</span></div>
@@ -20,9 +26,7 @@ const { p } = Astro.props;
 
       <p>{p.blurb}</p>
 
-      {p.noteBold && (
-        <p><strong>{p.noteBold}</strong></p>
-      )}
+      {p.noteBold && <p><strong>{p.noteBold}</strong></p>}
 
       <div class="actions">
         <a class="btn" href={p.photosHref}>Photos</a>
@@ -36,7 +40,20 @@ const { p } = Astro.props;
   <hr />
 
   <style>
-    .block { max-width: 1120px; margin: 0 auto; padding: 14px; }
+    .block {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .head h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .head a {
+      text-decoration: none;
+    }
 
     .body {
       display: grid;
@@ -45,23 +62,25 @@ const { p } = Astro.props;
       align-items: start;
     }
 
+    /* IMAGE WRAPPER (important fix) */
+    .img {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(0,0,0,.04);
+    }
+
     .img img {
+      display: block;
       width: 100%;
       height: 240px;
       object-fit: cover;
-      border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.12);
-      background: rgba(0,0,0,.04);
     }
 
     .title {
       margin: 0 0 8px;
       font-size: 22px;
-    }
-
-    .title a {
-      text-decoration: none;
-      color: inherit;
     }
 
     .meta {
