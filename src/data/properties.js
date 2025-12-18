@@ -13,7 +13,9 @@ export const properties = [
     availabilityHref: "/properties/heavenly-hideaway/#availability",
     detailsHref: "/properties/heavenly-hideaway/",
     inquireHref: "/contact/?property=heavenly-hideaway",
-    image: "/images/props/heavenly-1106.jpg"
+    image: "/images/props/heavenly-1106.jpg",
+    city: "Panama City Beach, FL",
+    resort: "Edgewater Beach & Golf Resort"
   },
   {
     id: "sailors-delight",
@@ -28,7 +30,9 @@ export const properties = [
     availabilityHref: "/properties/sailors-delight/#availability",
     detailsHref: "/properties/sailors-delight/",
     inquireHref: "/contact/?property=sailors-delight",
-    image: "/images/props/sailors.jpg"
+    image: "/images/props/sailors.jpg",
+    city: "Panama City Beach, FL",
+    resort: "Edgewater Beach & Golf Resort"
   },
   {
     id: "red-sky-nights",
@@ -43,7 +47,9 @@ export const properties = [
     availabilityHref: "/properties/red-sky-nights/#availability",
     detailsHref: "/properties/red-sky-nights/",
     inquireHref: "/contact/?property=red-sky-nights",
-    image: "/images/props/redsky.jpg"
+    image: "/images/props/redsky.jpg",
+    city: "Panama City Beach, FL",
+    resort: "Edgewater Beach & Golf Resort"
   },
   {
     id: "destin-dreams",
@@ -58,6 +64,8 @@ export const properties = [
     availabilityHref: "/properties/destin-dreams/#availability",
     detailsHref: "/properties/destin-dreams/",
     inquireHref: "/contact/?property=destin-dreams",
-    image: "/images/props/destin.jpg"
+    image: "/images/props/destin.jpg",
+    city: "Panama City Beach, FL",
+    resort: "Edgewater Beach & Golf Resort"
   }
 ];

@@ -5,6 +5,20 @@ import HeroCarousel from "../components/HeroCarousel.astro";
 import PropertyBlock from "../components/PropertyBlock.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { properties } from "../data/properties.js";
+
+// Group properties by city
+const groups = properties.reduce((acc, p) => {
+  const key = p.city || "Other";
+  (acc[key] ||= []).push(p);
+  return acc;
+}, {});
+
+// Order the groups how you want them to appear
+const cityOrder = ["Panama City Beach, FL", "Destin, FL"];
+const orderedCities = [
+  ...cityOrder.filter((c) => groups[c]),
+  ...Object.keys(groups).filter((c) => !cityOrder.includes(c)),
+];
 ---
 
 <!doctype html>
@@ -13,7 +27,10 @@ import { properties } from "../data/properties.js";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Coastal Beach Retreats</title>
-    <meta name="description" content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin." />
+    <meta
+      name="description"
+      content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,7 +42,11 @@ import { properties } from "../data/properties.js";
       rel="stylesheet"
     />
     <style>
-      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.5; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        line-height: 1.5;
+      }
     </style>
   </head>
 
@@ -34,26 +55,37 @@ import { properties } from "../data/properties.js";
 
     <HeroCarousel />
 
-    {properties.map((p) => <PropertyBlock p={p} />)}
+    <!-- Grouped properties by location -->
+    {orderedCities.map((city) => (
+      <section style="max-width:1120px;margin:0 auto;padding:14px;">
+        <h2 style="margin:18px 0 4px;">{city}</h2>
 
-    <section
-  style="max-width:1120px;margin:0 auto;padding:14px;"
-  id="reviews"
->
-  <h2 style="margin:0 0 8px;">Guest Reviews</h2>
-  <hr style="border:0;border-top:1px solid rgba(0,0,0,.10);margin:12px 0 16px;" />
+        {groups[city][0]?.resort ? (
+          <p style="margin:0 0 12px;opacity:.75;">{groups[city][0].resort}</p>
+        ) : (
+          <div style="height:12px;"></div>
+        )}
 
-  <!-- OwnerRez Reviews widget -->
-  <div
-    class="ownerrez-widget"
-    data-widget-type="Reviews - Reviews"
-    data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
-  ></div>
+        {groups[city].map((p) => (
+          <PropertyBlock p={p} />
+        ))}
+      </section>
+    ))}
 
-  <!-- Load OwnerRez widget script -->
-  <script is:inline src="https://app.ownerrez.com/widget.js"></script>
-</section>
+    <section style="max-width:1120px;margin:0 auto;padding:14px;" id="reviews">
+      <h2 style="margin:0 0 8px;">Guest Reviews</h2>
+      <hr style="border:0;border-top:1px solid rgba(0,0,0,.10);margin:12px 0 16px;" />
 
+      <!-- OwnerRez Reviews widget -->
+      <div
+        class="ownerrez-widget"
+        data-widget-type="Reviews - Reviews"
+        data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
+      ></div>
+
+      <!-- Load OwnerRez widget script -->
+      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+    </section>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
   </body>
