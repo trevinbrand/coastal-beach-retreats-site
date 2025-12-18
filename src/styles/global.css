@@ -117,3 +117,36 @@ h4 {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.location-switcher{
+  max-width:1120px;
+  margin: 6px auto 10px;
+  padding: 0 14px;
+  text-align:center;
+}
+
+.location-label{
+  margin: 0 0 10px;
+  font-weight: 600;
+  opacity: .8;
+}
+
+.location-buttons{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.loc-btn{
+  text-decoration:none;
+  border:1px solid rgba(0,0,0,.18);
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+.loc-btn:hover{
+  background: rgba(0,0,0,.04);
+}
+.city-heading { margin: 14px 0 6px; font-size: 20px; }
+.city-sub { margin: 0 0 10px; opacity: .7; }
