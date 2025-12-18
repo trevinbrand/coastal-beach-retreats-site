@@ -58,10 +58,10 @@ const orderedCities = [
     <!-- Grouped properties by location -->
     {orderedCities.map((city) => (
       <section style="max-width:1120px;margin:0 auto;padding:14px;">
-        <h2 style="margin:18px 0 4px;">{city}</h2>
+        <h2 class="city-heading">{city}</h2>
 
         {groups[city][0]?.resort ? (
-          <p style="margin:0 0 12px;opacity:.75;">{groups[city][0].resort}</p>
+          <p class="city-sub">{groups[city][0].resort}</p>
         ) : (
           <div style="height:12px;"></div>
         )}

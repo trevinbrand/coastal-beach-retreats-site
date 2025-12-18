@@ -88,3 +88,13 @@ h4 {
   color: var(--accent-teal);
   font-weight: 600;
 }
+.city-heading {
+  text-align: center;
+  margin: 24px 0 6px;
+}
+
+.city-sub {
+  text-align: center;
+  margin: 0 0 16px;
+  opacity: 0.75;
+}
