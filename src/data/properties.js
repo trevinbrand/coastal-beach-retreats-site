@@ -65,7 +65,7 @@ export const properties = [
     detailsHref: "/properties/destin-dreams/",
     inquireHref: "/contact/?property=destin-dreams",
     image: "/images/props/destin.jpg",
-    city: "Panama City Beach, FL",
-    resort: "Edgewater Beach & Golf Resort"
+    city: "Destin, FL",
+    resort: "Sterling Shores Resort"
   }
 ];
