@@ -64,7 +64,7 @@ export const properties = [
     availabilityHref: "/properties/destin-dreams/#availability",
     detailsHref: "/properties/destin-dreams/",
     inquireHref: "/contact/?property=destin-dreams",
-    image: "/images/props/destin.jpg",
+    image: "/images/props/destin-dreams.jpg",
     city: "Destin, FL",
     resort: "Sterling Shores Resort"
   }

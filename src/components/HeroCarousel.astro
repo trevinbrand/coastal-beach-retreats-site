@@ -1,146 +1,218 @@
 ---
 const slides = [
-    "/images/props/heavenly-1106.jpg",
-  "/images/hero/01.jpg",
-  "/images/hero/02.jpg",
-  "/images/hero/03.jpg"
+  "/images/props/heavenly-1106.jpg",
+  "/images/hero/heroimage2.jpg",
+  "/images/hero/heroimage3.jpg",
+  "/images/hero/heroimage4.jpg",
 ];
 ---
 
-<section class="hero" aria-label="Homepage photos">
+<section class="hero hero-full" aria-label="Homepage photos">
   <div class="frame">
     {slides.map((src, i) => (
-      <img class={`slide ${i === 0 ? "active" : ""}`} src={src} alt="Coastal Beach Retreats hero image" loading={i === 0 ? "eager" : "lazy"} />
+      <img
+        class={`slide ${i === 0 ? "active" : ""}`}
+        src={src}
+        alt="Coastal Beach Retreats hero image"
+        loading={i === 0 ? "eager" : "lazy"}
+      />
     ))}
 
     <div class="arrows">
-        <button class="arrow left" type="button" data-dir="-1" aria-label="Previous image">
-            ‹
-         </button>
-         <button class="arrow right" type="button" data-dir="1" aria-label="Next image">
-            ›
-        </button>
+      <button class="arrow left" type="button" data-dir="-1" aria-label="Previous image">
+        ‹
+      </button>
+      <button class="arrow right" type="button" data-dir="1" aria-label="Next image">
+        ›
+      </button>
     </div>
+
+    <!-- Down arrow to location selector -->
+    <a href="#location-select" class="scroll-down" aria-label="Scroll to locations">↓</a>
   </div>
 
-  <script>
-  const root = document.currentScript?.closest(".hero");
-  if (!root) {}
-  else {
-    const slides = Array.from(root.querySelectorAll(".slide"));
-    const btns = Array.from(root.querySelectorAll("button[data-dir]"));
-    const frame = root.querySelector(".frame");
+  <script is:inline>
+    const root = document.currentScript?.closest(".hero");
+    if (!root) {}
+    else {
+      const slides = Array.from(root.querySelectorAll(".slide"));
+      const btns = Array.from(root.querySelectorAll("button[data-dir]"));
+      const frame = root.querySelector(".frame");
 
-    let idx = 0;
+      let idx = 0;
 
-    const show = (n) => {
-      slides[idx]?.classList.remove("active");
-      idx = (n + slides.length) % slides.length;
-      slides[idx]?.classList.add("active");
-    };
+      const show = (n) => {
+        slides[idx]?.classList.remove("active");
+        idx = (n + slides.length) % slides.length;
+        slides[idx]?.classList.add("active");
+      };
 
-    // Button clicks (arrows)
-    btns.forEach((b) =>
-      b.addEventListener("click", () => show(idx + Number(b.dataset.dir)))
-    );
+      // Button clicks (arrows)
+      btns.forEach((b) =>
+        b.addEventListener("click", () => show(idx + Number(b.dataset.dir)))
+      );
 
-    // Auto-advance every 6s (optional)
-    const timer = setInterval(() => show(idx + 1), 6000);
+      // Auto-advance every 6s (optional)
+      const timer = setInterval(() => show(idx + 1), 6000);
 
-    // ---- Swipe support ----
-    let startX = 0;
-    let startY = 0;
-    let dragging = false;
+      // ---- Swipe support ----
+      let startX = 0;
+      let startY = 0;
+      let dragging = false;
 
-    const SWIPE_MIN_X = 50;      // pixels
-    const SWIPE_MAX_Y = 60;      // allow some vertical movement
+      const SWIPE_MIN_X = 50; // pixels
+      const SWIPE_MAX_Y = 60; // allow some vertical movement
 
-    frame?.addEventListener("touchstart", (e) => {
-      if (!e.touches || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      startX = t.clientX;
-      startY = t.clientY;
-      dragging = true;
-    }, { passive: true });
+      frame?.addEventListener(
+        "touchstart",
+        (e) => {
+          if (!e.touches || e.touches.length !== 1) return;
+          const t = e.touches[0];
+          startX = t.clientX;
+          startY = t.clientY;
+          dragging = true;
+        },
+        { passive: true }
+      );
 
-    frame?.addEventListener("touchmove", (e) => {
-      // If swipe is clearly horizontal, prevent page scroll while swiping
-      if (!dragging || !e.touches || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
+      frame?.addEventListener(
+        "touchmove",
+        (e) => {
+          if (!dragging || !e.touches || e.touches.length !== 1) return;
+          const t = e.touches[0];
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
 
-      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+          if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+            e.preventDefault();
+          }
+        },
+        { passive: false }
+      );
 
-    frame?.addEventListener("touchend", (e) => {
-      if (!dragging) return;
-      dragging = false;
+      frame?.addEventListener(
+        "touchend",
+        (e) => {
+          if (!dragging) return;
+          dragging = false;
 
-      const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
-      if (!t) return;
+          const t =
+            e.changedTouches && e.changedTouches[0] ? e.changedTouches[0] : null;
+          if (!t) return;
 
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
 
-      // Only treat as swipe if mostly horizontal and far enough
-      if (Math.abs(dx) >= SWIPE_MIN_X && Math.abs(dy) <= SWIPE_MAX_Y) {
-        if (dx < 0) show(idx + 1);   // swipe left -> next
-        else show(idx - 1);          // swipe right -> prev
-      }
-    }, { passive: true });
-  }
-</script>
+          if (Math.abs(dx) >= SWIPE_MIN_X && Math.abs(dy) <= SWIPE_MAX_Y) {
+            if (dx < 0) show(idx + 1); // swipe left -> next
+            else show(idx - 1); // swipe right -> prev
+          }
+        },
+        { passive: true }
+      );
+    }
+  </script>
 
   <style>
-    .hero { max-width: 1120px; margin: 0 auto; padding: 14px; }
-    .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); touch-action: pan-y; }
-    .slide { display:none; width:100%; height: clamp(220px, 38vw, 520px); object-fit: cover; }
-    .slide.active { display:block; }
+    /* Full-bleed hero */
+    .hero-full {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: 0; /* full width */
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      border: 0;
+      touch-action: pan-y;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: clamp(200px, 32vw, 480px);
+      object-fit: cover;
+    }
+    .slide.active {
+      display: block;
+    }
+
     .arrows {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none; /* allow clicks only on buttons */
-}
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
 
-.arrow {
-  pointer-events: auto;
-  background: rgba(0,0,0,.25);
-  color: #fff;
-  border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  font-size: 26px;
-  line-height: 1;
-  margin: 0 12px;
-  cursor: pointer;
-  opacity: 0.55;
-  transition: opacity .2s ease, background .2s ease, transform .15s ease;
-}
+    .arrow {
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 26px;
+      line-height: 1;
+      margin: 0 12px;
+      cursor: pointer;
+      opacity: 0.55;
+      transition: opacity 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    }
 
-.arrow:hover {
-  opacity: 0.9;
-  background: rgba(0,0,0,.45);
-  transform: scale(1.05);
-}
+    .arrow:hover {
+      opacity: 0.9;
+      background: rgba(0, 0, 0, 0.45);
+      transform: scale(1.05);
+    }
 
-.arrow:active {
-  transform: scale(0.95);
-}
+    .arrow:active {
+      transform: scale(0.95);
+    }
 
-/* Mobile: slightly smaller */
-@media (max-width: 640px) {
-  .arrow {
-    width: 36px;
-    height: 36px;
-    font-size: 22px;
-  }
-}
+    /* Down arrow */
+    .scroll-down {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 5;
+
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      text-decoration: none;
+      font-size: 22px;
+
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Mobile: slightly smaller controls */
+    @media (max-width: 640px) {
+      .arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 22px;
+      }
+      .scroll-down {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+    }
   </style>
 </section>

@@ -222,3 +222,45 @@ h4 {
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0,0,0,.08);
 }
+.hero-full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw); /* true full-bleed */
+  position: relative;
+}
+.scroll-down {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  text-decoration: none;
+  font-size: 22px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: bounce 1.8s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+#location-select {
+  scroll-margin-top: 90px; /* match header height */
+}
+.scroll-down{
+  pointer-events: auto;
+  z-index: 999;
+}
