@@ -13,12 +13,16 @@ const groups = properties.reduce((acc, p) => {
   return acc;
 }, {});
 
-// Order the groups how you want them to appear
+// Order cities
 const cityOrder = ["Panama City Beach, FL", "Destin, FL"];
 const orderedCities = [
   ...cityOrder.filter((c) => groups[c]),
   ...Object.keys(groups).filter((c) => !cityOrder.includes(c)),
 ];
+
+// Helper: pull a stable slug from p.href (e.g. "/properties/heavenly-hideaway/")
+const slugFromHref = (href = "") =>
+  href.replace(/^\/+|\/+$/g, "").split("/").pop() || "";
 ---
 
 <!doctype html>
@@ -30,16 +34,6 @@ const orderedCities = [
     <meta
       name="description"
       content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
     />
     <style>
       body {
@@ -54,6 +48,7 @@ const orderedCities = [
     <SiteHeader phone="(918) 734-3331" />
 
     <HeroCarousel />
+
     <section class="brand-divider">
       <img
         src="/images/coastal-beach-retreats-welcome.png"
@@ -62,20 +57,38 @@ const orderedCities = [
       />
     </section>
 
-    <!-- Grouped properties by location -->
+    <!-- Location switcher (jump to featured properties) -->
+    <nav class="location-switcher" aria-label="Browse by location">
+      <p class="location-label">Browse by location</p>
+      <div class="location-buttons">
+        <a class="loc-btn" href="#heavenly-hideaway">Panama City Beach</a>
+        <a class="loc-btn" href="#destin-dreams">Destin</a>
+      </div>
+    </nav>
+
+    <!-- Properties -->
     {orderedCities.map((city) => (
       <section style="max-width:1120px;margin:0 auto;padding:14px;">
-        <h2 class="city-heading">{city}</h2>
+        {/* Keep Destin city heading only */}
+        {city === "Destin, FL" && <h2 class="city-heading">{city}</h2>}
 
-        {groups[city][0]?.resort ? (
-          <p class="city-sub">{groups[city][0].resort}</p>
-        ) : (
-          <div style="height:12px;"></div>
-        )}
+        {groups[city].map((p) => {
+          const slug = slugFromHref(p.href);
 
-        {groups[city].map((p) => (
-          <PropertyBlock p={p} />
-        ))}
+          // Set anchors based on slug (stable)
+          const anchorId =
+            slug === "heavenly-hideaway"
+              ? "heavenly-hideaway"
+              : slug === "destin-dreams"
+              ? "destin-dreams"
+              : undefined;
+
+          return (
+            <div id={anchorId} style="scroll-margin-top: 90px;">
+              <PropertyBlock p={p} />
+            </div>
+          );
+        })}
       </section>
     ))}
 
@@ -83,14 +96,12 @@ const orderedCities = [
       <h2 style="margin:0 0 8px;">Guest Reviews</h2>
       <hr style="border:0;border-top:1px solid rgba(0,0,0,.10);margin:12px 0 16px;" />
 
-      <!-- OwnerRez Reviews widget -->
       <div
         class="ownerrez-widget"
         data-widget-type="Reviews - Reviews"
         data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
       ></div>
 
-      <!-- Load OwnerRez widget script -->
       <script is:inline src="https://app.ownerrez.com/widget.js"></script>
     </section>
 
