@@ -20,7 +20,7 @@ const orderedCities = [
   ...Object.keys(groups).filter((c) => !cityOrder.includes(c)),
 ];
 
-// Helper: pull a stable slug from p.href (e.g. "/properties/heavenly-hideaway/")
+// Helper: pull slug from p.href (stable)
 const slugFromHref = (href = "") =>
   href.replace(/^\/+|\/+$/g, "").split("/").pop() || "";
 ---
@@ -35,13 +35,6 @@ const slugFromHref = (href = "") =>
       name="description"
       content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin."
     />
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        line-height: 1.5;
-      }
-    </style>
   </head>
 
   <body>
@@ -57,8 +50,12 @@ const slugFromHref = (href = "") =>
       />
     </section>
 
-    <!-- Location switcher (jump to featured properties) -->
-    <nav class="location-switcher" aria-label="Browse by location">
+    <!-- LOCATION SELECT (arrow scroll target) -->
+    <nav
+      class="location-switcher"
+      id="location-select"
+      aria-label="Browse by location"
+    >
       <p class="location-label">Browse by location</p>
       <div class="location-buttons">
         <a class="loc-btn" href="#heavenly-hideaway">Panama City Beach</a>
@@ -66,25 +63,27 @@ const slugFromHref = (href = "") =>
       </div>
     </nav>
 
-    <!-- Properties -->
+    <!-- PROPERTIES -->
     {orderedCities.map((city) => (
       <section style="max-width:1120px;margin:0 auto;padding:14px;">
-        {/* Keep Destin city heading only */}
-        {city === "Destin, FL" && <h2 class="city-heading">{city}</h2>}
+
+        {/* Keep Destin heading only */}
+        {city === "Destin, FL" && (
+          <h2 class="city-heading">{city}</h2>
+        )}
 
         {groups[city].map((p) => {
           const slug = slugFromHref(p.href);
 
-          // Set anchors based on slug (stable)
-          const anchorId =
-            slug === "heavenly-hideaway"
-              ? "heavenly-hideaway"
-              : slug === "destin-dreams"
-              ? "destin-dreams"
-              : undefined;
+          // Explicit anchor placement (always rendered)
+          const isHeavenly = slug === "heavenly-hideaway";
+          const isDestin = slug === "destin-dreams";
 
           return (
-            <div id={anchorId} style="scroll-margin-top: 90px;">
+            <div
+              id={isHeavenly ? "heavenly-hideaway" : isDestin ? "destin-dreams" : undefined}
+              style="scroll-margin-top: 96px;"
+            >
               <PropertyBlock p={p} />
             </div>
           );
@@ -105,6 +104,9 @@ const slugFromHref = (href = "") =>
       <script is:inline src="https://app.ownerrez.com/widget.js"></script>
     </section>
 
-    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+    <SiteFooter
+      phone="(918) 734-3331"
+      email="coastalbeachretreats@gmail.com"
+    />
   </body>
 </html>
