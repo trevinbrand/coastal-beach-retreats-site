@@ -1,8 +1,11 @@
 /* ------------------------------
    Global link styling
 -------------------------------- */
+/* Load fonts globally (fixes desktop not showing Dancing Script) */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap");
+
 a {
-  color: #1a73e8; /* clean, familiar blue */
+  color: #1a73e8;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -39,12 +42,10 @@ body {
 }
 
 /* ------------------------------
-   HEADER (entire nav bar)
-   Force EVERYTHING in header
-   to use Quicksand
+   HEADER (TOP NAV ONLY)
 -------------------------------- */
-header,
-header * {
+.site-header,
+.site-header * {
   font-family: var(--font-nav);
   color: var(--brand-blue);
 }
@@ -68,6 +69,12 @@ h4 {
   font-weight: 600;
 }
 
+/* Explicitly enforce for property cards */
+.block .head h2,
+.block .title {
+  font-family: var(--font-heading);
+}
+
 /* Ensure heading links stay brand blue */
 h1 a,
 h2 a,
@@ -81,23 +88,19 @@ h2 a:hover,
 h3 a:hover {
   opacity: 0.85;
 }
+
 h4 {
   color: var(--accent-teal);
 }
+
 .meta strong {
   color: var(--accent-teal);
   font-weight: 600;
 }
-.city-heading {
-  text-align: center;
-  margin: 24px 0 6px;
-}
 
-.city-sub {
-  text-align: center;
-  margin: 0 0 16px;
-  opacity: 0.75;
-}
+/* ------------------------------
+   BRAND DIVIDER (logo below hero)
+-------------------------------- */
 .brand-divider {
   width: 100%;
   background: #ffffff;
@@ -109,49 +112,40 @@ h4 {
 
 .brand-divider img {
   width: 100%;
-  max-width: 720px; /* aligns with your property sections */
+  max-width: 720px;
   height: auto;
   animation: fadeIn 0.6s ease-out;
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.location-switcher{
-  max-width:1120px;
-  margin: 6px auto 10px;
-  padding: 0 14px;
-  text-align:center;
+
+/* Desktop: baked-in 50px offset */
+@media (min-width: 768px) {
+  .brand-divider img {
+    transform: translateX(50px);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(50px) translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(50px) translateY(0);
+    }
+  }
 }
 
-.location-label{
-  margin: 0 0 10px;
-  font-weight: 600;
-  opacity: .8;
+/* Mobile: no horizontal offset */
+@media (max-width: 767px) {
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 }
 
-.location-buttons{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-
-.loc-btn{
-  text-decoration:none;
-  border:1px solid rgba(0,0,0,.18);
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:600;
-}
-
-.loc-btn:hover{
-  background: rgba(0,0,0,.04);
-}
-.city-heading { margin: 14px 0 6px; font-size: 20px; }
-.city-sub { margin: 0 0 10px; opacity: .7; }
-/* ===== Location Switcher (mobile-safe) ===== */
-
+/* ------------------------------
+   LOCATION SWITCHER
+-------------------------------- */
 .location-switcher {
   max-width: 1120px;
   margin: 12px auto 16px;
@@ -164,75 +158,104 @@ h4 {
 .location-label {
   margin: 0 0 10px;
   font-weight: 600;
+  opacity: 0.8;
 }
 
-/* Button container */
 .location-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
-/* Button styling */
 .loc-btn {
-  display: inline-flex;              /* IMPORTANT */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  text-decoration: none;
-  font-weight: 600;
+  min-width: 220px;
+  min-height: 44px;
 
   padding: 12px 16px;
   border-radius: 999px;
   border: 1px solid rgba(0,0,0,.25);
+
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+
   background: #fff;
   color: #111;
 
-  min-height: 44px;                  /* mobile tap target */
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== MOBILE FIX ===== */
+/* Brand colors */
+.loc-btn.pcb-btn {
+  background: #193e7f;
+  border-color: #193e7f;
+  color: #fff;
+}
+
+.loc-btn.destin-btn {
+  background: #058789;
+  border-color: #058789;
+  color: #fff;
+}
+
+.loc-btn:hover {
+  opacity: 0.9;
+}
+
+/* Mobile layout */
 @media (max-width: 640px) {
   .location-buttons {
-    flex-direction: column;          /* stack buttons */
+    flex-direction: column;
     align-items: center;
   }
 
   .loc-btn {
-    width: 100%;                     /* full-width pills */
-    max-width: 320px;                /* keeps them centered */
+    width: 100%;
+    max-width: 320px;
   }
 }
-/* Base header (top of page) */
-.site-header{
-  position: sticky; /* or fixed if you’re using fixed already */
+
+/* ------------------------------
+   HEADER translucency
+-------------------------------- */
+.site-header {
+  position: sticky;
   top: 0;
   z-index: 999;
-
-  /* normal state */
   background: transparent;
   transition: background-color .2s ease, backdrop-filter .2s ease, border-color .2s ease;
 }
 
-/* Scrolled state: translucent + blur */
-.site-header.is-scrolled{
+.site-header.is-scrolled {
   background: rgba(255,255,255,.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0,0,0,.08);
 }
+
+/* ------------------------------
+   HERO helpers
+-------------------------------- */
 .hero-full {
   width: 100vw;
-  margin-left: calc(50% - 50vw); /* true full-bleed */
+  margin-left: calc(50% - 50vw);
   position: relative;
 }
+
+/* Scroll arrow */
 .scroll-down {
   position: absolute;
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%);
-  z-index: 5;
+  z-index: 999;
 
   width: 44px;
   height: 44px;
@@ -251,16 +274,15 @@ h4 {
   -webkit-backdrop-filter: blur(6px);
 
   animation: bounce 1.8s infinite;
+  pointer-events: auto;
 }
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
+  50%      { transform: translateX(-50%) translateY(6px); }
 }
+
+/* Jump offset for anchors */
 #location-select {
-  scroll-margin-top: 90px; /* match header height */
-}
-.scroll-down{
-  pointer-events: auto;
-  z-index: 999;
+  scroll-margin-top: 90px;
 }

@@ -3,10 +3,6 @@ const { p } = Astro.props;
 ---
 
 <section class="block" aria-label={p.name}>
-  <div class="head">
-    <h2><a href={p.href}>{p.name}</a></h2>
-  </div>
-
   <div class="body">
     <div class="img">
       <img
@@ -46,15 +42,6 @@ const { p } = Astro.props;
       padding: 14px;
     }
 
-    .head h2 {
-      margin: 0 0 10px;
-      font-size: 22px;
-    }
-
-    .head a {
-      text-decoration: none;
-    }
-
     .body {
       display: grid;
       grid-template-columns: 360px 1fr;
@@ -77,9 +64,18 @@ const { p } = Astro.props;
       object-fit: cover;
     }
 
+    /* ✅ Force Dancing Script on the property name (right side) */
     .title {
       margin: 0 0 8px;
       font-size: 22px;
+      font-family: "Dancing Script", cursive;
+      color: #193e7f;
+      font-weight: 600;
+    }
+
+    .title a {
+      text-decoration: none;
+      color: inherit;
     }
 
     .meta {
