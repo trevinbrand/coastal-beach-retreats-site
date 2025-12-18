@@ -204,3 +204,21 @@ h4 {
     max-width: 320px;                /* keeps them centered */
   }
 }
+/* Base header (top of page) */
+.site-header{
+  position: sticky; /* or fixed if you’re using fixed already */
+  top: 0;
+  z-index: 999;
+
+  /* normal state */
+  background: transparent;
+  transition: background-color .2s ease, backdrop-filter .2s ease, border-color .2s ease;
+}
+
+/* Scrolled state: translucent + blur */
+.site-header.is-scrolled{
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}

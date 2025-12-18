@@ -60,7 +60,7 @@ const logoSrc = "/images/logo.png";
     </div>
   </div>
 
-    <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
+  <!-- Collapsed drawer menu (only shown when hamburger toggled) -->
   <div class="drawer" aria-label="Collapsed menu">
     <a class="dlink" href="/">Home</a>
 
@@ -80,7 +80,8 @@ const logoSrc = "/images/logo.png";
     <a class="dlink" href="/quote/">Quote / Pricing</a>
   </div>
 
-  <script>
+  <script is:inline>
+    // Drawer + hamburger
     const header = document.querySelector("header.hdr[data-header]") || document.querySelector("header.hdr");
     if (!header) {
       console.warn("Hamburger menu: header not found");
@@ -88,15 +89,15 @@ const logoSrc = "/images/logo.png";
       const btn = header.querySelector(".hamburger");
       const drawer = header.querySelector(".drawer");
 
+      const setOpen = (open) => {
+        drawer.classList.toggle("open", open);
+        btn.setAttribute("aria-expanded", String(open));
+        btn.textContent = open ? "✕" : "☰";
+      };
+
       if (!btn || !drawer) {
         console.warn("Hamburger menu: missing .hamburger or .drawer");
       } else {
-        const setOpen = (open) => {
-          drawer.classList.toggle("open", open);
-          btn.setAttribute("aria-expanded", String(open));
-          btn.textContent = open ? "✕" : "☰";
-        };
-
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           setOpen(!drawer.classList.contains("open"));
@@ -116,6 +117,14 @@ const logoSrc = "/images/logo.png";
           if (e.matches) setOpen(false);
         });
       }
+
+      // Translucent-on-scroll (adds .is-scrolled)
+      const setHeaderScrolled = () => {
+        const y = window.scrollY || 0;
+        header.classList.toggle("is-scrolled", y > 10);
+      };
+      setHeaderScrolled();
+      window.addEventListener("scroll", setHeaderScrolled, { passive: true });
     }
   </script>
 
@@ -126,6 +135,16 @@ const logoSrc = "/images/logo.png";
       z-index: 50;
       background: #fff;
       border-bottom: 1px solid rgba(0,0,0,.12);
+      transition: background-color .2s ease, backdrop-filter .2s ease, border-color .2s ease;
+    }
+
+    /* You'll tweak these values in CSS to get the translucency you want */
+    .hdr.is-scrolled {
+      /* example values — adjust in your CSS */
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,.08);
     }
 
     .bar {
@@ -281,9 +300,6 @@ const logoSrc = "/images/logo.png";
 
       /* Hide phone/pipe when collapsed */
       .hideOnCollapse { display: none; }
-
-      /* Show divet */
-      .cutout { display: block; }
 
       /* Align logo to divet width */
       .right { min-width: var(--cutout-w); justify-content: flex-end; }
