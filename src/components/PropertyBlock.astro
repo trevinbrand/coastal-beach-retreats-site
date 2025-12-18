@@ -13,7 +13,22 @@ const { p } = Astro.props;
         src={p.image}
         alt={p.name}
         loading={p.id === "destin-dreams" ? "eager" : "lazy"}
+        onerror="this.onerror=null;this.src='/images/props/heavenly-1106.jpg';"
       />
+
+      <!-- 🔍 DEBUG: shows exact image path being requested -->
+      <small
+        style="
+          display:block;
+          padding:6px;
+          font-size:12px;
+          word-break:break-all;
+          color:#999;
+          background:#f7f7f7;
+        "
+      >
+        {p.image}
+      </small>
     </div>
 
     <div class="text">
@@ -62,7 +77,6 @@ const { p } = Astro.props;
       align-items: start;
     }
 
-    /* IMAGE WRAPPER (important fix) */
     .img {
       width: 100%;
       border-radius: 16px;
