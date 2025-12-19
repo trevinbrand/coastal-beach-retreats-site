@@ -42,71 +42,109 @@ const slugFromHref = (href = "") =>
 
     <HeroCarousel />
 
-    <section class="brand-divider">
-      <img
-        src="/images/coastal-beach-retreats-welcome.png"
-        alt="Welcome to Coastal Beach Retreats"
-        loading="eager"
-      />
-    </section>
-
-    <!-- LOCATION SELECT (arrow scroll target) -->
-    <nav
-      class="location-switcher"
-      id="location-select"
-      aria-label="Browse by location"
-    >
-      <p class="location-label">Browse by location</p>
-      <div class="location-buttons">
-        <a class="loc-btn pcb-btn" href="#heavenly-hideaway">Panama City Beach</a>
-        <a class="loc-btn destin-btn" href="#destin-dreams">Destin</a>
-      </div>
-     </nav>
-
-    <!-- PROPERTIES -->
-    {orderedCities.map((city) => (
-      <section style="max-width:1120px;margin:0 auto;padding:14px;">
-
-        {/* Keep Destin heading only */}
-        {city === "Destin, FL" && (
-          <h2 class="city-heading">{city}</h2>
-        )}
-
-        {groups[city].map((p) => {
-          const slug = slugFromHref(p.href);
-
-          // Explicit anchor placement (always rendered)
-          const isHeavenly = slug === "heavenly-hideaway";
-          const isDestin = slug === "destin-dreams";
-
-          return (
-            <div
-              id={isHeavenly ? "heavenly-hideaway" : isDestin ? "destin-dreams" : undefined}
-              style="scroll-margin-top: 96px;"
-            >
-              <PropertyBlock p={p} />
-            </div>
-          );
-        })}
+    <main class="wrap">
+      <section class="brand-divider">
+        <img
+          src="/images/coastal-beach-retreats-welcome.png"
+          alt="Welcome to Coastal Beach Retreats"
+          loading="eager"
+        />
       </section>
-    ))}
 
-    <section style="max-width:1120px;margin:0 auto;padding:14px;" id="reviews">
-      <h2 style="margin:0 0 8px;">Guest Reviews</h2>
-      <hr style="border:0;border-top:1px solid rgba(0,0,0,.10);margin:12px 0 16px;" />
+      <!-- LOCATION SELECT (arrow scroll target) -->
+      <nav
+        class="location-switcher"
+        id="location-select"
+        aria-label="Browse by location"
+      >
+        <p class="location-label">Browse by location</p>
+        <div class="location-buttons">
+          <a class="loc-btn pcb-btn" href="#heavenly-hideaway">Panama City Beach</a>
+          <a class="loc-btn destin-btn" href="#destin-dreams">Destin</a>
+        </div>
+      </nav>
 
-      <div
-        class="ownerrez-widget"
-        data-widget-type="Reviews - Reviews"
-        data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
-      ></div>
+      <!-- PROPERTIES -->
+      {orderedCities.map((city) => (
+        <section class="section">
+          {/* Keep Destin heading only */}
+          {city === "Destin, FL" && <h2 class="city-heading">{city}</h2>}
 
-      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
-    </section>
+          {groups[city].map((p) => {
+            const slug = slugFromHref(p.href);
+            const isHeavenly = slug === "heavenly-hideaway";
+            const isDestin = slug === "destin-dreams";
 
-    <SiteFooter
-      phone="(918) 734-3331"
-      email="coastalbeachretreats@gmail.com"
-    />
+            return (
+              <div
+                id={isHeavenly ? "heavenly-hideaway" : isDestin ? "destin-dreams" : undefined}
+                class="prop"
+                style="scroll-margin-top: 96px;"
+              >
+                <PropertyBlock p={p} />
+              </div>
+            );
+          })}
+        </section>
+      ))}
+
+      <!-- REVIEWS -->
+      <section class="section" id="reviews">
+        <h2 class="reviews-title">Guest Reviews</h2>
+        <hr class="rule" />
+
+        <div
+          class="ownerrez-widget"
+          data-widget-type="Reviews - Reviews"
+          data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
+        ></div>
+
+        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+      </section>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      /* ✅ Match your property page spacing */
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 12px 10px;
+      }
+
+      .section {
+        padding: 14px 0;
+      }
+
+      /* small spacing between property blocks without shrinking them */
+      .prop {
+        margin: 0 0 6px;
+      }
+
+      .city-heading {
+        margin: 8px 0 12px;
+      }
+
+      .reviews-title {
+        margin: 0 0 8px;
+      }
+
+      .rule {
+        border: 0;
+        border-top: 1px solid rgba(0,0,0,.10);
+        margin: 12px 0 16px;
+      }
+
+      #location-select {
+        scroll-margin-top: 96px;
+      }
+
+      @media (max-width: 980px) {
+        .wrap {
+          padding: 12px 12px;
+        }
+      }
+    </style>
   </body>
 </html>

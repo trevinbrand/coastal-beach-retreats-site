@@ -1,30 +1,40 @@
 ---
 /**
  * FILE: src/pages/properties/heavenly-hideaway/index.astro
- * Photo collage like your screenshot + section nav + availability widget at the bottom.
+ * Layout matches your screenshot:
+ * - Photo collage at top (1 big left, 4 small right)
+ * - Section nav row
+ * - Below that: LEFT column = size + amenities lines + spaced description
+ * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
+ * - Availability calendar stays at the bottom (Multiple Month Calendar widget)
+ *
+ * ✅ FIX ADDED:
+ * The page felt “skinny” on large screens due to max-width: 1120px.
+ * This version reduces the white space by widening the container to 1440px
+ * and slightly reducing side padding.
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Replace these with your REAL photo paths + count
+// ✅ Update these to your real images
 const PHOTO_COUNT = 35;
-
 const photosTop = [
-  // BIG photo (left)
-  { src: "/images/props/heavenly-1106.jpg", alt: "Living room with Gulf views" },
-
-  // 4 small photos (right grid)
-  { src: "/images/props/heavenly-1106-2.jpg", alt: "Living area" },
-  { src: "/images/props/heavenly-1106-3.jpg", alt: "Balcony view" },
-  { src: "/images/props/heavenly-1106-4.jpg", alt: "Dining area" },
-  { src: "/images/props/heavenly-1106-5.jpg", alt: "Kitchen / open layout" },
+  { src: "/images/props/heavenly-1106.jpg", alt: "Living room with Gulf views" }, // big
+  { src: "/images/props/heavenly-1106-2.jpg", alt: "Living area" },              // small 1
+  { src: "/images/props/heavenly-1106-3.jpg", alt: "Balcony view" },             // small 2
+  { src: "/images/props/heavenly-1106-4.jpg", alt: "Dining area" },              // small 3
+  { src: "/images/props/heavenly-1106-5.jpg", alt: "Kitchen / open layout" },    // small 4
 ];
 
 const pageTitle =
   "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL";
 const subtitle =
   "Reduced rates during temporary property enhancements — same amazing experience @ Edgewater.";
+
+// These show ABOVE the description like your screenshot
+const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-10";
+const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 ---
 
 <!doctype html>
@@ -35,7 +45,7 @@ const subtitle =
     <title>{pageTitle} | Coastal Beach Retreats</title>
     <meta
       name="description"
-      content="Heavenly Hideaway at Edgewater Tower 1-1106 — photos, details, and availability."
+      content="Heavenly Hideaway at Edgewater Tower 1-1106 — photos, details, and booking."
     />
   </head>
 
@@ -48,10 +58,14 @@ const subtitle =
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE (like screenshot) -->
+      <!-- PHOTO COLLAGE -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <!-- BIG LEFT -->
-        <a class="big" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+        <a
+          class="big"
+          href="/properties/heavenly-hideaway/photos/"
+          aria-label="View all photos"
+        >
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
         </a>
 
@@ -78,7 +92,7 @@ const subtitle =
         </div>
       </section>
 
-      <!-- SECTION NAV (like screenshot row) -->
+      <!-- SECTION NAV ROW -->
       <nav class="subnav" aria-label="Page sections">
         <a href="#photos">PHOTOS</a>
         <a href="#details">DETAILS</a>
@@ -88,66 +102,179 @@ const subtitle =
         <a href="#reviews">REVIEWS</a>
       </nav>
 
-      <section class="content">
-        <section id="details" class="card">
-          <h2 class="h2">Details</h2>
-          <ul class="bullets">
-            <li><strong>Bedrooms:</strong> 2</li>
-            <li><strong>Bathrooms:</strong> 2</li>
-            <li><strong>Sleeps:</strong> up to 10</li>
-            <li><strong>Resort:</strong> Edgewater Beach &amp; Golf Resort</li>
-            <li><strong>Parking:</strong> Nightly rate covers up to two vehicles</li>
-          </ul>
-        </section>
-
-        <section id="location" class="card">
-          <h2 class="h2">Location</h2>
-          <p>Panama City Beach, FL — Edgewater Beach &amp; Golf Resort.</p>
-        </section>
-
-        <section id="amenities" class="card">
-          <h2 class="h2">Amenities</h2>
-          <div class="amenities">
-            <span>High-speed WiFi</span>
-            <span>Beach access</span>
-            <span>Pools</span>
-            <span>Hot tubs</span>
-            <span>Fitness center</span>
-            <span>Tennis / pickleball</span>
-            <span>Washer / dryer</span>
-            <span>Fully stocked kitchen</span>
+      <!-- DETAILS + BOOKING WIDGET (MATCHES SCREENSHOT) -->
+      <section class="below" id="details" aria-label="Details and booking">
+        <!-- LEFT: size + amenities + description -->
+        <div class="desc">
+          <div class="metaLine">
+            <span class="metaLabel">Size –</span>
+            <span>{sizeLine}</span>
           </div>
-        </section>
 
-        <section id="reviews" class="card">
-          <h2 class="h2">Reviews</h2>
-          <p class="muted">Insert your OwnerRez reviews widget here if you want.</p>
-        </section>
+          <div class="metaLine">
+            <span class="metaLabel">Amenities –</span>
+            <span class="amenInline">
+              {amenitiesLine.map((a, i) => (
+                <>
+                  <span class="chip">{a}</span>
+                  {i < amenitiesLine.length - 1 ? <span class="dot">•</span> : null}
+                </>
+              ))}
+              <a class="more" href="#amenities">(more...)</a>
+            </span>
+          </div>
 
-        <!-- ✅ AVAILABILITY (BOTTOM) + OWNERREZ WIDGET INSERTED HERE -->
-        <section id="availability" class="card">
-          <h2 class="h2">Availability</h2>
+          <!-- ✅ SPACED DESCRIPTION (no JS consts needed) -->
+          <div class="longDesc">
+            <p>
+              Coastal Beach Retreats is excited to present this eleventh-floor condo located in
+              Tower 1 at the one-and-only Edgewater Beach &amp; Golf Resort.
+            </p>
 
-          <!-- OwnerRez Multiple Month Calendar widget for Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL -->
-          <div
-            class="ownerrez-widget"
-            data-widgetId="7789bd19d45c4d2f87a8e7e3a0d69734"
-            data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
-            data-widget-type="Multiple Month Calendar"
-          ></div>
+            <p>
+              <strong>The nightly rate covers parking for up to two vehicles during your visit.</strong>
+            </p>
 
-          <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
-        </section>
+            <p>
+              Discover the ultimate beachfront retreat at Edgewater T1-1106, a beautiful 2-bedroom,
+              2-bathroom condo, with hall bunks located within the prestigious Edgewater Beach and
+              Golf Resort. Positioned on the 11th floor, this residence boasts panoramic Gulf views
+              and overlooks the resort’s lagoon pool from its expansive balcony. Inside, the living
+              room showcases impressive floor-to-ceiling windows, while the tasteful décor and
+              elegant quartz countertops throughout create a warm, inviting atmosphere. The master
+              bathroom is a sanctuary, featuring a shower tower with massaging jets and LED lighting
+              for a rejuvenating experience. With updated cabinetry and stylish vinyl flooring, this
+              condo exudes modern sophistication. The custom-designed refrigerator with eye-catching
+              colored panels complements the kitchen’s tile perfectly. Enjoy your days at the beach
+              with ease: six comfortable beach chairs, a beach umbrella, eight beach towels, and a
+              Tommy Bahama shoulder ice chest are provided for your convenience, so you can relax
+              and soak up the sun without any extra hassle. Accommodating up to 10 guests, the condo
+              offers a king bed in the master bedroom, a queen bed and twin bunk beds in the guest
+              room, twin-over-full bunk beds in the hallway, and a pull-out sleeper sofa for extra
+              sleeping space. Entertainment is a breeze with Roku TVs in every bedroom and the living
+              room, plus 32&quot; Roku TVs in the hallway bunks. The balcony features four comfortable
+              Polywood chairs for enjoying the stunning views, and a new LG stackable washer and dryer
+              ensure added convenience. Enjoy the Gulf-front setting, take a dip in the lagoon pool,
+              and explore the many activities offered at Edgewater 1-1106 in Edgewater Beach &amp; Golf
+              Resort!
+            </p>
+
+            <p>
+              Primary renter must be at least 25 years old, sign a rental agreement within 48 hours
+              of booking, be present for the duration of the stay, and agree to a $200 damage hold
+              placed on a debit/credit card in the renter's name. No smoking or parties allowed.
+              Booking includes the resort's fee and up to two vehicles. This property has a Ring
+              peephole camera installed in the front door, providing added security by recording
+              activity outside the entrance. We provide starter amounts of soaps and paper products
+              (like toilet paper, paper towels, and trash bags). Please plan to bring/buy additional
+              if your stay is longer than a couple of days.
+            </p>
+
+            <p>
+              The luxurious Edgewater Beach &amp; Golf Resort is Panama City Beach's ONLY full-service
+              resort. Beachside you’ll find a full restaurant, tiki bar, huge oceanside lagoon pool,
+              kids splash area, Starbucks, market, ice cream parlor, 4 hot tubs, water sports/activities,
+              beach chair service (pool and beach), and more. Across the resort pedestrian bridge is a
+              9-hole golf course and Pro Shop. Enjoy complimentary access to a range of top-tier amenities
+              at the resort, including the fitness center, basketball court, tennis courts, shuffleboard,
+              and pickleball courts.
+            </p>
+
+            <p>
+              Just outside the 24/7/365 manned-security-gates of the resort is a multitude of additional
+              walkable restaurants—everything from NY style pizza to high-end seafood, an American eatery,
+              a Cajun cafe, Mexican restaurant, and even a Subway and Waffle House.
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT: booking widget -->
+        <aside class="book">
+          <div class="bookInner">
+            <div
+              class="ownerrez-widget"
+              data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
+              data-widget-type="Booking/Inquiry"
+              data-widgetId="a8281cc150054c85a38547dbd1cdcbb8"
+            ></div>
+            <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+          </div>
+        </aside>
+      </section>
+
+      <!-- LOCATION -->
+      <section id="location" class="card">
+        <h2 class="h2">Location</h2>
+        <p>
+          Edgewater Beach &amp; Golf Resort • Tower 1 • Panama City Beach, FL<br />
+          11212 Front Beach Rd, Panama City Beach, FL 32407
+        </p>
+
+        <!-- ✅ MAP (Tower 1 + very zoomed in) -->
+        <div class="mapWrap" aria-label="Map">
+          <iframe
+            title="Map: Edgewater Tower 1 (11212 Front Beach Rd, Panama City Beach, FL 32407)"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            src="https://www.google.com/maps?q=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201,%2011212%20Front%20Beach%20Rd,%20Panama%20City%20Beach,%20FL%2032407&z=18&output=embed"
+          ></iframe>
+
+          <a
+            class="mapLink"
+            href="https://www.google.com/maps/search/?api=1&query=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201,%2011212%20Front%20Beach%20Rd,%20Panama%20City%20Beach,%20FL%2032407"
+            target="_blank"
+            rel="noopener"
+          >
+            View on Google Maps →
+          </a>
+        </div>
+      </section>
+
+      <!-- AMENITIES -->
+      <section id="amenities" class="card">
+        <h2 class="h2">Amenities</h2>
+        <div class="amenitiesGrid">
+          <span>High-speed WiFi</span>
+          <span>Beach access</span>
+          <span>Lagoon pool</span>
+          <span>Hot tubs</span>
+          <span>Fitness center</span>
+          <span>Tennis / pickleball</span>
+          <span>Washer / dryer</span>
+          <span>Fully stocked kitchen</span>
+        </div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section id="reviews" class="card">
+        <h2 class="h2">Reviews</h2>
+        <p class="muted">Insert your OwnerRez reviews widget here if you want.</p>
+      </section>
+
+      <!-- AVAILABILITY (BOTTOM) -->
+      <section id="availability" class="card">
+        <h2 class="h2">Availability</h2>
+
+        <div
+          class="ownerrez-widget"
+          data-widgetId="7789bd19d45c4d2f87a8e7e3a0d69734"
+          data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
+          data-widget-type="Multiple Month Calendar"
+        ></div>
+
+        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
     <style>
+      /* ✅ FIX: reduce white space on large screens */
       .wrap {
-        max-width: 1120px;
+        max-width: 1440px;   /* was 1120px */
         margin: 0 auto;
-        padding: 14px;
+        padding: 12px 10px;  /* smaller left/right padding */
       }
 
       .titlebar { margin: 10px 0 14px; }
@@ -159,7 +286,7 @@ const subtitle =
       }
       .sub { margin: 0; opacity: .85; }
 
-      /* Collage like screenshot */
+      /* Collage */
       .collage {
         display: grid;
         grid-template-columns: 1.55fr 1fr;
@@ -197,7 +324,6 @@ const subtitle =
         display: block;
       }
 
-      /* Photo count badge (bottom-right like your screenshot) */
       .countBadge {
         position: absolute;
         right: 10px;
@@ -209,13 +335,13 @@ const subtitle =
         border-radius: 12px;
         background: rgba(0,0,0,.55);
         color: #fff;
-        font-weight: 700;
+        font-weight: 800;
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
       }
       .cam { font-size: 16px; }
 
-      /* section nav */
+      /* subnav row */
       .subnav {
         display: flex;
         gap: 22px;
@@ -234,8 +360,68 @@ const subtitle =
       }
       .subnav a:hover { color: var(--brand-blue, #193e7f); }
 
-      .content { margin: 14px 0 30px; }
+      /* description + widget area */
+      .below {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 22px;
+        align-items: start;
+        margin: 8px 0 18px;
+      }
 
+      .desc { padding-right: 6px; }
+
+      .metaLine {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 10px 0;
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .metaLabel {
+        font-family: var(--font-heading, "Dancing Script", cursive);
+        color: var(--accent-teal, #058789);
+        font-weight: 700;
+        font-size: 24px;
+        white-space: nowrap;
+      }
+
+      .amenInline {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .chip { font-weight: 600; }
+      .dot { opacity: .55; }
+
+      .more {
+        text-decoration: none;
+        font-weight: 700;
+        color: rgba(25,62,127,.75);
+      }
+      .more:hover { color: var(--brand-blue, #193e7f); }
+
+      .longDesc p {
+        font-size: 18px;
+        line-height: 1.75;
+        margin: 14px 0;
+      }
+
+      .bookInner {
+        position: sticky;
+        top: 92px;
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      }
+
+      /* section cards below */
       .card {
         border: 1px solid rgba(0,0,0,.12);
         border-radius: 16px;
@@ -251,15 +437,12 @@ const subtitle =
         color: var(--brand-blue, #193e7f);
       }
 
-      .bullets { margin: 0; padding-left: 18px; }
-      .bullets li { margin: 6px 0; }
-
-      .amenities {
+      .amenitiesGrid {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
       }
-      .amenities span {
+      .amenitiesGrid span {
         padding: 8px 10px;
         border-radius: 999px;
         border: 1px solid rgba(0,0,0,.14);
@@ -270,12 +453,39 @@ const subtitle =
 
       .muted { opacity: .8; }
 
-      @media (max-width: 900px) {
+      /* ✅ MAP styles */
+      .mapWrap {
+        margin-top: 12px;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: #fff;
+      }
+      .mapWrap iframe {
+        width: 100%;
+        height: 360px;
+        border: 0;
+        display: block;
+      }
+      .mapLink {
+        display: block;
+        padding: 10px 12px;
+        text-align: right;
+        font-weight: 800;
+        text-decoration: none;
+        color: rgba(25,62,127,.85);
+      }
+      .mapLink:hover { color: var(--brand-blue, #193e7f); }
+
+      @media (max-width: 980px) {
+        .wrap { padding: 12px 12px; }
         .collage { grid-template-columns: 1fr; }
         .big img { height: 320px; }
         .small img { height: 160px; }
+        .below { grid-template-columns: 1fr; }
+        .bookInner { position: static; }
+        .mapWrap iframe { height: 300px; }
       }
     </style>
   </body>
 </html>
-

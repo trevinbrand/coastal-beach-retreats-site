@@ -12,7 +12,6 @@ const propertyLinks = [
 
 <header class="hdr site-header" data-header>
   <div class="bar">
-
     <!-- LEFT: navigation -->
     <div class="left">
       <button
@@ -29,11 +28,15 @@ const propertyLinks = [
       <nav class="nav" aria-label="Primary">
         <a class="link" href="/">Home</a>
 
-        <div class="dropdown">
-          <button class="link dropbtn" type="button">Properties ▾</button>
-          <div class="menu">
-            {propertyLinks.map(p => (
-              <a href={p.href}>{p.label}</a>
+        <!-- ✅ HOVER OPENS + SAFE GAP + MENU DOESN'T DISAPPEAR WHILE MOVING MOUSE -->
+        <div class="dropdown" data-dropdown>
+          <button class="link dropbtn" type="button">
+            Properties ▾
+          </button>
+
+          <div class="menu" role="menu" aria-label="Properties menu">
+            {propertyLinks.map((p) => (
+              <a role="menuitem" href={p.href}>{p.label}</a>
             ))}
           </div>
         </div>
@@ -58,7 +61,7 @@ const propertyLinks = [
 
     <details>
       <summary>Properties</summary>
-      {propertyLinks.map(p => (
+      {propertyLinks.map((p) => (
         <a class="dlink" href={p.href}>{p.label}</a>
       ))}
     </details>
@@ -72,15 +75,17 @@ const propertyLinks = [
 
   <script is:inline>
     const header = document.querySelector("[data-header]");
-    const btn = header.querySelector(".hamburger");
+    const burgerBtn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
 
-    btn.addEventListener("click", () => {
-      const open = btn.classList.toggle("open");
+    // Mobile drawer toggle
+    burgerBtn.addEventListener("click", () => {
+      const open = burgerBtn.classList.toggle("open");
       drawer.classList.toggle("open", open);
-      btn.setAttribute("aria-expanded", open);
+      burgerBtn.setAttribute("aria-expanded", open);
     });
 
+    // Sticky header styling
     window.addEventListener("scroll", () => {
       header.classList.toggle("is-scrolled", window.scrollY > 10);
     });
@@ -108,10 +113,11 @@ const propertyLinks = [
       -webkit-backdrop-filter: blur(10px);
     }
 
+    /* ✅ match your page spacing */
     .bar {
-      max-width: 1120px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 18px 12px;
+      padding: 18px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -136,14 +142,18 @@ const propertyLinks = [
       border-radius: 12px;
       font-weight: 600;
       color: inherit;
+      white-space: nowrap;
     }
 
     .link:hover {
       background: rgba(0,0,0,.05);
     }
 
-    /* ===== DROPDOWN ===== */
-    .dropdown { position: relative; }
+    /* ===== DROPDOWN (FIXED) ===== */
+    .dropdown {
+      position: relative;
+    }
+
     .dropbtn {
       background: none;
       border: 0;
@@ -151,10 +161,21 @@ const propertyLinks = [
       cursor: pointer;
     }
 
+    /* ✅ This invisible "hover bridge" prevents the menu from closing
+       when moving the mouse from the button down into the menu. */
+    .dropdown::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 100%;
+      width: 100%;
+      height: 14px;           /* must match the menu's top gap below */
+    }
+
     .menu {
       display: none;
       position: absolute;
-      top: calc(100% + 10px);
+      top: calc(100% + 14px); /* ⬅️ gap that matches the hover bridge */
       left: 0;
       background: #fff;
       border-radius: 14px;
@@ -162,6 +183,12 @@ const propertyLinks = [
       padding: 8px;
       min-width: 220px;
       z-index: 1000;
+    }
+
+    /* ✅ Hover shows it; no JS needed */
+    .dropdown:hover .menu,
+    .dropdown:focus-within .menu {
+      display: block;
     }
 
     .menu a {
@@ -174,10 +201,6 @@ const propertyLinks = [
 
     .menu a:hover {
       background: rgba(0,0,0,.05);
-    }
-
-    .dropdown:hover .menu {
-      display: block;
     }
 
     /* ===== RIGHT ===== */

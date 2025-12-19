@@ -1,7 +1,6 @@
 /* ------------------------------
    Global link styling
 -------------------------------- */
-/* Load fonts globally (fixes desktop not showing Dancing Script) */
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap");
 
 a {
@@ -24,33 +23,51 @@ nav a,
 }
 
 /* ------------------------------
-   Global font + rendering
--------------------------------- */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ------------------------------
    Brand variables
 -------------------------------- */
 :root {
   --brand-blue: #193e7f;
   --accent-teal: #058789;
-  --page-pad: 12px; 
+  --page-pad: 12px;
   --font-heading: "Dancing Script", cursive;
   --font-nav: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
+
+/* ------------------------------
+   Global base / typography
+-------------------------------- */
 html, body {
   margin: 0;
   padding: 0;
 }
 
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Base font */
+  font-family: var(--font-nav);
+  color: #111; /* ✅ DEFAULT BODY TEXT = BLACK */
+}
+
+/* Page padding wrapper */
 main {
   padding-left: var(--page-pad);
   padding-right: var(--page-pad);
 }
 
+/* ------------------------------
+   PROPERTY DESCRIPTION TEXT
+-------------------------------- */
+p,
+.desc p,
+.longDesc,
+.longDesc p {
+  font-family: var(--font-nav);
+  font-size: 16px;     /* ✅ reduced by 2px */
+  line-height: 1.7;
+  color: #111;         /* ✅ black text */
+}
 
 /* ------------------------------
    HEADER (TOP NAV ONLY)
@@ -74,7 +91,9 @@ a.quote,
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   color: var(--brand-blue);
   font-weight: 600;
@@ -89,7 +108,10 @@ h4 {
 /* Ensure heading links stay brand blue */
 h1 a,
 h2 a,
-h3 a {
+h3 a,
+h4 a,
+h5 a,
+h6 a {
   color: var(--brand-blue);
   text-decoration: none;
 }
@@ -184,23 +206,16 @@ h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-width: 220px;
   min-height: 44px;
-
   padding: 12px 16px;
   border-radius: 999px;
   border: 1px solid rgba(0,0,0,.25);
-
   font-weight: 600;
   text-decoration: none;
-  text-align: center;
-
   background: #fff;
   color: #111;
-
   box-shadow: 0 4px 12px rgba(0,0,0,.12);
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* Brand colors */
@@ -214,23 +229,6 @@ h4 {
   background: #058789;
   border-color: #058789;
   color: #fff;
-}
-
-.loc-btn:hover {
-  opacity: 0.9;
-}
-
-/* Mobile layout */
-@media (max-width: 640px) {
-  .location-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .loc-btn {
-    width: 100%;
-    max-width: 320px;
-  }
 }
 
 /* ------------------------------
@@ -247,88 +245,5 @@ h4 {
 .site-header.is-scrolled {
   background: rgba(255,255,255,.72);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0,0,0,.08);
 }
-
-/* ------------------------------
-   HERO helpers
--------------------------------- */
-.hero-full {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  position: relative;
-}
-
-/* Scroll arrow */
-.scroll-down {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  z-index: 999;
-
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(0,0,0,.45);
-  color: #fff;
-  text-decoration: none;
-  font-size: 22px;
-
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  animation: bounce 1.8s infinite;
-  pointer-events: auto;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(6px); }
-}
-
-/* Jump offset for anchors */
-#location-select {
-  scroll-margin-top: 90px;
-}
-/* ==============================
-   HEADINGS (entire site)
-============================== */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #193e7f;
-}
-
-/* Ensure heading LINKS stay brand blue */
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
-  color: #193e7f;
-}
-
-/* ==============================
-   TOP NAV BAR ONLY
-============================== */
-.site-header,
-.site-header a,
-.site-header button,
-.site-header span,
-.site-header nav,
-.site-header .link,
-.site-header .contact {
-  color: #193e7f;
-}
-
