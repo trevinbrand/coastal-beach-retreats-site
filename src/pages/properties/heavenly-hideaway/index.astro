@@ -1,0 +1,281 @@
+---
+/**
+ * FILE: src/pages/properties/heavenly-hideaway/index.astro
+ * Photo collage like your screenshot + section nav + availability widget at the bottom.
+ */
+import "../../../styles/global.css";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+
+// ✅ Replace these with your REAL photo paths + count
+const PHOTO_COUNT = 35;
+
+const photosTop = [
+  // BIG photo (left)
+  { src: "/images/props/heavenly-1106.jpg", alt: "Living room with Gulf views" },
+
+  // 4 small photos (right grid)
+  { src: "/images/props/heavenly-1106-2.jpg", alt: "Living area" },
+  { src: "/images/props/heavenly-1106-3.jpg", alt: "Balcony view" },
+  { src: "/images/props/heavenly-1106-4.jpg", alt: "Dining area" },
+  { src: "/images/props/heavenly-1106-5.jpg", alt: "Kitchen / open layout" },
+];
+
+const pageTitle =
+  "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL";
+const subtitle =
+  "Reduced rates during temporary property enhancements — same amazing experience @ Edgewater.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle} | Coastal Beach Retreats</title>
+    <meta
+      name="description"
+      content="Heavenly Hideaway at Edgewater Tower 1-1106 — photos, details, and availability."
+    />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main class="wrap">
+      <header class="titlebar">
+        <h1 class="h1">{pageTitle}</h1>
+        <p class="sub">{subtitle}</p>
+      </header>
+
+      <!-- PHOTO COLLAGE (like screenshot) -->
+      <section class="collage" id="photos" aria-label="Photo preview">
+        <!-- BIG LEFT -->
+        <a class="big" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+        </a>
+
+        <!-- RIGHT GRID -->
+        <div class="smallGrid">
+          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+          </a>
+          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+          </a>
+          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+          </a>
+
+          <!-- LAST TILE WITH PHOTO COUNT BADGE -->
+          <a class="small last" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
+              <span class="cam" aria-hidden="true">📷</span>
+              {PHOTO_COUNT}
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION NAV (like screenshot row) -->
+      <nav class="subnav" aria-label="Page sections">
+        <a href="#photos">PHOTOS</a>
+        <a href="#details">DETAILS</a>
+        <a href="#availability">AVAILABILITY</a>
+        <a href="#location">LOCATION</a>
+        <a href="#amenities">AMENITIES</a>
+        <a href="#reviews">REVIEWS</a>
+      </nav>
+
+      <section class="content">
+        <section id="details" class="card">
+          <h2 class="h2">Details</h2>
+          <ul class="bullets">
+            <li><strong>Bedrooms:</strong> 2</li>
+            <li><strong>Bathrooms:</strong> 2</li>
+            <li><strong>Sleeps:</strong> up to 10</li>
+            <li><strong>Resort:</strong> Edgewater Beach &amp; Golf Resort</li>
+            <li><strong>Parking:</strong> Nightly rate covers up to two vehicles</li>
+          </ul>
+        </section>
+
+        <section id="location" class="card">
+          <h2 class="h2">Location</h2>
+          <p>Panama City Beach, FL — Edgewater Beach &amp; Golf Resort.</p>
+        </section>
+
+        <section id="amenities" class="card">
+          <h2 class="h2">Amenities</h2>
+          <div class="amenities">
+            <span>High-speed WiFi</span>
+            <span>Beach access</span>
+            <span>Pools</span>
+            <span>Hot tubs</span>
+            <span>Fitness center</span>
+            <span>Tennis / pickleball</span>
+            <span>Washer / dryer</span>
+            <span>Fully stocked kitchen</span>
+          </div>
+        </section>
+
+        <section id="reviews" class="card">
+          <h2 class="h2">Reviews</h2>
+          <p class="muted">Insert your OwnerRez reviews widget here if you want.</p>
+        </section>
+
+        <!-- ✅ AVAILABILITY (BOTTOM) + OWNERREZ WIDGET INSERTED HERE -->
+        <section id="availability" class="card">
+          <h2 class="h2">Availability</h2>
+
+          <!-- OwnerRez Multiple Month Calendar widget for Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL -->
+          <div
+            class="ownerrez-widget"
+            data-widgetId="7789bd19d45c4d2f87a8e7e3a0d69734"
+            data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
+            data-widget-type="Multiple Month Calendar"
+          ></div>
+
+          <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
+        </section>
+      </section>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 14px;
+      }
+
+      .titlebar { margin: 10px 0 14px; }
+      .h1 {
+        margin: 0 0 6px;
+        font-size: 34px;
+        line-height: 1.1;
+        color: var(--brand-blue, #193e7f);
+      }
+      .sub { margin: 0; opacity: .85; }
+
+      /* Collage like screenshot */
+      .collage {
+        display: grid;
+        grid-template-columns: 1.55fr 1fr;
+        gap: 10px;
+        margin: 14px 0 12px;
+      }
+
+      .big, .small {
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(0,0,0,.04);
+        text-decoration: none;
+        position: relative;
+      }
+
+      .big img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .smallGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .small img {
+        width: 100%;
+        height: 205px;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Photo count badge (bottom-right like your screenshot) */
+      .countBadge {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        background: rgba(0,0,0,.55);
+        color: #fff;
+        font-weight: 700;
+        border: 1px solid rgba(255,255,255,.18);
+        backdrop-filter: blur(6px);
+      }
+      .cam { font-size: 16px; }
+
+      /* section nav */
+      .subnav {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        padding: 14px 4px 8px;
+        border-bottom: 1px solid rgba(0,0,0,.10);
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .subnav a {
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: .08em;
+        font-size: 14px;
+        color: rgba(25,62,127,.75);
+      }
+      .subnav a:hover { color: var(--brand-blue, #193e7f); }
+
+      .content { margin: 14px 0 30px; }
+
+      .card {
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
+        margin-bottom: 14px;
+      }
+
+      .h2 {
+        margin: 0 0 10px;
+        font-size: 24px;
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .bullets { margin: 0; padding-left: 18px; }
+      .bullets li { margin: 6px 0; }
+
+      .amenities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .amenities span {
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,0,0,.14);
+        background: rgba(0,0,0,.03);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .muted { opacity: .8; }
+
+      @media (max-width: 900px) {
+        .collage { grid-template-columns: 1fr; }
+        .big img { height: 320px; }
+        .small img { height: 160px; }
+      }
+    </style>
+  </body>
+</html>
+

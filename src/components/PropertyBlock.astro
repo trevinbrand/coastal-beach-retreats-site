@@ -3,10 +3,6 @@ const { p } = Astro.props;
 ---
 
 <section class="block" aria-label={p.name}>
-  <div class="head">
-    <h2><a href={p.href}>{p.name}</a></h2>
-  </div>
-
   <div class="body">
     <div class="img">
       <img
@@ -46,15 +42,6 @@ const { p } = Astro.props;
       padding: 14px;
     }
 
-    .head h2 {
-      margin: 0 0 10px;
-      font-size: 22px;
-    }
-
-    .head a {
-      text-decoration: none;
-    }
-
     .body {
       display: grid;
       grid-template-columns: 360px 1fr;
@@ -62,7 +49,6 @@ const { p } = Astro.props;
       align-items: start;
     }
 
-    /* IMAGE WRAPPER (important fix) */
     .img {
       width: 100%;
       border-radius: 16px;
@@ -81,6 +67,14 @@ const { p } = Astro.props;
     .title {
       margin: 0 0 8px;
       font-size: 22px;
+      font-family: var(--font-heading, "Dancing Script", cursive);
+      color: var(--brand-blue, #193e7f);
+      font-weight: 600;
+    }
+
+    .title a {
+      text-decoration: none;
+      color: inherit;
     }
 
     .meta {
@@ -102,6 +96,7 @@ const { p } = Astro.props;
       border: 1px solid rgba(0,0,0,.18);
       padding: 8px 12px;
       border-radius: 12px;
+      color: inherit;
     }
 
     .btn.primary {
