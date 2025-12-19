@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+// Replace these with YOUR Matterport embed URLs (see step 2)
+const tours = [
+  {
+    name: "Heavenly Hideaway",
+    embedUrl: "https://my.matterport.com/show/?m=YOUR_MODEL_ID",
+  },
+  {
+    name: "Sailor's Delight",
+    embedUrl: "https://my.matterport.com/show/?m=YOUR_MODEL_ID",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>3D Condo Tours | Coastal Beach Retreats</title>
+    <meta name="description" content="Explore our condos with interactive 3D Matterport tours." />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main class="page-wrap">
+      <h1 style="margin: 8px 0 14px;">3D Condo Tours</h1>
+      <p style="margin: 0 0 18px; opacity:.85;">
+        Click a tour below to explore in 3D.
+      </p>
+
+      {tours.map((t) => (
+        <section style="margin: 0 0 26px;">
+          <h2 style="margin: 0 0 10px;">{t.name}</h2>
+
+          <div class="mp-embed">
+            <iframe
+              src={t.embedUrl}
+              title={`${t.name} 3D Tour`}
+              allow="fullscreen; vr"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+
+          <p style="margin: 10px 0 0;">
+            <a href={t.embedUrl} target="_blank" rel="noopener">Open tour in a new tab</a>
+          </p>
+        </section>
+      ))}
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      /* Responsive 16:9 embed */
+      .mp-embed{
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(0,0,0,.04);
+      }
+      .mp-embed iframe{
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </body>
+</html>
