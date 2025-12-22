@@ -1,0 +1,523 @@
+---
+/**
+ * FILE: src/pages/properties/destin-dreams/index.astro
+ * Layout matches Heavenly Hideaway page:
+ * - Photo collage at top (1 big left, 4 small right)
+ * - Section nav row
+ * - Below that: LEFT column = size + amenities lines + spaced description
+ * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
+ * - Availability calendar at the bottom (Multiple Month Calendar widget)
+ */
+import "../../../styles/global.css";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+
+// ✅ Update these to your real images
+const PHOTO_COUNT = 25;
+const photosTop = [
+  { src: "/images/props/destindreams-v2.jpg", alt: "Destin Dreams main photo" }, // big
+  { src: "/images/props/destin/311-living.jpg", alt: "Living area" },           // small 1
+  { src: "/images/props/destin/311-balcony.jpg", alt: "Balcony view" },         // small 2
+  { src: "/images/props/destin/311-bed.jpg", alt: "Bedroom" },                  // small 3
+  { src: "/images/props/destin/311-kitchen.jpg", alt: "Kitchen" },              // small 4
+];
+
+const pageTitle = "Destin Dreams @ Sterling Shores 311 Destin, FL";
+const subtitle = "Peekaboo Gulf views + lagoon pool + private beach access.";
+
+// These show ABOVE the description like your screenshot
+const sizeLine = "1 Bedroom • 1 Bathroom • Sleeps 1-4";
+const amenitiesLine = ["Internet", "Ocean View", "Hot Tub"];
+
+// ✅ Replace these with your real OwnerRez IDs
+const OWNERREZ_PROPERTY_ID = "REPLACE_ME_PROPERTY_ID";
+const OWNERREZ_BOOKING_WIDGET_ID = "REPLACE_ME_BOOKING_WIDGET_ID";
+const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle} | Coastal Beach Retreats</title>
+    <meta
+      name="description"
+      content="Destin Dreams at Sterling Shores 311 — photos, details, and booking."
+    />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main class="wrap">
+      <header class="titlebar">
+        <h1 class="h1">{pageTitle}</h1>
+        <p class="sub">{subtitle}</p>
+      </header>
+
+      <!-- PHOTO COLLAGE -->
+      <section class="collage" id="photos" aria-label="Photo preview">
+        <!-- BIG LEFT -->
+        <a class="big" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+          <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+        </a>
+
+        <!-- RIGHT GRID -->
+        <div class="smallGrid">
+          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+          </a>
+
+          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+          </a>
+
+          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+          </a>
+
+          <!-- LAST TILE WITH PHOTO COUNT BADGE -->
+          <a class="small last" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
+              <span class="cam" aria-hidden="true">📷</span>
+              {PHOTO_COUNT}
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION NAV ROW -->
+      <nav class="subnav" aria-label="Page sections">
+        <a href="#photos">PHOTOS</a>
+        <a href="#details">DETAILS</a>
+        <a href="#availability">AVAILABILITY</a>
+        <a href="#location">LOCATION</a>
+        <a href="#amenities">AMENITIES</a>
+        <a href="#reviews">REVIEWS</a>
+      </nav>
+
+      <!-- DETAILS + BOOKING WIDGET -->
+      <section class="below" id="details" aria-label="Details and booking">
+        <!-- LEFT -->
+        <div class="desc">
+          <div class="metaLine">
+            <span class="metaLabel">Size –</span>
+            <span>{sizeLine}</span>
+          </div>
+
+          <div class="metaLine">
+            <span class="metaLabel">Amenities –</span>
+            <span class="amenInline">
+              {amenitiesLine.map((a, i) => (
+                <span class="amenItem">
+                  <span class="chip">{a}</span>
+                  {i < amenitiesLine.length - 1 ? <span class="dot">•</span> : null}
+                </span>
+              ))}
+              <a class="more" href="#amenities">(more...)</a>
+            </span>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="longDesc">
+            <p>
+              Welcome to <strong>Destin Dreams</strong> at Sterling Shores Resort — a stylish third-floor condo
+              with beautiful Gulf views, a private balcony, and access to top-notch resort amenities.
+            </p>
+
+            <p>
+              This is an ideal couples getaway or small-family beach escape with a comfortable open layout, a modern
+              kitchen, and everything you need to settle in and relax.
+            </p>
+
+            <p>
+              Sterling Shores features a lagoon-style pool, private beach access, a fitness center, and a seasonal
+              poolside bar — all just minutes from Destin dining, shopping, and attractions.
+            </p>
+
+            <p>
+              Primary renter must be at least 25 years old, sign a rental agreement within 48 hours of booking,
+              be present for the duration of the stay, and agree to a $200 damage hold placed on a debit/credit card
+              in the renter&apos;s name. No smoking or parties allowed. We provide starter amounts of soaps and paper products
+              (toilet paper, paper towels, trash bags). Please plan to bring/buy additional if your stay is longer than a couple of days.
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT: booking widget -->
+        <aside class="book">
+          <div class="bookInner">
+            <div
+              class="ownerrez-widget"
+              data-propertyId={OWNERREZ_PROPERTY_ID}
+              data-widget-type="Booking/Inquiry"
+              data-widgetId={OWNERREZ_BOOKING_WIDGET_ID}
+            ></div>
+            <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+          </div>
+        </aside>
+      </section>
+
+      <!-- LOCATION -->
+      <section id="location" class="card">
+        <h2 class="h2">Location</h2>
+        <p>
+          Sterling Shores Resort • Destin, FL<br />
+          1751 Scenic Hwy 98, Destin, FL 32541
+        </p>
+
+        <div class="mapWrap" aria-label="Map">
+          <iframe
+            title="Map: Sterling Shores Resort, Destin, FL"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            src="https://www.google.com/maps?q=Sterling%20Shores%20Resort%201751%20Scenic%20Hwy%2098%20Destin%20FL%2032541&z=16&output=embed"
+          ></iframe>
+
+          <a
+            class="mapLink"
+            href="https://www.google.com/maps/search/?api=1&query=Sterling%20Shores%20Resort%201751%20Scenic%20Hwy%2098%20Destin%20FL%2032541"
+            target="_blank"
+            rel="noopener"
+          >
+            View on Google Maps →
+          </a>
+        </div>
+      </section>
+
+      <!-- AMENITIES -->
+      <section id="amenities" class="card">
+        <h2 class="h2">Amenities</h2>
+
+        <div class="amenities-table">
+          <div class="amen-row">
+            <div class="amen-label">Property Type</div>
+            <div class="amen-value">Condo</div>
+          </div>
+
+          <div class="amen-row">
+            <div class="amen-label">Resort</div>
+            <div class="amen-value">Sterling Shores Resort</div>
+          </div>
+
+          <div class="amen-row">
+            <div class="amen-label">General</div>
+            <div class="amen-value columns">
+              <span>Internet / WiFi</span>
+              <span>Air Conditioning</span>
+              <span>Linens &amp; Towels</span>
+              <span>Washer/Dryer</span>
+            </div>
+          </div>
+
+          <div class="amen-row">
+            <div class="amen-label">Kitchen</div>
+            <div class="amen-value columns">
+              <span>Refrigerator</span>
+              <span>Oven/Stove</span>
+              <span>Microwave</span>
+              <span>Dishwasher</span>
+            </div>
+          </div>
+
+          <div class="amen-row">
+            <div class="amen-label">Pool &amp; Spa</div>
+            <div class="amen-value columns">
+              <span>Lagoon Pool</span>
+              <span>Hot Tub</span>
+              <span>Seasonal Pool Bar</span>
+            </div>
+          </div>
+
+          <div class="amen-row">
+            <div class="amen-label">Outdoor</div>
+            <div class="amen-value columns">
+              <span>Private Beach Access</span>
+              <span>Balcony</span>
+              <span>Outdoor Seating</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section id="reviews" class="card">
+        <h2 class="h2">Reviews</h2>
+
+        <div
+          class="ownerrez-widget"
+          data-widget-type="Reviews - Reviews"
+          data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
+        ></div>
+
+        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+      </section>
+
+      <!-- AVAILABILITY -->
+      <section id="availability" class="card">
+        <h2 class="h2">Availability</h2>
+
+        <div
+          class="ownerrez-widget"
+          data-widgetId={OWNERREZ_CALENDAR_WIDGET_ID}
+          data-propertyId={OWNERREZ_PROPERTY_ID}
+          data-widget-type="Multiple Month Calendar"
+        ></div>
+
+        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
+      </section>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 12px 10px;
+      }
+
+      .titlebar { margin: 10px 0 14px; }
+      .h1 {
+        margin: 0 0 6px;
+        font-size: 34px;
+        line-height: 1.1;
+        color: var(--brand-blue, #193e7f);
+      }
+      .sub { margin: 0; opacity: .85; }
+
+      /* Collage */
+      .collage {
+        display: grid;
+        grid-template-columns: 1.55fr 1fr;
+        gap: 2px;
+        margin: 14px 0 12px;
+      }
+
+      .big, .small {
+        display: block;
+        border-radius: 0;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(0,0,0,.04);
+        text-decoration: none;
+        position: relative;
+      }
+
+      .big img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .smallGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+
+      .small img {
+        width: 100%;
+        height: 205px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .countBadge {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        background: rgba(0,0,0,.55);
+        color: #fff;
+        font-weight: 800;
+        border: 1px solid rgba(255,255,255,.18);
+        backdrop-filter: blur(6px);
+      }
+      .cam { font-size: 16px; }
+
+      /* subnav row */
+      .subnav {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        padding: 14px 4px 8px;
+        border-bottom: 1px solid rgba(0,0,0,.10);
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .subnav a {
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: .08em;
+        font-size: 14px;
+        color: rgba(25,62,127,.75);
+      }
+      .subnav a:hover { color: var(--brand-blue, #193e7f); }
+
+      /* description + widget area */
+      .below {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 22px;
+        align-items: start;
+        margin: 8px 0 18px;
+      }
+
+      .desc { padding-right: 6px; }
+
+      .metaLine {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 10px 0;
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .metaLabel {
+        font-family: var(--font-heading, "Dancing Script", cursive);
+        color: var(--accent-teal, #058789);
+        font-weight: 700;
+        font-size: 24px;
+        white-space: nowrap;
+      }
+
+      .amenInline {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .amenItem {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .chip { font-weight: 600; }
+      .dot { opacity: .55; }
+
+      .more {
+        text-decoration: none;
+        font-weight: 700;
+        color: rgba(25,62,127,.75);
+      }
+      .more:hover { color: var(--brand-blue, #193e7f); }
+
+      .longDesc p {
+        font-size: 16px;
+        line-height: 1.75;
+        margin: 14px 0;
+      }
+
+      .bookInner {
+        position: sticky;
+        top: 92px;
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      }
+
+      /* section cards */
+      .card {
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
+        margin-bottom: 14px;
+      }
+
+      .h2 {
+        margin: 0 0 10px;
+        font-size: 24px;
+        color: var(--brand-blue, #193e7f);
+      }
+
+      /* map */
+      .mapWrap {
+        margin-top: 12px;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: #fff;
+      }
+      .mapWrap iframe {
+        width: 100%;
+        height: 360px;
+        border: 0;
+        display: block;
+      }
+      .mapLink {
+        display: block;
+        padding: 10px 12px;
+        text-align: right;
+        font-weight: 800;
+        text-decoration: none;
+        color: rgba(25,62,127,.85);
+      }
+      .mapLink:hover { color: var(--brand-blue, #193e7f); }
+
+      /* amenities table */
+      .amenities-table {
+        margin-top: 8px;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.10);
+        background: #fff;
+      }
+
+      .amen-row {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 18px;
+        padding: 18px 18px;
+        border-top: 1px solid rgba(0,0,0,.08);
+      }
+      .amen-row:first-child { border-top: 0; }
+
+      .amen-label { font-weight: 800; color: #111; }
+      .amen-value { color: #111; }
+
+      .amen-value.columns {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+        gap: 8px 18px;
+      }
+
+      .amen-value.columns span {
+        display: block;
+        white-space: normal;
+      }
+
+      @media (max-width: 980px) {
+        .wrap { padding: 12px 12px; }
+        .collage { grid-template-columns: 1fr; }
+        .big img { height: 320px; }
+        .small img { height: 160px; }
+        .below { grid-template-columns: 1fr; }
+        .bookInner { position: static; }
+        .mapWrap iframe { height: 300px; }
+
+        .amen-row { grid-template-columns: 1fr; }
+        .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+      }
+
+      @media (max-width: 520px) {
+        .amen-value.columns { grid-template-columns: 1fr; }
+      }
+    </style>
+  </body>
+</html>

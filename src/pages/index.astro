@@ -72,15 +72,18 @@ const slugFromHref = (href = "") =>
 
           {groups[city].map((p) => {
             const slug = slugFromHref(p.href);
-            const isHeavenly = slug === "heavenly-hideaway";
-            const isDestin = slug === "destin-dreams";
+
+            // Only create anchors for the two featured buttons
+            const anchorId =
+              slug === "heavenly-hideaway"
+                ? "heavenly-hideaway"
+                : slug === "destin-dreams"
+                ? "destin-dreams"
+                : null;
 
             return (
-              <div
-                id={isHeavenly ? "heavenly-hideaway" : isDestin ? "destin-dreams" : undefined}
-                class="prop"
-                style="scroll-margin-top: 96px;"
-              >
+              <div class="prop">
+                {anchorId && <span id={anchorId} class="jump-anchor" aria-hidden="true"></span>}
                 <PropertyBlock p={p} />
               </div>
             );
@@ -117,7 +120,6 @@ const slugFromHref = (href = "") =>
         padding: 14px 0;
       }
 
-      /* small spacing between property blocks without shrinking them */
       .prop {
         margin: 0 0 6px;
       }
@@ -136,6 +138,15 @@ const slugFromHref = (href = "") =>
         margin: 12px 0 16px;
       }
 
+      /* ✅ Reliable anchor offset for sticky header */
+      .jump-anchor {
+        display: block;
+        height: 1px;
+        margin-top: -96px; /* offset = sticky header height */
+        padding-top: 96px;
+      }
+
+      /* Also keep the nav target from hiding under header */
       #location-select {
         scroll-margin-top: 96px;
       }
@@ -143,6 +154,10 @@ const slugFromHref = (href = "") =>
       @media (max-width: 980px) {
         .wrap {
           padding: 12px 12px;
+        }
+        .jump-anchor {
+          margin-top: -88px;
+          padding-top: 88px;
         }
       }
     </style>

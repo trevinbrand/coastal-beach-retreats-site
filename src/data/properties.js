@@ -8,7 +8,6 @@ export const properties = [
     blurb:
       "This eleventh-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled, features impressive floor-to-ceiling windows, tasteful décor, and elegant quartz countertops throughout the kitchen to create a warm, inviting atmosphere and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
-    // Buttons (wire to OwnerRez / pages as you build)
     photosHref: "/properties/heavenly-hideaway/#photos",
     availabilityHref: "/properties/heavenly-hideaway/#availability",
     detailsHref: "/properties/heavenly-hideaway/",

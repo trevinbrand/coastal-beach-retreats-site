@@ -1,0 +1,224 @@
+---
+import "../../styles/global.css";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+/**
+ * EXACT ADDRESSES
+ * (Matches your property pages + Sterling Shores address you provided)
+ */
+const props = [
+  {
+    id: "destin-dreams",
+    name: "Destin Dreams @ Sterling Shores 311",
+    meta: "1 br • 1 ba • Sleeps 1–4",
+    address: "1751 Scenic Hwy 98 Unit 311, Destin, FL 32541",
+  },
+  {
+    id: "heavenly-hideaway",
+    name: "Heavenly Hideaway @ Edgewater Tower 1-1106",
+    meta: "2 br • 2 ba • Sleeps 1–10",
+    address: "11483 Front Beach Rd, Tower 1-1106, Panama City Beach, FL 32407",
+  },
+  {
+    id: "red-sky-nights",
+    name: "Red Sky Nights @ Edgewater Tower 1-1002",
+    meta: "2 br • 2 ba • Sleeps 1–9",
+    address: "11483 Front Beach Rd, Tower 1-1002, Panama City Beach, FL 32407",
+  },
+  {
+    id: "sailors-delight",
+    name: "Sailor’s Delight @ Edgewater Tower 1-911",
+    meta: "2 br • 2 ba • Sleeps 1–9",
+    address: "11483 Front Beach Rd, Tower 1-911, Panama City Beach, FL 32407",
+  },
+];
+
+// Default property shown when page loads
+const DEFAULT_ID = "red-sky-nights";
+const defaultProp = props.find(p => p.id === DEFAULT_ID) ?? props[0];
+
+const initialMapSrc =
+  `https://www.google.com/maps?q=${encodeURIComponent(defaultProp.address)}&z=17&output=embed`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Map | Coastal Beach Retreats</title>
+</head>
+
+<body>
+  <SiteHeader phone="(918) 734-3331" />
+
+  <main class="map-wrap">
+    <h1 class="map-title">Map</h1>
+
+    <div class="map-layout">
+      <!-- MAP -->
+      <div class="map-frame">
+        <iframe
+          id="mapFrame"
+          src={initialMapSrc}
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Property Locations"
+        ></iframe>
+
+        <div class="map-actions">
+          <a
+            id="openInMaps"
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultProp.address)}`}
+            target="_blank"
+            rel="noopener"
+            class="open"
+          >
+            Open in Google Maps →
+          </a>
+        </div>
+      </div>
+
+      <!-- PROPERTY LIST -->
+      <aside class="map-list">
+        {props.map((p) => (
+          <button
+            class={`map-card ${p.id === DEFAULT_ID ? "active" : ""}`}
+            type="button"
+            data-address={p.address}
+            data-open={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address)}`}
+          >
+            <strong>{p.name}</strong>
+            <span>{p.meta}</span>
+            <small>{p.address}</small>
+          </button>
+        ))}
+      </aside>
+    </div>
+  </main>
+
+  <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+  <script is:inline>
+    const frame = document.getElementById("mapFrame");
+    const openBtn = document.getElementById("openInMaps");
+    const cards = document.querySelectorAll(".map-card");
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        const address = card.dataset.address;
+        const openUrl = card.dataset.open;
+
+        cards.forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+
+        frame.src =
+          "https://www.google.com/maps?q=" +
+          encodeURIComponent(address) +
+          "&z=17&output=embed";
+
+        openBtn.href = openUrl;
+      });
+    });
+  </script>
+
+  <style>
+    .map-wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 10px;
+    }
+
+    .map-title {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: var(--brand-blue);
+    }
+
+    .map-layout {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 18px;
+    }
+
+    .map-frame iframe {
+      width: 100%;
+      height: 560px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: #fff;
+    }
+
+    .map-actions {
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .open {
+      text-decoration: none;
+      font-weight: 800;
+      color: rgba(25,62,127,.9);
+    }
+    .open:hover { color: var(--brand-blue); }
+
+    .map-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .map-card {
+      text-align: left;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .map-card strong {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      color: var(--brand-blue);
+      display: block;
+    }
+
+    .map-card span {
+      display: block;
+      margin-top: 4px;
+      opacity: .9;
+    }
+
+    .map-card small {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      opacity: .6;
+      word-break: break-word;
+    }
+
+    .map-card:hover {
+      background: rgba(25,62,127,.05);
+    }
+
+    .map-card.active {
+      border-color: var(--accent-teal);
+      background: rgba(5,135,137,.08);
+    }
+
+    @media (max-width: 980px) {
+      .map-layout {
+        grid-template-columns: 1fr;
+      }
+      .map-frame iframe {
+        height: 420px;
+      }
+    }
+  </style>
+</body>
+</html>

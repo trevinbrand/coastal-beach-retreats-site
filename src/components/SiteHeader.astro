@@ -28,7 +28,6 @@ const propertyLinks = [
       <nav class="nav" aria-label="Primary">
         <a class="link" href="/">Home</a>
 
-        <!-- ✅ HOVER OPENS + SAFE GAP + MENU DOESN'T DISAPPEAR WHILE MOVING MOUSE -->
         <div class="dropdown" data-dropdown>
           <button class="link dropbtn" type="button">
             Properties ▾
@@ -41,7 +40,9 @@ const propertyLinks = [
           </div>
         </div>
 
+        <!-- ✅ Goes to the NEW page we'll create below -->
         <a class="link" href="/3d-condo-tours/">3D Condo Tours</a>
+
         <a class="link" href="/map/">Map</a>
         <a class="link" href="/availability/">Availability</a>
         <a class="link" href="/reviews/">Reviews</a>
@@ -92,7 +93,6 @@ const propertyLinks = [
   </script>
 
   <style>
-    /* ===== FORCE QUICKSAND ON NAV ===== */
     .hdr,
     .hdr * {
       font-family: var(--font-nav, "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif) !important;
@@ -113,7 +113,6 @@ const propertyLinks = [
       -webkit-backdrop-filter: blur(10px);
     }
 
-    /* ✅ match your page spacing */
     .bar {
       max-width: 1440px;
       margin: 0 auto;
@@ -123,7 +122,6 @@ const propertyLinks = [
       justify-content: space-between;
     }
 
-    /* ===== LEFT ===== */
     .left {
       display: flex;
       align-items: center;
@@ -149,7 +147,6 @@ const propertyLinks = [
       background: rgba(0,0,0,.05);
     }
 
-    /* ===== DROPDOWN (FIXED) ===== */
     .dropdown {
       position: relative;
     }
@@ -161,21 +158,19 @@ const propertyLinks = [
       cursor: pointer;
     }
 
-    /* ✅ This invisible "hover bridge" prevents the menu from closing
-       when moving the mouse from the button down into the menu. */
     .dropdown::after {
       content: "";
       position: absolute;
       left: 0;
       top: 100%;
       width: 100%;
-      height: 14px;           /* must match the menu's top gap below */
+      height: 14px;
     }
 
     .menu {
       display: none;
       position: absolute;
-      top: calc(100% + 14px); /* ⬅️ gap that matches the hover bridge */
+      top: calc(100% + 14px);
       left: 0;
       background: #fff;
       border-radius: 14px;
@@ -185,7 +180,6 @@ const propertyLinks = [
       z-index: 1000;
     }
 
-    /* ✅ Hover shows it; no JS needed */
     .dropdown:hover .menu,
     .dropdown:focus-within .menu {
       display: block;
@@ -203,7 +197,6 @@ const propertyLinks = [
       background: rgba(0,0,0,.05);
     }
 
-    /* ===== RIGHT ===== */
     .right {
       display: flex;
       align-items: center;
@@ -231,7 +224,6 @@ const propertyLinks = [
       color: #fff;
     }
 
-    /* ===== HAMBURGER (MOBILE ONLY) ===== */
     .hamburger {
       display: none;
       position: relative !important;
@@ -273,7 +265,6 @@ const propertyLinks = [
     .hamburger.open .hb:nth-child(2) { opacity: 0 !important; }
     .hamburger.open .hb:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg) !important; }
 
-    /* Invert on scroll */
     .site-header.is-scrolled .hamburger {
       background: var(--brand-blue, #193e7f) !important;
       border-color: var(--brand-blue, #193e7f) !important;
@@ -282,7 +273,6 @@ const propertyLinks = [
       background: #fff !important;
     }
 
-    /* ===== MOBILE DRAWER ===== */
     .drawer {
       display: none;
       padding: 16px 20px;

@@ -1,17 +1,15 @@
 ---
 /**
- * FILE: src/pages/properties/heavenly-hideaway/index.astro
- * Layout matches your screenshot:
+ * FILE: src/pages/properties/red-sky-nights/index.astro
+ * Layout matches Heavenly Hideaway:
  * - Photo collage at top (1 big left, 4 small right)
  * - Section nav row
  * - Below that: LEFT column = size + amenities lines + spaced description
  * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
- * - Availability calendar stays at the bottom (Multiple Month Calendar widget)
- *
- * ✅ FIX ADDED:
- * The page felt “skinny” on large screens due to max-width: 1120px.
- * This version reduces the white space by widening the container to 1440px
- * and slightly reducing side padding.
+ * - Location section includes Google map (zoomed)
+ * - Amenities section uses the table layout
+ * - Reviews widget section
+ * - Availability calendar at bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -20,15 +18,15 @@ import SiteFooter from "../../../components/SiteFooter.astro";
 // ✅ Update these to your real images
 const PHOTO_COUNT = 35;
 const photosTop = [
-  { src: "/images/props/heavenly-1106.jpg", alt: "Living room with Gulf views" }, // big
-  { src: "/images/props/heavenly/1106-living.jpg", alt: "Living area" },          // small 1
-  { src: "/images/props/heavenly/1106-balcony.jpg", alt: "Balcony view" },        // small 2
-  { src: "/images/props/heavenly/1106-dining.jpg", alt: "Dining area" },          // small 3
-  { src: "/images/props/heavenly/1106-kitchen.jpg", alt: "Kitchen / open layout" }// small 4
+  { src: "/images/props/red-sky/1002-hero.jpg", alt: "Living room with Gulf views" }, // big
+  { src: "/images/props/red-sky/1002-living.jpg", alt: "Living area" },              // small 1
+  { src: "/images/props/red-sky/1002-balcony.jpg", alt: "Balcony view" },            // small 2
+  { src: "/images/props/red-sky/1002-dining.jpg", alt: "Dining area" },              // small 3
+  { src: "/images/props/red-sky/1002-kitchen.jpg", alt: "Kitchen / open layout" },   // small 4
 ];
 
 const pageTitle =
-  "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL";
+  "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL";
 const subtitle =
   "Reduced rates, same amazing experience @ Edgewater.";
 
@@ -45,7 +43,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
     <title>{pageTitle} | Coastal Beach Retreats</title>
     <meta
       name="description"
-      content="Heavenly Hideaway at Edgewater Tower 1-1106 — photos, details, and booking."
+      content="Red Sky Nights at Edgewater Tower 1-1002 — photos, details, and booking."
     />
   </head>
 
@@ -63,7 +61,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <!-- BIG LEFT -->
         <a
           class="big"
-          href="/properties/heavenly-hideaway/photos/"
+          href="/properties/red-sky-nights/photos/"
           aria-label="View all photos"
         >
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
@@ -71,18 +69,18 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
         <!-- RIGHT GRID -->
         <div class="smallGrid">
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href="/properties/red-sky-nights/photos/" aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href="/properties/red-sky-nights/photos/" aria-label="View all photos">
             <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
           </a>
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href="/properties/red-sky-nights/photos/" aria-label="View all photos">
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE -->
-          <a class="small last" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small last" href="/properties/red-sky-nights/photos/" aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
             <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
               <span class="cam" aria-hidden="true">📷</span>
@@ -102,9 +100,9 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <a href="#reviews">REVIEWS</a>
       </nav>
 
-      <!-- DETAILS + BOOKING WIDGET (MATCHES SCREENSHOT) -->
+      <!-- DETAILS + BOOKING WIDGET -->
       <section class="below" id="details" aria-label="Details and booking">
-        <!-- LEFT: size + amenities + description -->
+        <!-- LEFT -->
         <div class="desc">
           <div class="metaLine">
             <span class="metaLabel">Size –</span>
@@ -124,11 +122,11 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </span>
           </div>
 
-          <!-- ✅ SPACED DESCRIPTION (no JS consts needed) -->
+          <!-- ✅ SPACED DESCRIPTION -->
           <div class="longDesc">
             <p>
-              Coastal Beach Retreats is excited to present this eleventh-floor condo located in
-              Tower 1 at the one-and-only Edgewater Beach &amp; Golf Resort.
+              Coastal Beach Retreats is excited to present Red Sky Nights — a gorgeous Gulf-front
+              condo located in Tower 1 at the one-and-only Edgewater Beach &amp; Golf Resort.
             </p>
 
             <p>
@@ -136,54 +134,27 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </p>
 
             <p>
-              Discover the ultimate beachfront retreat at Edgewater T1-1106, a beautiful 2-bedroom,
-              2-bathroom condo, with hall bunks located within the prestigious Edgewater Beach and
-              Golf Resort. Positioned on the 11th floor, this residence boasts panoramic Gulf views
-              and overlooks the resort’s lagoon pool from its expansive balcony. Inside, the living
-              room showcases impressive floor-to-ceiling windows, while the tasteful décor and
-              elegant quartz countertops throughout create a warm, inviting atmosphere. The master
-              bathroom is a sanctuary, featuring a shower tower with massaging jets and LED lighting
-              for a rejuvenating experience. With updated cabinetry and stylish vinyl flooring, this
-              condo exudes modern sophistication. The custom-designed refrigerator with eye-catching
-              colored panels complements the kitchen’s tile perfectly. Enjoy your days at the beach
-              with ease: six comfortable beach chairs, a beach umbrella, eight beach towels, and a
-              Tommy Bahama shoulder ice chest are provided for your convenience, so you can relax
-              and soak up the sun without any extra hassle. Accommodating up to 10 guests, the condo
-              offers a king bed in the master bedroom, a queen bed and twin bunk beds in the guest
-              room, twin-over-full bunk beds in the hallway, and a pull-out sleeper sofa for extra
-              sleeping space. Entertainment is a breeze with Roku TVs in every bedroom and the living
-              room, plus 32&quot; Roku TVs in the hallway bunks. The balcony features four comfortable
-              Polywood chairs for enjoying the stunning views, and a new LG stackable washer and dryer
-              ensure added convenience. Enjoy the Gulf-front setting, take a dip in the lagoon pool,
-              and explore the many activities offered at Edgewater 1-1106 in Edgewater Beach &amp; Golf
-              Resort!
+              Wake up to sweeping Gulf views and enjoy the resort’s famous lagoon pool, hot tubs,
+              beach access, and on-site dining — all right outside your door. Red Sky Nights is set
+              up for families and groups, with comfortable sleeping for up to 10 guests and plenty
+              of space to relax after a beach day.
             </p>
 
             <p>
               Primary renter must be at least 25 years old, sign a rental agreement within 48 hours
               of booking, be present for the duration of the stay, and agree to a $200 damage hold
               placed on a debit/credit card in the renter's name. No smoking or parties allowed.
-              Booking includes the resort's fee and up to two vehicles. This property has a Ring
-              peephole camera installed in the front door, providing added security by recording
-              activity outside the entrance. We provide starter amounts of soaps and paper products
-              (like toilet paper, paper towels, and trash bags). Please plan to bring/buy additional
-              if your stay is longer than a couple of days.
+              Booking includes the resort's fee and up to two vehicles. We provide starter amounts
+              of soaps and paper products (like toilet paper, paper towels, and trash bags). Please
+              plan to bring/buy additional if your stay is longer than a couple of days.
             </p>
 
             <p>
-              The luxurious Edgewater Beach &amp; Golf Resort is Panama City Beach's ONLY full-service
-              resort. Beachside you’ll find a full restaurant, tiki bar, huge oceanside lagoon pool,
-              kids splash area, Starbucks, market, ice cream parlor, 4 hot tubs, water sports/activities,
-              beach chair service (pool and beach), and more. Across the resort pedestrian bridge is a
-              9-hole golf course and Pro Shop. Enjoy complimentary access to a range of top-tier amenities
-              at the resort, including the fitness center, basketball court, tennis courts, shuffleboard,
-              and pickleball courts.
-            </p>
-
-            <p>
-              Just outside the 24/7/365 manned-security-gates of the resort is a multitude of additional
-              walkable restaurants—everything from NY style pizza to high-end seafood, an American eatery,
-              a Cajun cafe, Mexican restaurant, and even a Subway and Waffle House.
+              Edgewater is Panama City Beach's ONLY full-service resort. Beachside you’ll find a
+              full restaurant, tiki bar, huge oceanside lagoon pool, kids splash area, Starbucks,
+              market, ice cream parlor, 4 hot tubs, water sports/activities, beach chair service
+              (pool and beach), and more. Across the pedestrian bridge is a 9-hole golf course and
+              Pro Shop plus fitness, tennis, pickleball, and more.
             </p>
           </div>
         </div>
@@ -191,11 +162,12 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <!-- RIGHT: booking widget -->
         <aside class="book">
           <div class="bookInner">
+            <!-- ✅ OwnerRez Booking/Inquiry widget for Red Sky Nights -->
             <div
               class="ownerrez-widget"
-              data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
+              data-propertyId="REPLACE_WITH_RED_SKY_PROPERTY_ID"
               data-widget-type="Booking/Inquiry"
-              data-widgetId="a8281cc150054c85a38547dbd1cdcbb8"
+              data-widgetId="REPLACE_WITH_RED_SKY_BOOKING_WIDGET_ID"
             ></div>
             <script is:inline src="https://app.ownerrez.com/widget.js"></script>
           </div>
@@ -207,17 +179,17 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <h2 class="h2">Location</h2>
         <p>
           Edgewater Beach &amp; Golf Resort • Tower 1 • Panama City Beach, FL<br />
-          11483 Front Beach Rd, T1-1106 Panama City Beach, FL 32407
+          11212 Front Beach Rd, Tower 1 (T1-1002) Panama City Beach, FL 32407
         </p>
 
-        <!-- ✅ MAP (Tower 1 + very zoomed in) -->
+        <!-- ✅ MAP (Tower 1 + zoomed) -->
         <div class="mapWrap" aria-label="Map">
           <iframe
             title="Map: Edgewater Tower 1 (11212 Front Beach Rd, Panama City Beach, FL 32407)"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
-            src="https://www.google.com/maps?q=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201,%2011212%20Front%20Beach%20Rd,%20Panama%20City%20Beach,%20FL%2032407&z=18&output=embed"
+            src="https://www.google.com/maps?q=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201,%2011212%20Front%20Beach%20Rd,%20Panama%20City%20Beach,%20FL%2032407&z=19&output=embed"
           ></iframe>
 
           <a
@@ -231,10 +203,11 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         </div>
       </section>
 
-      <!-- AMENITIES (TABLE LAYOUT LIKE YOUR SCREENSHOT) -->
+      <!-- AMENITIES -->
       <section id="amenities" class="card">
         <h2 class="h2">&ensp;Amenities</h2>
 
+        <!-- ✅ Copy/paste this section and adjust specifics if Red Sky differs -->
         <div class="amenities-table">
           <div class="amen-row">
             <div class="amen-label">Property Type</div>
@@ -243,9 +216,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
           <div class="amen-row">
             <div class="amen-label">Check-In</div>
-            <div class="amen-value">
-              A keypad is available 24 hours a day to provide entry for guests
-            </div>
+            <div class="amen-value">Keypad entry (24/7)</div>
           </div>
 
           <div class="amen-row">
@@ -269,17 +240,9 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           <div class="amen-row">
             <div class="amen-label">Setting &amp; View</div>
             <div class="amen-value columns">
-              <span>Water View</span>
-              <span>Beach</span>
-              <span>Ocean</span>
-              <span>Beachfront</span>
-              <span>Beach View</span>
-              <span>Golf Course View</span>
-              <span>Near Ocean</span>
               <span>Oceanfront</span>
               <span>Ocean View</span>
-              <span>Waterfront</span>
-              <span>Resort</span>
+              <span>Beachfront</span>
               <span>Resort View</span>
               <span>Shared Beach Access</span>
               <span>Resort Access</span>
@@ -291,33 +254,22 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             <div class="amen-value columns">
               <span>Internet</span>
               <span>High-speed WiFi</span>
-              <span>Free Internet</span>
               <span>Air Conditioning</span>
               <span>Central Heating</span>
               <span>Linens Provided</span>
               <span>Towels Provided</span>
               <span>Washing Machine</span>
               <span>Clothes Dryer</span>
-              <span>Hot Water</span>
               <span>Hair Dryer</span>
               <span>Iron &amp; Board</span>
               <span>Ceiling Fans</span>
               <span>Laptop-Friendly Workspace</span>
-              <span>Hangers</span>
-              <span>Lock on bedroom door</span>
-              <span>Extra pillows &amp; blankets</span>
-              <span>Basic soaps</span>
-              <span>Body soap</span>
-              <span>Shampoo</span>
-              <span>Hair conditioner</span>
-              <span>Toilet paper</span>
             </div>
           </div>
 
           <div class="amen-row">
             <div class="amen-label">Kitchen</div>
             <div class="amen-value columns">
-              <span>Kitchen</span>
               <span>Refrigerator</span>
               <span>Stove</span>
               <span>Oven</span>
@@ -333,48 +285,6 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           </div>
 
           <div class="amen-row">
-            <div class="amen-label">Bathrooms</div>
-            <div class="amen-value columns">
-              <span>2 Bathrooms</span>
-              <span>Main bathroom: Shower, Toilet</span>
-              <span>Second bathroom: Shower, Toilet</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Sleeping Arrangements</div>
-            <div class="amen-value columns">
-              <span>2 Bedrooms • Sleeps 1–10</span>
-              <span>Main bedroom: 1 King bed</span>
-              <span>Second bedroom: 1 Queen bed, 1 Bunk bed</span>
-              <span>Living area: 1 Sleeper sofa/futon, 1 Bunk bed</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Entertainment</div>
-            <div class="amen-value columns">
-              <span>Television</span>
-              <span>Satellite/Cable</span>
-              <span>Smart TV</span>
-              <span>Gym</span>
-              <span>Exercise equipment</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Outdoor</div>
-            <div class="amen-value columns">
-              <span>Deck/Patio (uncovered)</span>
-              <span>Balcony/Terrace</span>
-              <span>Outdoor seating</span>
-              <span>Beach essentials</span>
-              <span>Tennis</span>
-              <span>Walkable to golf</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
             <div class="amen-label">Pool &amp; Spa</div>
             <div class="amen-value columns">
               <span>Communal pool</span>
@@ -385,72 +295,24 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           </div>
 
           <div class="amen-row">
-            <div class="amen-label">Vehicles</div>
+            <div class="amen-label">Outdoor</div>
             <div class="amen-value columns">
-              <span>Parking</span>
-              <span>Paid parking on premises</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Theme</div>
-            <div class="amen-value columns">
-              <span>Family</span>
-              <span>Tourist attractions</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Attractions</div>
-            <div class="amen-value columns">
-              <span>Bay/Sound</span>
-              <span>Health/Beauty spa</span>
-              <span>Marina</span>
-              <span>Museums</span>
-              <span>Water parks</span>
-              <span>Winery tours</span>
-              <span>Zoo</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Leisure</div>
-            <div class="amen-value columns">
-              <span>Boating</span>
-              <span>Shopping</span>
-              <span>Water sports</span>
-            </div>
-          </div>
-
-          <div class="amen-row">
-            <div class="amen-label">Sports &amp; Adventure</div>
-            <div class="amen-value columns">
-              <span>Basketball court</span>
-              <span>Fishing</span>
-              <span>Golf</span>
-              <span>Jet skiing</span>
-              <span>Parasailing</span>
-              <span>Sailing</span>
-              <span>Snorkeling</span>
-              <span>Surfing</span>
-              <span>Swimming</span>
-              <span>Wind surfing</span>
-              <span>Mini golf</span>
+              <span>Balcony/Terrace</span>
+              <span>Outdoor seating</span>
+              <span>Beach essentials</span>
+              <span>Tennis</span>
+              <span>Walkable to golf</span>
             </div>
           </div>
 
           <div class="amen-row">
             <div class="amen-label">Safety</div>
             <div class="amen-value columns">
+              <span>Smoke detector</span>
               <span>Fire extinguisher</span>
               <span>First aid kit</span>
               <span>Exterior lighting</span>
-              <span>Smoke detector</span>
-              <span>Cleaning products</span>
               <span>Enhanced cleaning practices</span>
-              <span>Disinfection</span>
-              <span>Linens high-temp wash</span>
-              <span>Common surfaces disinfected</span>
             </div>
           </div>
         </div>
@@ -469,14 +331,15 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
 
-      <!-- AVAILABILITY (BOTTOM) -->
+      <!-- AVAILABILITY -->
       <section id="availability" class="card">
         <h2 class="h2">Availability</h2>
 
+        <!-- ✅ OwnerRez Multiple Month Calendar widget for Red Sky Nights -->
         <div
           class="ownerrez-widget"
-          data-widgetId="7789bd19d45c4d2f87a8e7e3a0d69734"
-          data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
+          data-widgetId="REPLACE_WITH_RED_SKY_CAL_WIDGET_ID"
+          data-propertyId="REPLACE_WITH_RED_SKY_PROPERTY_ID"
           data-widget-type="Multiple Month Calendar"
         ></div>
 
@@ -487,11 +350,10 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
     <style>
-      /* ✅ FIX: reduce white space on large screens */
       .wrap {
-        max-width: 1440px;   /* was 1120px */
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 12px 10px;  /* smaller left/right padding */
+        padding: 12px 10px;
       }
 
       .titlebar { margin: 10px 0 14px; }
@@ -519,8 +381,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         background: rgba(0,0,0,.04);
         text-decoration: none;
         position: relative;
-        }
-
+      }
 
       .big img {
         width: 100%;
@@ -639,7 +500,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         box-shadow: 0 6px 18px rgba(0,0,0,.06);
       }
 
-      /* section cards below */
+      /* cards */
       .card {
         border: 1px solid rgba(0,0,0,.12);
         border-radius: 16px;
@@ -655,7 +516,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         color: var(--brand-blue, #193e7f);
       }
 
-      /* ✅ MAP styles */
+      /* map */
       .mapWrap {
         margin-top: 12px;
         border-radius: 14px;
@@ -679,7 +540,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       }
       .mapLink:hover { color: var(--brand-blue, #193e7f); }
 
-      /* ✅ AMENITIES table like screenshot */
+      /* amenities table */
       .amenities-table {
         margin-top: 8px;
         border-radius: 14px;
@@ -697,24 +558,13 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       }
       .amen-row:first-child { border-top: 0; }
 
-      .amen-label {
-        font-weight: 800;
-        color: #111;
-      }
-
-      .amen-value {
-        color: #111;
-      }
+      .amen-label { font-weight: 800; color: #111; }
+      .amen-value { color: #111; }
 
       .amen-value.columns {
         display: grid;
         grid-template-columns: repeat(4, minmax(180px, 1fr));
         gap: 8px 18px;
-      }
-
-      .amen-value.columns span {
-        display: block;
-        white-space: normal;
       }
 
       @media (max-width: 980px) {
@@ -726,18 +576,12 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         .bookInner { position: static; }
         .mapWrap iframe { height: 300px; }
 
-        .amen-row {
-          grid-template-columns: 1fr;
-        }
-        .amen-value.columns {
-          grid-template-columns: repeat(2, minmax(160px, 1fr));
-        }
+        .amen-row { grid-template-columns: 1fr; }
+        .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
       @media (max-width: 520px) {
-        .amen-value.columns {
-          grid-template-columns: 1fr;
-        }
+        .amen-value.columns { grid-template-columns: 1fr; }
       }
     </style>
   </body>
