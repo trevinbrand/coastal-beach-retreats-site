@@ -1,0 +1,75 @@
+---
+/**
+ * FILE: src/pages/availability/index.astro
+ * Purpose:
+ * - Linked from the "Availability" header nav
+ * - Displays ONLY the OwnerRez Ribbon Calendar widget
+ */
+import "../../styles/global.css";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Availability | Coastal Beach Retreats</title>
+    <meta
+      name="description"
+      content="View availability across all Coastal Beach Retreats vacation rentals."
+    />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main class="wrap">
+      <section class="calendar-wrap">
+        <!-- OwnerRez Ribbon Calendar widget -->
+        <div
+          class="ownerrez-widget"
+          data-widget-type="Ribbon Calendar"
+          data-widgetId="c0baaf6aae2e40bead47d4ab7077009b"
+        ></div>
+      </section>
+
+      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+    </main>
+
+    <SiteFooter
+      phone="(918) 734-3331"
+      email="coastalbeachretreats@gmail.com"
+    />
+
+    <style>
+      /* Match your site width & spacing */
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px 10px 40px;
+      }
+
+      /* Center the ribbon calendar nicely */
+      .calendar-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      /* Optional: give the widget breathing room */
+      .ownerrez-widget {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .wrap {
+          padding: 18px 12px 32px;
+        }
+      }
+    </style>
+  </body>
+</html>
