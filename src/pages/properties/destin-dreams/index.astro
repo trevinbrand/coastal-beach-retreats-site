@@ -7,20 +7,39 @@
  * - Below that: LEFT column = size + amenities lines + spaced description
  * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
  * - Availability calendar at the bottom (Multiple Month Calendar widget)
+ *
+ * ✅ CHANGE:
+ * - Photos now use d1.jpeg ... d21.jpeg in /public/images/props/destin-dreams/
+ * - Clicking any collage photo (or PHOTOS tab) now goes to:
+ *   /properties/destin-dreams/photos/
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Update these to your real images
-const PHOTO_COUNT = 25;
-const photosTop = [
-  { src: "/images/props/destindreams-v2.jpg", alt: "Destin Dreams main photo" }, // big
-  { src: "/images/props/destin/311-living.jpg", alt: "Living area" },           // small 1
-  { src: "/images/props/destin/311-balcony.jpg", alt: "Balcony view" },         // small 2
-  { src: "/images/props/destin/311-bed.jpg", alt: "Bedroom" },                  // small 3
-  { src: "/images/props/destin/311-kitchen.jpg", alt: "Kitchen" },              // small 4
-];
+// ✅ Photo setup (d1.jpeg ... d21.jpeg)
+const PHOTO_COUNT = 21;
+
+// ✅ Folder where images live in /public
+const PHOTO_BASE = "/images/props/destin-dreams";
+
+// ✅ Where the separate photos page lives:
+const PHOTOS_PAGE_HREF = "/properties/destin-dreams/photos/";
+
+// ✅ Precompute strings used in attributes
+const photosCountAria = `${PHOTO_COUNT} photos`;
+
+// Build full list (still used to create the collage preview)
+const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
+  const n = i + 1;
+  return {
+    src: `${PHOTO_BASE}/d${n}.jpeg`,
+    alt: `Destin Dreams photo ${n}`,
+  };
+});
+
+// Collage uses first 5
+const photosTop = galleryPhotos.slice(0, 5);
 
 const pageTitle = "Destin Dreams @ Sterling Shores 311 Destin, FL";
 const subtitle = "Peekaboo Gulf views + lagoon pool + private beach access.";
@@ -56,31 +75,31 @@ const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE -->
+      <!-- PHOTO COLLAGE (links to separate photos page) -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <!-- BIG LEFT -->
-        <a class="big" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+        <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
         </a>
 
         <!-- RIGHT GRID -->
         <div class="smallGrid">
-          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
 
-          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
           </a>
 
-          <a class="small" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE -->
-          <a class="small last" href="/properties/destin-dreams/photos/" aria-label="View all photos">
+          <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
-            <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
+            <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
             </span>
@@ -90,7 +109,7 @@ const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
 
       <!-- SECTION NAV ROW -->
       <nav class="subnav" aria-label="Page sections">
-        <a href="#photos">PHOTOS</a>
+        <a href={PHOTOS_PAGE_HREF}>PHOTOS</a>
         <a href="#details">DETAILS</a>
         <a href="#availability">AVAILABILITY</a>
         <a href="#location">LOCATION</a>

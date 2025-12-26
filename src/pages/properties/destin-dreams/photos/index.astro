@@ -1,0 +1,171 @@
+---
+/**
+ * FILE: src/pages/properties/destin-dreams/photos/index.astro
+ * Full Photos page for Destin Dreams
+ * - Uses d1.jpeg ... d21.jpeg from /public/images/props/destin-dreams/
+ */
+import "../../../../styles/global.css";
+import SiteHeader from "../../../../components/SiteHeader.astro";
+import SiteFooter from "../../../../components/SiteFooter.astro";
+
+// ✅ Photo setup (d1.jpeg ... d21.jpeg)
+const PHOTO_COUNT = 21;
+const PHOTO_BASE = "/images/props/destin-dreams";
+
+const pageTitle = "Destin Dreams Photos";
+const subtitle =
+  "All photos for Sterling Shores 311 in Destin — tap any image to open full size.";
+const backHref = "/properties/destin-dreams/";
+
+// Build gallery list
+const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
+  const n = i + 1;
+  return {
+    src: `${PHOTO_BASE}/d${n}.jpeg`,
+    alt: `Destin Dreams photo ${n}`,
+  };
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle} | Coastal Beach Retreats</title>
+    <meta name="description" content="Full photo gallery for Destin Dreams." />
+  </head>
+
+  <body>
+    <SiteHeader phone="(918) 734-3331" />
+
+    <main class="wrap">
+      <header class="titlebar">
+        <div class="topRow">
+          <div>
+            <h1 class="h1">{pageTitle}</h1>
+            <p class="sub">{subtitle}</p>
+          </div>
+
+          <a class="btnBack" href={backHref} aria-label="Back to property page">
+            ← Back to Property
+          </a>
+        </div>
+      </header>
+
+      <section class="card" aria-label="Photo gallery">
+        <div class="galleryGrid">
+          {galleryPhotos.map((ph) => (
+            <a class="gItem" href={ph.src} target="_blank" rel="noopener">
+              <img src={ph.src} alt={ph.alt} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 12px 10px;
+      }
+
+      .titlebar {
+        margin: 10px 0 14px;
+      }
+
+      .topRow {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .h1 {
+        margin: 0 0 6px;
+        font-size: 34px;
+        line-height: 1.1;
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .sub {
+        margin: 0;
+        opacity: 0.85;
+        max-width: 860px;
+      }
+
+      .btnBack {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: #fff;
+        text-decoration: none;
+        font-weight: 900;
+        color: rgba(25, 62, 127, 0.9);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        white-space: nowrap;
+      }
+      .btnBack:hover {
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .card {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      .galleryGrid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .gItem {
+        display: block;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0.04);
+        text-decoration: none;
+      }
+
+      .gItem img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+
+      @media (max-width: 980px) {
+        .wrap {
+          padding: 12px 12px;
+        }
+        .galleryGrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .gItem img {
+          height: 190px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .galleryGrid {
+          grid-template-columns: 1fr;
+        }
+        .gItem img {
+          height: 240px;
+        }
+      }
+    </style>
+  </body>
+</html>

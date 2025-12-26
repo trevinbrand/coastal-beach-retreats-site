@@ -8,6 +8,11 @@
  * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
  * - Availability calendar stays at the bottom (Multiple Month Calendar widget)
  *
+ * ✅ CHANGE:
+ * - Photos now use h1.jpeg ... h35.jpeg in /public/images/props/heavenly-hideaway/
+ * - Clicking any collage photo (or PHOTOS tab) now goes to:
+ *   /properties/heavenly-hideaway/photos/
+ *
  * ✅ FIX ADDED:
  * The page felt “skinny” on large screens due to max-width: 1120px.
  * This version reduces the white space by widening the container to 1440px
@@ -17,15 +22,29 @@ import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Update these to your real images
+// ✅ Photo setup (h1.jpeg ... h35.jpeg)
 const PHOTO_COUNT = 35;
-const photosTop = [
-  { src: "/images/props/heavenly-1106.jpg", alt: "Living room with Gulf views" }, // big
-  { src: "/images/props/heavenly/1106-living.jpg", alt: "Living area" },          // small 1
-  { src: "/images/props/heavenly/1106-balcony.jpg", alt: "Balcony view" },        // small 2
-  { src: "/images/props/heavenly/1106-dining.jpg", alt: "Dining area" },          // small 3
-  { src: "/images/props/heavenly/1106-kitchen.jpg", alt: "Kitchen / open layout" }// small 4
-];
+
+// ✅ Update this folder if needed
+const PHOTO_BASE = "/images/props/heavenly-hideaway";
+
+// ✅ Where the separate photos page lives:
+const PHOTOS_PAGE_HREF = "/properties/heavenly-hideaway/photos/";
+
+// ✅ Precompute strings used in attributes
+const photosCountAria = `${PHOTO_COUNT} photos`;
+
+// Build full list (still used to create the collage preview)
+const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
+  const n = i + 1;
+  return {
+    src: `${PHOTO_BASE}/h${n}.jpeg`,
+    alt: `Heavenly Hideaway photo ${n}`,
+  };
+});
+
+// Collage uses first 5
+const photosTop = galleryPhotos.slice(0, 5);
 
 const pageTitle =
   "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL";
@@ -63,7 +82,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <!-- BIG LEFT -->
         <a
           class="big"
-          href="/properties/heavenly-hideaway/photos/"
+          href={PHOTOS_PAGE_HREF}
           aria-label="View all photos"
         >
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
@@ -71,20 +90,20 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
         <!-- RIGHT GRID -->
         <div class="smallGrid">
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
           </a>
-          <a class="small" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE -->
-          <a class="small last" href="/properties/heavenly-hideaway/photos/" aria-label="View all photos">
+          <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
-            <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
+            <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
             </span>
@@ -94,7 +113,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
       <!-- SECTION NAV ROW -->
       <nav class="subnav" aria-label="Page sections">
-        <a href="#photos">PHOTOS</a>
+        <a href={PHOTOS_PAGE_HREF}>PHOTOS</a>
         <a href="#details">DETAILS</a>
         <a href="#availability">AVAILABILITY</a>
         <a href="#location">LOCATION</a>
@@ -162,8 +181,8 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             <p>
               Primary renter must be at least 25 years old, sign a rental agreement within 48 hours
               of booking, be present for the duration of the stay, and agree to a $200 damage hold
-              placed on a debit/credit card in the renter's name. No smoking or parties allowed.
-              Booking includes the resort's fee and up to two vehicles. This property has a Ring
+              placed on a debit/credit card in the renter&apos;s name. No smoking or parties allowed.
+              Booking includes the resort&apos;s fee and up to two vehicles. This property has a Ring
               peephole camera installed in the front door, providing added security by recording
               activity outside the entrance. We provide starter amounts of soaps and paper products
               (like toilet paper, paper towels, and trash bags). Please plan to bring/buy additional
@@ -171,7 +190,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </p>
 
             <p>
-              The luxurious Edgewater Beach &amp; Golf Resort is Panama City Beach's ONLY full-service
+              The luxurious Edgewater Beach &amp; Golf Resort is Panama City Beach&apos;s ONLY full-service
               resort. Beachside you’ll find a full restaurant, tiki bar, huge oceanside lagoon pool,
               kids splash area, Starbucks, market, ice cream parlor, 4 hot tubs, water sports/activities,
               beach chair service (pool and beach), and more. Across the resort pedestrian bridge is a
@@ -520,7 +539,6 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         text-decoration: none;
         position: relative;
         }
-
 
       .big img {
         width: 100%;
