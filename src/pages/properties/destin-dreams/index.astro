@@ -12,6 +12,20 @@
  * - Photos now use d1.jpeg ... d21.jpeg in /public/images/props/destin-dreams/
  * - Clicking any collage photo (or PHOTOS tab) now goes to:
  *   /properties/destin-dreams/photos/
+ *
+ * ✅ CHANGE (OwnerRez widgets updated):
+ * - Booking/Inquiry widget (right column) uses:
+ *   propertyId=38c38f783fe14bc8aea041d24552e0bb
+ *   widgetId=a23513547a9348c1b4b249aa2587f052
+ * - Reviews widget uses:
+ *   propertyId=38c38f783fe14bc8aea041d24552e0bb
+ *   widgetId=a169586fbbb54c64ad88f9125a3d428a
+ * - Multiple Month Calendar widget (bottom) uses:
+ *   propertyId=38c38f783fe14bc8aea041d24552e0bb
+ *   widgetId=d583f4999c3f487eb9e7036f05e66d5a
+ *
+ * NOTE:
+ * - widget.js is loaded ONCE at the bottom (avoid duplicates).
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -48,10 +62,11 @@ const subtitle = "Peekaboo Gulf views + lagoon pool + private beach access.";
 const sizeLine = "1 Bedroom • 1 Bathroom • Sleeps 1-4";
 const amenitiesLine = ["Internet", "Ocean View", "Hot Tub"];
 
-// ✅ Replace these with your real OwnerRez IDs
-const OWNERREZ_PROPERTY_ID = "REPLACE_ME_PROPERTY_ID";
-const OWNERREZ_BOOKING_WIDGET_ID = "REPLACE_ME_BOOKING_WIDGET_ID";
-const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
+// ✅ OwnerRez (Destin Dreams @ Sterling Shores 311)
+const OR_PROPERTY_ID = "38c38f783fe14bc8aea041d24552e0bb";
+const OR_BOOKING_WIDGET_ID = "a23513547a9348c1b4b249aa2587f052";
+const OR_REVIEWS_WIDGET_ID = "a169586fbbb54c64ad88f9125a3d428a";
+const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
 ---
 
 <!doctype html>
@@ -168,13 +183,13 @@ const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
         <!-- RIGHT: booking widget -->
         <aside class="book">
           <div class="bookInner">
+            <!-- OwnerRez Booking/Inquiry widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
             <div
               class="ownerrez-widget"
-              data-propertyId={OWNERREZ_PROPERTY_ID}
+              data-propertyId={OR_PROPERTY_ID}
               data-widget-type="Booking/Inquiry"
-              data-widgetId={OWNERREZ_BOOKING_WIDGET_ID}
+              data-widgetId={OR_BOOKING_WIDGET_ID}
             ></div>
-            <script is:inline src="https://app.ownerrez.com/widget.js"></script>
           </div>
         </aside>
       </section>
@@ -266,31 +281,33 @@ const OWNERREZ_CALENDAR_WIDGET_ID = "REPLACE_ME_CALENDAR_WIDGET_ID";
       <section id="reviews" class="card">
         <h2 class="h2">Reviews</h2>
 
+        <!-- OwnerRez Reviews widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
         <div
           class="ownerrez-widget"
-          data-widget-type="Reviews - Reviews"
-          data-widgetId="a169586fbbb54c64ad88f9125a3d428a"
+          data-propertyId={OR_PROPERTY_ID}
+          data-widget-type="Reviews"
+          data-widgetId={OR_REVIEWS_WIDGET_ID}
         ></div>
-
-        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
 
       <!-- AVAILABILITY -->
       <section id="availability" class="card">
         <h2 class="h2">Availability</h2>
 
+        <!-- OwnerRez Multiple Month Calendar widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
         <div
           class="ownerrez-widget"
-          data-widgetId={OWNERREZ_CALENDAR_WIDGET_ID}
-          data-propertyId={OWNERREZ_PROPERTY_ID}
+          data-propertyId={OR_PROPERTY_ID}
           data-widget-type="Multiple Month Calendar"
+          data-widgetId={OR_CALENDAR_WIDGET_ID}
         ></div>
-
-        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <style>
       .wrap {
