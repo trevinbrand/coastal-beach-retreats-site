@@ -4,9 +4,14 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 
 /**
- * EXACT ADDRESSES
- * (Matches your property pages + Sterling Shores address you provided)
+ * PROPERTY DEFINITIONS
+ * - Destin Dreams uses ADDRESS
+ * - All Panama City Beach properties use FIXED COORDINATES
+ * - Zoom level adjusted to be one unit closer
  */
+const PCB_COORDS = "30.18528,-85.82094";
+const PCB_ZOOM = 17;
+
 const props = [
   {
     id: "destin-dreams",
@@ -18,28 +23,33 @@ const props = [
     id: "heavenly-hideaway",
     name: "Heavenly Hideaway @ Edgewater Tower 1-1106",
     meta: "2 br • 2 ba • Sleeps 1–10",
-    address: "11483 Front Beach Rd, Tower 1-1106, Panama City Beach, FL 32407",
+    coords: PCB_COORDS,
   },
   {
     id: "red-sky-nights",
     name: "Red Sky Nights @ Edgewater Tower 1-1002",
     meta: "2 br • 2 ba • Sleeps 1–9",
-    address: "11483 Front Beach Rd, Tower 1-1002, Panama City Beach, FL 32407",
+    coords: PCB_COORDS,
   },
   {
     id: "sailors-delight",
     name: "Sailor’s Delight @ Edgewater Tower 1-911",
     meta: "2 br • 2 ba • Sleeps 1–9",
-    address: "11483 Front Beach Rd, Tower 1-911, Panama City Beach, FL 32407",
+    coords: PCB_COORDS,
   },
 ];
 
-// Default property shown when page loads
+// Default property
 const DEFAULT_ID = "red-sky-nights";
 const defaultProp = props.find(p => p.id === DEFAULT_ID) ?? props[0];
 
-const initialMapSrc =
-  `https://www.google.com/maps?q=${encodeURIComponent(defaultProp.address)}&z=17&output=embed`;
+const initialMapSrc = defaultProp.coords
+  ? `https://www.google.com/maps?q=${defaultProp.coords}&z=${PCB_ZOOM}&output=embed`
+  : `https://www.google.com/maps?q=${encodeURIComponent(defaultProp.address)}&z=17&output=embed`;
+
+const initialOpenSrc = defaultProp.coords
+  ? `https://www.google.com/maps?q=${defaultProp.coords}`
+  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultProp.address)}`;
 ---
 
 <!doctype html>
@@ -71,7 +81,7 @@ const initialMapSrc =
         <div class="map-actions">
           <a
             id="openInMaps"
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultProp.address)}`}
+            href={initialOpenSrc}
             target="_blank"
             rel="noopener"
             class="open"
@@ -87,12 +97,11 @@ const initialMapSrc =
           <button
             class={`map-card ${p.id === DEFAULT_ID ? "active" : ""}`}
             type="button"
-            data-address={p.address}
-            data-open={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address)}`}
+            data-coords={p.coords ?? ""}
+            data-address={p.address ?? ""}
           >
             <strong>{p.name}</strong>
             <span>{p.meta}</span>
-            <small>{p.address}</small>
           </button>
         ))}
       </aside>
@@ -108,18 +117,24 @@ const initialMapSrc =
 
     cards.forEach(card => {
       card.addEventListener("click", () => {
-        const address = card.dataset.address;
-        const openUrl = card.dataset.open;
-
         cards.forEach(c => c.classList.remove("active"));
         card.classList.add("active");
 
-        frame.src =
-          "https://www.google.com/maps?q=" +
-          encodeURIComponent(address) +
-          "&z=17&output=embed";
+        const coords = card.dataset.coords;
+        const address = card.dataset.address;
 
-        openBtn.href = openUrl;
+        if (coords) {
+          frame.src = `https://www.google.com/maps?q=${coords}&z=17&output=embed`;
+          openBtn.href = `https://www.google.com/maps?q=${coords}`;
+        } else {
+          frame.src =
+            "https://www.google.com/maps?q=" +
+            encodeURIComponent(address) +
+            "&z=17&output=embed";
+          openBtn.href =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(address);
+        }
       });
     });
   </script>
@@ -192,14 +207,6 @@ const initialMapSrc =
       display: block;
       margin-top: 4px;
       opacity: .9;
-    }
-
-    .map-card small {
-      display: block;
-      margin-top: 6px;
-      font-size: 12px;
-      opacity: .6;
-      word-break: break-word;
     }
 
     .map-card:hover {
