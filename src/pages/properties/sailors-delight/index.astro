@@ -1,26 +1,38 @@
 ---
 /**
  * FILE: src/pages/properties/sailors-delight/index.astro
- * Layout matches Heavenly Hideaway page:
- * - Photo collage at top (1 big left, 4 small right)
- * - Section nav row
- * - Below that: LEFT column = size + amenities lines + spaced description
- * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
- * - Availability calendar stays at the bottom (Multiple Month Calendar widget)
+ * ✅ CHANGE:
+ * - Removed the on-page full photo gallery
+ * - Clicking any collage photo (or PHOTOS tab) now goes to:
+ *   /properties/sailors-delight/photos/
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Update these to your real images
-const PHOTO_COUNT = 30;
-const photosTop = [
-  { src: "/images/props/sailors.jpg", alt: "Sailor's Delight main photo" }, // big
-  { src: "/images/props/sailors/911-living.jpg", alt: "Living area" }, // small 1
-  { src: "/images/props/sailors/911-balcony.jpg", alt: "Balcony view" }, // small 2
-  { src: "/images/props/sailors/911-dining.jpg", alt: "Dining area" }, // small 3
-  { src: "/images/props/sailors/911-kitchen.jpg", alt: "Kitchen" }, // small 4
-];
+// ✅ Photo setup (RS1.jpeg ... RS47.jpeg)
+const PHOTO_COUNT = 47;
+
+// ✅ Update this folder if needed
+const PHOTO_BASE = "/images/props/sailors";
+
+// ✅ Where the separate photos page lives:
+const PHOTOS_PAGE_HREF = "/properties/sailors-delight/photos/";
+
+// ✅ Precompute strings used in attributes
+const photosCountAria = `${PHOTO_COUNT} photos`;
+
+// Build full list (still used to create the collage preview)
+const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
+  const n = i + 1;
+  return {
+    src: `${PHOTO_BASE}/RS${n}.jpeg`,
+    alt: `Sailor's Delight photo ${n}`,
+  };
+});
+
+// Collage uses first 5
+const photosTop = galleryPhotos.slice(0, 5);
 
 const pageTitle =
   "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL";
@@ -52,51 +64,31 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE -->
+      <!-- PHOTO COLLAGE (links to separate photos page) -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <!-- BIG LEFT -->
-        <a
-          class="big"
-          href="/properties/sailors-delight/photos/"
-          aria-label="View all photos"
-        >
+        <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
         </a>
 
         <!-- RIGHT GRID -->
         <div class="smallGrid">
-          <a
-            class="small"
-            href="/properties/sailors-delight/photos/"
-            aria-label="View all photos"
-          >
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
 
-          <a
-            class="small"
-            href="/properties/sailors-delight/photos/"
-            aria-label="View all photos"
-          >
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
           </a>
 
-          <a
-            class="small"
-            href="/properties/sailors-delight/photos/"
-            aria-label="View all photos"
-          >
+          <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE -->
-          <a
-            class="small last"
-            href="/properties/sailors-delight/photos/"
-            aria-label="View all photos"
-          >
+          <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
-            <span class="countBadge" aria-label={`${PHOTO_COUNT} photos`}>
+            <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
             </span>
@@ -106,7 +98,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
       <!-- SECTION NAV ROW -->
       <nav class="subnav" aria-label="Page sections">
-        <a href="#photos">PHOTOS</a>
+        <a href={PHOTOS_PAGE_HREF}>PHOTOS</a>
         <a href="#details">DETAILS</a>
         <a href="#availability">AVAILABILITY</a>
         <a href="#location">LOCATION</a>
@@ -129,9 +121,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
               {amenitiesLine.map((a, i) => (
                 <span class="amenItem">
                   <span class="chip">{a}</span>
-                  {i < amenitiesLine.length - 1 ? (
-                    <span class="dot">•</span>
-                  ) : null}
+                  {i < amenitiesLine.length - 1 ? <span class="dot">•</span> : null}
                 </span>
               ))}
               <a class="more" href="#amenities">(more...)</a>
@@ -293,7 +283,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           data-widget-type="Multiple Month Calendar"
         ></div>
 
-        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
+        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 

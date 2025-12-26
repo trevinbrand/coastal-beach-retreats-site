@@ -1,25 +1,20 @@
 ---
-/**
- * FILE: src/pages/availability/index.astro
- * Purpose:
- * - Linked from the "Availability" header nav
- * - Displays ONLY the OwnerRez Ribbon Calendar widget
- */
 import "../../styles/global.css";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+
+const pageTitle = "Availability";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Availability | Coastal Beach Retreats</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle} | Coastal Beach Retreats</title>
     <meta
       name="description"
-      content="View availability across all Coastal Beach Retreats vacation rentals."
+      content="Check availability for all Coastal Beach Retreats vacation rentals."
     />
   </head>
 
@@ -27,48 +22,50 @@ import SiteFooter from "../../components/SiteFooter.astro";
     <SiteHeader phone="(918) 734-3331" />
 
     <main class="wrap">
-      <section class="calendar-wrap">
-        <!-- OwnerRez Ribbon Calendar widget -->
+      <!-- PAGE TITLE -->
+      <header class="titlebar">
+        <h1 class="h1">Availability</h1>
+        <p class="sub">View real-time availability for all properties</p>
+      </header>
+
+      <!-- OWNERREZ RIBBON CALENDAR -->
+      <section class="calendar">
         <div
           class="ownerrez-widget"
           data-widget-type="Ribbon Calendar"
           data-widgetId="c0baaf6aae2e40bead47d4ab7077009b"
         ></div>
+        <script src="https://app.ownerrez.com/widget.js"></script>
       </section>
-
-      <script is:inline src="https://app.ownerrez.com/widget.js"></script>
     </main>
 
-    <SiteFooter
-      phone="(918) 734-3331"
-      email="coastalbeachretreats@gmail.com"
-    />
+    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
     <style>
-      /* Match your site width & spacing */
       .wrap {
         max-width: 1440px;
         margin: 0 auto;
-        padding: 24px 10px 40px;
+        padding: 16px 10px;
       }
 
-      /* Center the ribbon calendar nicely */
-      .calendar-wrap {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
+      .titlebar {
+        margin: 12px 0 18px;
+        text-align: center;
       }
 
-      /* Optional: give the widget breathing room */
-      .ownerrez-widget {
-        width: 100%;
+      .h1 {
+        margin: 0 0 6px;
+        font-size: 36px;
+        color: var(--brand-blue, #193e7f);
       }
 
-      @media (max-width: 768px) {
-        .wrap {
-          padding: 18px 12px 32px;
-        }
+      .sub {
+        margin: 0;
+        opacity: 0.75;
+      }
+
+      .calendar {
+        margin-top: 10px;
       }
     </style>
   </body>

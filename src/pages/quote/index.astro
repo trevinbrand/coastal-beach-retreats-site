@@ -1,4 +1,5 @@
 ---
+import "../../styles/global.css";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 ---
@@ -8,33 +9,53 @@ import SiteFooter from "../../components/SiteFooter.astro";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Quote & Pricing | Coastal Beach Retreats</title>
+    <title>Quote / Book Now | Coastal Beach Retreats</title>
     <meta
       name="description"
-      content="Check availability, pricing, and request a quote for all Coastal Beach Retreats properties."
+      content="Check availability, pricing, and book your stay with Coastal Beach Retreats."
     />
   </head>
 
   <body>
     <SiteHeader phone="(918) 734-3331" />
 
-    <main style="max-width:1120px;margin:0 auto;padding:18px;">
-      <h1>Quote & Pricing</h1>
-      <p style="opacity:.75;">
+    <main class="wrap">
+      <h1 class="page-title">Quote / Book Now</h1>
+
+      <p class="page-sub">
         Select your dates and property below to see live pricing and availability.
       </p>
 
-      <!-- OwnerRez Booking/Inquiry widget -->
       <div
         class="ownerrez-widget"
         data-widgetId="3c35d18f0b814b78a74c10f7ea832119"
         data-widget-type="Booking/Inquiry"
       ></div>
 
-      <!-- Load OwnerRez widget script -->
       <script is:inline src="https://app.ownerrez.com/widget.js"></script>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <style>
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 22px 14px;
+      }
+
+      .page-title {
+        font-family: var(--font-heading, "Dancing Script", cursive);
+        font-size: 40px;
+        color: var(--brand-blue, #193e7f);
+        margin: 0 0 8px;
+      }
+
+      .page-sub {
+        margin: 0 0 18px;
+        opacity: 0.75;
+        font-size: 16px;
+      }
+    </style>
   </body>
 </html>

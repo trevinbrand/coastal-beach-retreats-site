@@ -13,7 +13,9 @@ const { p } = Astro.props;
     </div>
 
     <div class="text">
-      <h3 class="title"><a href={p.href}>{p.name}</a></h3>
+      <h3 class="title">
+        <a href={p.href}>{p.name}</a>
+      </h3>
 
       <div class="meta">
         <div><strong>Size –</strong> <span>{p.sizeLine}</span></div>
@@ -22,13 +24,17 @@ const { p } = Astro.props;
 
       <p>{p.blurb}</p>
 
-      {p.noteBold && <p><strong>{p.noteBold}</strong></p>}
+      {p.noteBold && (
+        <p><strong>{p.noteBold}</strong></p>
+      )}
 
       <div class="actions">
         <a class="btn" href={p.photosHref}>Photos</a>
         <a class="btn" href={p.availabilityHref}>Availability</a>
         <a class="btn primary" href={p.detailsHref}>Details</a>
-        <a class="btn" href={p.inquireHref}>Inquire</a>
+
+        <!-- ✅ FIX: Inquire now goes to the property page -->
+        <a class="btn" href={p.href}>Inquire</a>
       </div>
     </div>
   </div>
@@ -36,18 +42,15 @@ const { p } = Astro.props;
   <hr />
 
   <style>
-    /* ✅ IMPORTANT CHANGE:
-       Remove max-width + auto-centering so the homepage container controls width.
-    */
     .block {
       width: 100%;
       margin: 0;
-      padding: 14px 0; /* keeps vertical spacing but no extra side squeeze */
+      padding: 14px 0;
     }
 
     .body {
       display: grid;
-      grid-template-columns: 420px 1fr; /* a little wider for big screens */
+      grid-template-columns: 420px 1fr;
       gap: 18px;
       align-items: start;
     }
