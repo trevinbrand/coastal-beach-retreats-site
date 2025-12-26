@@ -46,6 +46,12 @@ const subtitle = "Reduced rates, same amazing experience @ Edgewater.";
 // These show ABOVE the description like your screenshot
 const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-10";
 const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
+
+// ✅ OwnerRez (Red Sky Nights)
+const OR_PROPERTY_ID = "4c1b9a39c3e44c929cf198773a243ea3";
+const OR_BOOKING_WIDGET_ID = "5d64f7bc08a94f63bf97dec0fa67b864";
+const OR_REVIEWS_WIDGET_ID = "4890e07b74de4687afea0375b876245e";
+const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
 ---
 
 <!doctype html>
@@ -133,11 +139,12 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </span>
           </div>
 
-          <!-- ✅ SPACED DESCRIPTION -->
+          <!-- ✅ UPDATED DESCRIPTION (replaced with your provided text) -->
           <div class="longDesc">
             <p>
-              Coastal Beach Retreats is excited to present Red Sky Nights — a gorgeous Gulf-front
-              condo located in Tower 1 at the one-and-only Edgewater Beach &amp; Golf Resort.
+              Coastal Beach Retreats is excited to present this tenth-floor condo located in Tower 1 at the
+              one-and-only Edgewater Beach &amp; Golf Resort. This condo features an ocean-themed interior
+              and an open layout perfect for close friends or families.
             </p>
 
             <p>
@@ -145,27 +152,61 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </p>
 
             <p>
-              Wake up to sweeping Gulf views and enjoy the resort’s famous lagoon pool, hot tubs,
-              beach access, and on-site dining — all right outside your door. Red Sky Nights is set
-              up for families and groups, with comfortable sleeping for up to 10 guests and plenty
-              of space to relax after a beach day.
+              Enjoy stunning views of the lagoon pool and 110 acres of beachfront and the Gulf from the living room
+              and kitchen/dining areas of the condo. The living area features comfy seating and a huge flatscreen TV
+              with cable. The kitchen is gorgeous with granite counters and all new stainless steel appliances plus
+              all you need for cooking meals or preparing snacks for the beach. An island offers seating for two and
+              the dining table alongside it can seat 6.
             </p>
 
             <p>
-              Primary renter must be at least 25 years old, sign a rental agreement within 48 hours
-              of booking, be present for the duration of the stay, and agree to a $200 damage hold
-              placed on a debit/credit card in the renter&apos;s name. No smoking or parties allowed.
-              Booking includes the resort&apos;s fee and up to two vehicles. We provide starter amounts
-              of soaps and paper products (like toilet paper, paper towels, and trash bags). Please
-              plan to bring/buy additional if your stay is longer than a couple of days.
+              Enjoy your days at the beach with ease: six comfortable beach chairs, a beach umbrella, eight beach
+              towels, and a Tommy Bahama shoulder ice chest are provided for your convenience, so you can relax and
+              soak up the sun without any extra hassle.
             </p>
 
             <p>
-              Edgewater is Panama City Beach&apos;s ONLY full-service resort. Beachside you’ll find a
-              full restaurant, tiki bar, huge oceanside lagoon pool, kids splash area, Starbucks,
-              market, ice cream parlor, 4 hot tubs, water sports/activities, beach chair service
-              (pool and beach), and more. Across the pedestrian bridge is a 9-hole golf course and
-              Pro Shop plus fitness, tennis, pickleball, and more.
+              Just outside the living room/dining area, open the sliding door to your private balcony and enjoy the
+              breeze and salty air.
+            </p>
+
+            <p>
+              Our master bedroom offers a king bed, flatscreen TV, and fully remodeled bathroom. Our guest room has a
+              queen bed and flatscreen TV. Twin over full bunk beds are tucked into a nook in the hallway and two
+              more guests can enjoy a gel foam queen sleeper sofa. In-unit washer/dryer are ideal for drying your
+              bathing suits or freshening up your outfits throughout your stay. High-speed wifi keeps you connected
+              during your stay.
+            </p>
+
+            <p>
+              The nautical decor is beachfront perfect—clean, fresh, crisp. This condo is newly remodeled from top to
+              bottom and one of the most stunning at the complex.
+            </p>
+
+            <p>
+              Primary renter must be at least 25 years old, sign a rental agreement within 48 hours of booking, be
+              present for the duration of the stay, and agree to a $200 damage hold on a credit/debit card in the
+              renter&apos;s name. No smoking or parties are allowed. Booking includes the resort&apos;s fee and up to
+              two vehicles. This property has a Ring peephole camera installed in the front door, providing added
+              security by recording activity outside the entrance. We provide starter amounts of soaps and paper
+              products (like tp, paper towels, and trash bags). Please plan to bring/buy additional if your stay is
+              longer than a couple of days.
+            </p>
+
+            <p>
+              The luxurious Edgewater Beach &amp; Golf Resort is Panama City Beach&apos;s ONLY full-service resort.
+              Beachside you’ll find a full restaurant, tiki bar, huge oceanside lagoon pool, kids splash area,
+              Starbucks, market, ice cream parlor, 4 hot tubs, water sports/activities, beach chair service (pool and
+              beach), and more. Across the resort pedestrian bridge is a 9-hole golf course and Pro Shop. Enjoy
+              complimentary access to a range of top-tier amenities at the resort, including the fitness center,
+              basketball court, 11 Pools (10 heated seasonally), 10 plexicushion tennis courts, 10 shuffleboard, and
+              5 pickleball courts.
+            </p>
+
+            <p>
+              Just outside the 24/7/365 manned-security-gates of the resort is a multitude of additional walkable
+              restaurants—everything from NY style pizza to high-end seafood, an American eatery, a Cajun cafe,
+              Mexican restaurant, and even a Subway and Waffle House.
             </p>
           </div>
         </div>
@@ -176,11 +217,10 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             <!-- ✅ OwnerRez Booking/Inquiry widget for Red Sky Nights -->
             <div
               class="ownerrez-widget"
-              data-propertyId="4c1b9a39c3e44c929cf198773a243ea3"
+              data-propertyId={OR_PROPERTY_ID}
               data-widget-type="Booking/Inquiry"
-              data-widgetId="5d64f7bc08a94f63bf97dec0fa67b864"
+              data-widgetId={OR_BOOKING_WIDGET_ID}
             ></div>
-            <script is:inline src="https://app.ownerrez.com/widget.js"></script>
           </div>
         </aside>
       </section>
@@ -190,21 +230,21 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <h2 class="h2">Location</h2>
         <p>
           Edgewater Beach &amp; Golf Resort • Tower 1 • Panama City Beach, FL<br />
-          11483 Front Beach Rd, T1-1106 Panama City Beach, FL 32407
+          11483 Front Beach Rd, Tower 1-1002, Panama City Beach, FL 32407
         </p>
 
         <!-- ✅ MAP (Tower 1 + very zoomed in) -->
         <div class="mapWrap" aria-label="Map">
           <iframe
-            title="Map: Heavenly Hideaway location"
+            title="Map: Red Sky Nights location"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
-            src="https://www.google.com/maps?q=30.18528,-85.82094&z=17&output=embed">
-          </iframe>
+            src="https://www.google.com/maps?q=30.18528,-85.82094&z=17&output=embed"
+          ></iframe>
           <a
             class="mapLink"
-            href="https://www.google.com/maps/search/?api=1&query=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201,%2011212%20Front%20Beach%20Rd,%20Panama%20City%20Beach,%20FL%2032407"
+            href="https://www.google.com/maps/search/?api=1&query=Edgewater%20Beach%20%26%20Golf%20Resort%20Tower%201%20Panama%20City%20Beach%20FL"
             target="_blank"
             rel="noopener"
           >
@@ -334,11 +374,9 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <div
           class="ownerrez-widget"
           data-widget-type="Reviews - Reviews"
-          data-propertyId="4c1b9a39c3e44c929cf198773a243ea3"
-          data-widgetId="4890e07b74de4687afea0375b876245e"
+          data-propertyId={OR_PROPERTY_ID}
+          data-widgetId={OR_REVIEWS_WIDGET_ID}
         ></div>
-
-        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
 
       <!-- AVAILABILITY -->
@@ -347,16 +385,17 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
         <div
           class="ownerrez-widget"
-          data-widgetId="a473169ad4d64e4f88ee8ad0d1668898"
-          data-propertyId="4c1b9a39c3e44c929cf198773a243ea3" 
+          data-widgetId={OR_CALENDAR_WIDGET_ID}
+          data-propertyId={OR_PROPERTY_ID}
           data-widget-type="Multiple Month Calendar"
         ></div>
-
-        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <style>
       .wrap {

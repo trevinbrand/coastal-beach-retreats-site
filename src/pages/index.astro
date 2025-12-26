@@ -6,12 +6,15 @@ import PropertyBlock from "../components/PropertyBlock.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { properties } from "../data/properties.js";
 
-// Group properties by city
-const groups = properties.reduce((acc, p) => {
-  const key = p.city || "Other";
-  (acc[key] ||= []).push(p);
-  return acc;
-}, {});
+type Property = (typeof properties)[number];
+
+// Group properties by city (TypeScript-safe)
+const groups: Record<string, Property[]> = {};
+
+for (const p of properties) {
+  const key = p.city ?? "Other";
+  (groups[key] ??= []).push(p);
+}
 
 // Order cities
 const cityOrder = ["Panama City Beach, FL", "Destin, FL"];
@@ -83,7 +86,9 @@ const slugFromHref = (href = "") =>
 
             return (
               <div class="prop">
-                {anchorId && <span id={anchorId} class="jump-anchor" aria-hidden="true"></span>}
+                {anchorId && (
+                  <span id={anchorId} class="jump-anchor" aria-hidden="true"></span>
+                )}
                 <PropertyBlock p={p} />
               </div>
             );
@@ -101,12 +106,13 @@ const slugFromHref = (href = "") =>
           data-widget-type="Reviews - Reviews"
           data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
         ></div>
-
-        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <style>
       /* ✅ Match your property page spacing */

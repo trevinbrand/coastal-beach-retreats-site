@@ -29,17 +29,19 @@ const pageTitle = "Availability";
       </header>
 
       <!-- OWNERREZ RIBBON CALENDAR -->
-      <section class="calendar">
+      <section class="calendar" aria-label="Availability calendar">
         <div
           class="ownerrez-widget"
           data-widget-type="Ribbon Calendar"
           data-widgetId="c0baaf6aae2e40bead47d4ab7077009b"
         ></div>
-        <script src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+
+    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <style>
       .wrap {
@@ -65,7 +67,7 @@ const pageTitle = "Availability";
       }
 
       .calendar {
-        margin-top: 10px;
+        margin-top: 12px;
       }
     </style>
   </body>

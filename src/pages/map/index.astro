@@ -12,7 +12,15 @@ import SiteFooter from "../../components/SiteFooter.astro";
 const PCB_COORDS = "30.18528,-85.82094";
 const PCB_ZOOM = 17;
 
-const props = [
+type MapProp = {
+  id: string;
+  name: string;
+  meta: string;
+  coords?: string;
+  address?: string;
+};
+
+const props: MapProp[] = [
   {
     id: "destin-dreams",
     name: "Destin Dreams @ Sterling Shores 311",
@@ -41,15 +49,18 @@ const props = [
 
 // Default property
 const DEFAULT_ID = "red-sky-nights";
-const defaultProp = props.find(p => p.id === DEFAULT_ID) ?? props[0];
+const defaultProp = props.find((p) => p.id === DEFAULT_ID) ?? props[0];
+
+// ✅ TS-safe: address might be undefined on some props
+const defaultAddress = defaultProp.address ?? "";
 
 const initialMapSrc = defaultProp.coords
   ? `https://www.google.com/maps?q=${defaultProp.coords}&z=${PCB_ZOOM}&output=embed`
-  : `https://www.google.com/maps?q=${encodeURIComponent(defaultProp.address)}&z=17&output=embed`;
+  : `https://www.google.com/maps?q=${encodeURIComponent(defaultAddress)}&z=17&output=embed`;
 
 const initialOpenSrc = defaultProp.coords
   ? `https://www.google.com/maps?q=${defaultProp.coords}`
-  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultProp.address)}`;
+  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultAddress)}`;
 ---
 
 <!doctype html>
@@ -115,13 +126,13 @@ const initialOpenSrc = defaultProp.coords
     const openBtn = document.getElementById("openInMaps");
     const cards = document.querySelectorAll(".map-card");
 
-    cards.forEach(card => {
+    cards.forEach((card) => {
       card.addEventListener("click", () => {
-        cards.forEach(c => c.classList.remove("active"));
+        cards.forEach((c) => c.classList.remove("active"));
         card.classList.add("active");
 
-        const coords = card.dataset.coords;
-        const address = card.dataset.address;
+        const coords = card.dataset.coords || "";
+        const address = card.dataset.address || "";
 
         if (coords) {
           frame.src = `https://www.google.com/maps?q=${coords}&z=17&output=embed`;
