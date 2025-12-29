@@ -6,6 +6,9 @@
  * - Camera button on bottom-right shows photo count and still links to /photos/ (tap image = /photos/)
  * - Desktop/tablet keeps the 5-photo collage layout.
  *
+ * ✅ NEW MOBILE CHANGE:
+ * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
+ *
  * NOTE: widget.js is loaded ONCE at the bottom.
  */
 import "../../../styles/global.css";
@@ -757,15 +760,20 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
-      /* ✅ Mobile behavior:
-         - Hide the 4 small photos entirely
-         - Show camera button + arrows on the main photo
-      */
+      /* ✅ Mobile behavior + ✅ move booking widget above description (mobile only) */
       @media (max-width: 640px) {
         .smallGrid { display: none; }
         .mobileCam { display: inline-flex; }
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
+
+        /* ✅ Reorder: booking widget first, then description */
+        .below { display: grid; grid-template-columns: 1fr; }
+        .below .book { order: 1; }
+        .below .desc { order: 2; }
+
+        /* ✅ Make it look natural on mobile */
+        .bookInner { position: static; margin-bottom: 12px; }
       }
 
       @media (max-width: 520px) {

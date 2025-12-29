@@ -6,6 +6,9 @@
  * - Camera badge on bottom-right shows count and links to /photos/ (tap image = /photos/)
  * - Desktop/tablet keeps the 5-photo collage layout.
  *
+ * ✅ NEW MOBILE CHANGE:
+ * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
+ *
  * NOTE: widget.js is loaded ONCE at the bottom.
  */
 import "../../../styles/global.css";
@@ -699,25 +702,25 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
-      /* ✅ Mobile behavior:
-         - Hide the 4 small photos entirely
-         - Show camera badge + arrows on the main photo
-      */
+      /* ✅ Mobile behavior + ✅ move booking widget above description (mobile only) */
       @media (max-width: 640px) {
         .smallGrid { display: none; }
         .mobileCam { display: inline-flex; }
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
+
+        /* ✅ Reorder: booking widget first, then description */
+        .below { display: grid; grid-template-columns: 1fr; }
+        .below .book { order: 1; }
+        .below .desc { order: 2; }
+
+        /* ✅ Make it look natural on mobile */
+        .bookInner { position: static; margin-bottom: 12px; }
       }
 
       @media (max-width: 520px) {
         .amen-value.columns { grid-template-columns: 1fr; }
       }
     </style>
-
-    <!-- ✅ Make sure the hero image exists for slider -->
-    <script is:inline>
-      // If you ever remove/rename heroImg above, the slider won't work.
-    </script>
   </body>
 </html>

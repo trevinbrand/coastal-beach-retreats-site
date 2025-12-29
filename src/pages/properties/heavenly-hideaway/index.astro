@@ -6,6 +6,9 @@
  * - Camera button on bottom-right shows photo count and still links to /photos/ (tap image = /photos/)
  * - Desktop/tablet keeps the 5-photo collage layout.
  *
+ * ✅ NEW MOBILE CHANGE:
+ * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
+ *
  * NOTE: I also removed the duplicate widget.js tags inside sections and load it ONCE at the bottom.
  */
 import "../../../styles/global.css";
@@ -548,7 +551,6 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
 
-        // Optional swipe
         let startX = 0;
         heroImg.addEventListener(
           "touchstart",
@@ -658,7 +660,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         font-weight: 900;
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
-        pointer-events: none; /* tap image still goes to /photos/ */
+        pointer-events: none;
       }
       .cam { font-size: 16px; }
 
@@ -781,7 +783,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         color: var(--brand-blue, #193e7f);
       }
 
-      /* ✅ MAP styles */
+      /* map */
       .mapWrap {
         margin-top: 12px;
         border-radius: 14px;
@@ -805,7 +807,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       }
       .mapLink:hover { color: var(--brand-blue, #193e7f); }
 
-      /* ✅ AMENITIES table like screenshot */
+      /* amenities table */
       .amenities-table {
         margin-top: 8px;
         border-radius: 14px;
@@ -850,15 +852,20 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
-      /* ✅ Mobile behavior:
-         - Hide the 4 small photos entirely
-         - Show camera button + arrows on the main photo
-      */
+      /* ✅ Mobile behavior + ✅ move booking widget above description (mobile only) */
       @media (max-width: 640px) {
         .smallGrid { display: none; }
         .mobileCam { display: inline-flex; }
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
+
+        /* ✅ Reorder: booking widget first, then description */
+        .below { display: grid; grid-template-columns: 1fr; }
+        .below .book { order: 1; }
+        .below .desc { order: 2; }
+
+        /* ✅ Make it look natural on mobile */
+        .bookInner { position: static; margin-bottom: 12px; }
       }
 
       @media (max-width: 520px) {
