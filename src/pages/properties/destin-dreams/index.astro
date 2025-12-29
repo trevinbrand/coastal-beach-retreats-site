@@ -1,31 +1,10 @@
 ---
 /**
  * FILE: src/pages/properties/destin-dreams/index.astro
- * Layout matches Heavenly Hideaway page:
- * - Photo collage at top (1 big left, 4 small right)
- * - Section nav row
- * - Below that: LEFT column = size + amenities lines + spaced description
- * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
- * - Availability calendar at the bottom (Multiple Month Calendar widget)
- *
- * ✅ CHANGE:
- * - Photos now use d1.jpeg ... d21.jpeg in /public/images/props/destin-dreams/
- * - Clicking any collage photo (or PHOTOS tab) now goes to:
- *   /properties/destin-dreams/photos/
- *
- * ✅ CHANGE (OwnerRez widgets updated):
- * - Booking/Inquiry widget (right column) uses:
- *   propertyId=38c38f783fe14bc8aea041d24552e0bb
- *   widgetId=a23513547a9348c1b4b249aa2587f052
- * - Reviews widget uses:
- *   propertyId=38c38f783fe14bc8aea041d24552e0bb
- *   widgetId=a169586fbbb54c64ad88f9125a3d428a
- * - Multiple Month Calendar widget (bottom) uses:
- *   propertyId=38c38f783fe14bc8aea041d24552e0bb
- *   widgetId=d583f4999c3f487eb9e7036f05e66d5a
- *
- * NOTE:
- * - widget.js is loaded ONCE at the bottom (avoid duplicates).
+ * ✅ MOBILE CHANGE:
+ * - On mobile, show ONLY the main photo.
+ * - Add a camera button on bottom-right of the main photo that links to /photos/
+ * - Desktop/tablet keeps the 5-photo collage layout.
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -90,15 +69,21 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE (links to separate photos page) -->
+      <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO (1 photo) -->
       <section class="collage" id="photos" aria-label="Photo preview">
-        <!-- BIG LEFT -->
+        <!-- BIG LEFT (always visible; becomes the ONLY photo on mobile) -->
         <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
           <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+
+          <!-- ✅ Mobile camera button (bottom-right) -->
+          <span class="mobileCam" aria-label={photosCountAria}>
+            <span class="cam" aria-hidden="true">📷</span>
+            {PHOTO_COUNT}
+          </span>
         </a>
 
-        <!-- RIGHT GRID -->
-        <div class="smallGrid">
+        <!-- RIGHT GRID (hidden on mobile) -->
+        <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
@@ -111,7 +96,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
-          <!-- LAST TILE WITH PHOTO COUNT BADGE -->
+          <!-- LAST TILE WITH PHOTO COUNT BADGE (desktop/tablet) -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
             <span class="countBadge" aria-label={photosCountAria}>
@@ -154,7 +139,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
             </span>
           </div>
 
-          <!-- DESCRIPTION (UPDATED with your formatted website copy) -->
+          <!-- DESCRIPTION -->
           <div class="longDesc">
             <h2 class="h2" style="margin-top: 0;">Important Notice</h2>
             <p>
@@ -251,12 +236,11 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         <!-- RIGHT: booking widget -->
         <aside class="book">
           <div class="bookInner">
-            <!-- OwnerRez Booking/Inquiry widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
             <div
               class="ownerrez-widget"
-              data-propertyId="38c38f783fe14bc8aea041d24552e0bb"
+              data-propertyId={OR_PROPERTY_ID}
               data-widget-type="Booking/Inquiry"
-              data-widgetId="a23513547a9348c1b4b249aa2587f052"
+              data-widgetId={OR_BOOKING_WIDGET_ID}
             ></div>
           </div>
         </aside>
@@ -348,26 +332,22 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
       <!-- REVIEWS -->
       <section id="reviews" class="card">
         <h2 class="h2">Reviews</h2>
-
-        <!-- OwnerRez Reviews widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
         <div
           class="ownerrez-widget"
-          data-propertyId="38c38f783fe14bc8aea041d24552e0bb"
+          data-propertyId={OR_PROPERTY_ID}
           data-widget-type="Reviews"
-          data-widgetId="a169586fbbb54c64ad88f9125a3d428a"
+          data-widgetId={OR_REVIEWS_WIDGET_ID}
         ></div>
       </section>
 
       <!-- AVAILABILITY -->
       <section id="availability" class="card">
         <h2 class="h2">Availability</h2>
-
-        <!-- OwnerRez Multiple Month Calendar widget for Destin Dreams @ Sterling Shores 311 Destin, FL -->
         <div
           class="ownerrez-widget"
-          data-propertyId="38c38f783fe14bc8aea041d24552e0bb"
+          data-propertyId={OR_PROPERTY_ID}
           data-widget-type="Multiple Month Calendar"
-          data-widgetId="d583f4999c3f487eb9e7036f05e66d5a"
+          data-widgetId={OR_CALENDAR_WIDGET_ID}
         ></div>
       </section>
     </main>
@@ -431,6 +411,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         display: block;
       }
 
+      /* Desktop/tablet badge (last tile) */
       .countBadge {
         position: absolute;
         right: 10px;
@@ -446,6 +427,24 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
       }
+
+      /* ✅ Mobile camera button (shown on mobile only) */
+      .mobileCam {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: none; /* default hidden; enabled on mobile below */
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.60);
+        color: #fff;
+        font-weight: 900;
+        border: 1px solid rgba(255,255,255,.18);
+        backdrop-filter: blur(6px);
+      }
+
       .cam { font-size: 16px; }
 
       /* subnav row */
@@ -524,10 +523,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         margin: 14px 0;
       }
 
-      /* Make headings inside longDesc match your site style nicely */
-      .longDesc .h2 {
-        text-align: left;
-      }
+      .longDesc .h2 { text-align: left; }
 
       .bookInner {
         position: sticky;
@@ -622,6 +618,16 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
 
         .amen-row { grid-template-columns: 1fr; }
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+      }
+
+      /* ✅ Mobile behavior:
+         - Hide the 4 small photos entirely
+         - Show the camera button on the main photo
+      */
+      @media (max-width: 640px) {
+        .smallGrid { display: none; }
+        .mobileCam { display: inline-flex; }
+        .big img { height: 320px; }
       }
 
       @media (max-width: 520px) {
