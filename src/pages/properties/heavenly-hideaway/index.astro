@@ -1,22 +1,12 @@
 ---
 /**
  * FILE: src/pages/properties/heavenly-hideaway/index.astro
- * Layout matches your screenshot:
- * - Photo collage at top (1 big left, 4 small right)
- * - Section nav row
- * - Below that: LEFT column = size + amenities lines + spaced description
- * - RIGHT column = OwnerRez Booking/Inquiry widget (sticky on desktop)
- * - Availability calendar stays at the bottom (Multiple Month Calendar widget)
+ * ✅ MOBILE CHANGES ADDED (same as Destin Dreams):
+ * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (h1..h35)
+ * - Camera button on bottom-right shows photo count and still links to /photos/ (tap image = /photos/)
+ * - Desktop/tablet keeps the 5-photo collage layout.
  *
- * ✅ CHANGE:
- * - Photos now use h1.jpeg ... h35.jpeg in /public/images/props/heavenly-hideaway/
- * - Clicking any collage photo (or PHOTOS tab) now goes to:
- *   /properties/heavenly-hideaway/photos/
- *
- * ✅ FIX ADDED:
- * The page felt “skinny” on large screens due to max-width: 1120px.
- * This version reduces the white space by widening the container to 1440px
- * and slightly reducing side padding.
+ * NOTE: I also removed the duplicate widget.js tags inside sections and load it ONCE at the bottom.
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -34,7 +24,7 @@ const PHOTOS_PAGE_HREF = "/properties/heavenly-hideaway/photos/";
 // ✅ Precompute strings used in attributes
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-// Build full list (still used to create the collage preview)
+// Build full list (still used to create the collage preview + mobile slider)
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
@@ -43,13 +33,12 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   };
 });
 
-// Collage uses first 5
+// Collage uses first 5 (desktop/tablet)
 const photosTop = galleryPhotos.slice(0, 5);
 
 const pageTitle =
   "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL";
-const subtitle =
-  "Reduced rates, same amazing experience @ Edgewater.";
+const subtitle = "Reduced rates, same amazing experience @ Edgewater.";
 
 // These show ABOVE the description like your screenshot
 const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-10";
@@ -77,19 +66,44 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE -->
+      <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO SLIDER (1 photo with arrows) -->
       <section class="collage" id="photos" aria-label="Photo preview">
-        <!-- BIG LEFT -->
-        <a
-          class="big"
-          href={PHOTOS_PAGE_HREF}
-          aria-label="View all photos"
-        >
-          <img src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+        <!-- BIG LEFT (always visible; becomes the ONLY photo on mobile) -->
+        <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
+          <img
+            id="heroImg"
+            src={photosTop[0].src}
+            alt={photosTop[0].alt}
+            loading="eager"
+          />
+
+          <!-- ✅ Mobile arrows (only visible on mobile) -->
+          <button
+            class="arrow left"
+            type="button"
+            aria-label="Previous photo"
+            data-arrow="prev"
+          >
+            ‹
+          </button>
+          <button
+            class="arrow right"
+            type="button"
+            aria-label="Next photo"
+            data-arrow="next"
+          >
+            ›
+          </button>
+
+          <!-- ✅ Mobile camera button (bottom-right) -->
+          <span class="mobileCam" aria-label={photosCountAria}>
+            <span class="cam" aria-hidden="true">📷</span>
+            {PHOTO_COUNT}
+          </span>
         </a>
 
-        <!-- RIGHT GRID -->
-        <div class="smallGrid">
+        <!-- RIGHT GRID (hidden on mobile) -->
+        <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
           </a>
@@ -100,7 +114,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
           </a>
 
-          <!-- LAST TILE WITH PHOTO COUNT BADGE -->
+          <!-- LAST TILE WITH PHOTO COUNT BADGE (desktop/tablet) -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
             <span class="countBadge" aria-label={photosCountAria}>
@@ -143,7 +157,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             </span>
           </div>
 
-          <!-- ✅ SPACED DESCRIPTION (no JS consts needed) -->
+          <!-- ✅ SPACED DESCRIPTION -->
           <div class="longDesc">
             <p>
               Coastal Beach Retreats is excited to present this eleventh-floor condo located in
@@ -216,7 +230,6 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
               data-widget-type="Booking/Inquiry"
               data-widgetId="a8281cc150054c85a38547dbd1cdcbb8"
             ></div>
-            <script is:inline src="https://app.ownerrez.com/widget.js"></script>
           </div>
         </aside>
       </section>
@@ -229,16 +242,14 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           11483 Front Beach Rd, T1-1106 Panama City Beach, FL 32407
         </p>
 
-        <!-- ✅ MAP (Tower 1 + very zoomed in) -->
         <div class="mapWrap" aria-label="Map">
           <iframe
             title="Map: Heavenly Hideaway location"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
-            src="https://www.google.com/maps?q=30.18528,-85.82094&z=17&output=embed">
-          </iframe>
-
+            src="https://www.google.com/maps?q=30.18528,-85.82094&z=17&output=embed"
+          ></iframe>
 
           <a
             class="mapLink"
@@ -251,7 +262,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         </div>
       </section>
 
-      <!-- AMENITIES (TABLE LAYOUT LIKE YOUR SCREENSHOT) -->
+      <!-- AMENITIES -->
       <section id="amenities" class="card">
         <h2 class="h2">&ensp;Amenities</h2>
 
@@ -479,40 +490,94 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       <!-- REVIEWS -->
       <section id="reviews" class="card">
         <h2 class="h2">Reviews</h2>
-
         <div
           class="ownerrez-widget"
           data-widget-type="Reviews - Reviews"
           data-widgetId="40d36bb19abb4a95963ff7770e6ef090"
           data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
         ></div>
-
-        <script is:inline src="https://app.ownerrez.com/widget.js"></script>
       </section>
 
       <!-- AVAILABILITY (BOTTOM) -->
       <section id="availability" class="card">
         <h2 class="h2">Availability</h2>
-
         <div
           class="ownerrez-widget"
           data-widgetId="16b1003665044e999bba1565c1fb880f"
           data-propertyId="ddffb4e693c740d4b264b6a60773d8df"
           data-widget-type="Multiple Month Calendar"
         ></div>
-
-        <script is:inline type="text/javascript" src="https://app.ownerrez.com/widget.js"></script>
       </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
+    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <script is:inline src="https://app.ownerrez.com/widget.js"></script>
+
+    <!-- ✅ Mobile hero slider script (runs only on small screens) -->
+    <script is:inline define:vars={{ galleryPhotos }}>
+      (function () {
+        const isMobile = window.matchMedia("(max-width: 640px)").matches;
+        if (!isMobile) return;
+
+        const photos = JSON.parse(JSON.stringify(galleryPhotos || []));
+        if (!photos.length) return;
+
+        const heroImg = document.getElementById("heroImg");
+        const bigLink = heroImg?.closest("a.big");
+        if (!heroImg || !bigLink) return;
+
+        let idx = 0;
+
+        function setPhoto(i) {
+          idx = (i + photos.length) % photos.length;
+          heroImg.src = photos[idx].src;
+          heroImg.alt = photos[idx].alt;
+        }
+
+        function onArrow(e, dir) {
+          e.preventDefault();
+          e.stopPropagation();
+          setPhoto(idx + (dir === "next" ? 1 : -1));
+        }
+
+        const prevBtn = bigLink.querySelector('button[data-arrow="prev"]');
+        const nextBtn = bigLink.querySelector('button[data-arrow="next"]');
+
+        prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
+        nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
+
+        // Optional swipe
+        let startX = 0;
+        heroImg.addEventListener(
+          "touchstart",
+          (e) => {
+            startX = e.touches?.[0]?.clientX || 0;
+          },
+          { passive: true }
+        );
+        heroImg.addEventListener(
+          "touchend",
+          (e) => {
+            const endX = e.changedTouches?.[0]?.clientX || 0;
+            const dx = endX - startX;
+            if (Math.abs(dx) < 40) return;
+            setPhoto(idx + (dx < 0 ? 1 : -1));
+          },
+          { passive: true }
+        );
+
+        setPhoto(0);
+      })();
+    </script>
+
     <style>
       /* ✅ FIX: reduce white space on large screens */
       .wrap {
-        max-width: 1440px;   /* was 1120px */
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 12px 10px;  /* smaller left/right padding */
+        padding: 12px 10px;
       }
 
       .titlebar { margin: 10px 0 14px; }
@@ -540,7 +605,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         background: rgba(0,0,0,.04);
         text-decoration: none;
         position: relative;
-        }
+      }
 
       .big img {
         width: 100%;
@@ -577,7 +642,48 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
       }
+
+      /* ✅ Mobile camera button (shown on mobile only) */
+      .mobileCam {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.60);
+        color: #fff;
+        font-weight: 900;
+        border: 1px solid rgba(255,255,255,.18);
+        backdrop-filter: blur(6px);
+        pointer-events: none; /* tap image still goes to /photos/ */
+      }
       .cam { font-size: 16px; }
+
+      /* ✅ Mobile arrows (hidden by default) */
+      .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.22);
+        background: rgba(0,0,0,.45);
+        color: #fff;
+        font-size: 28px;
+        line-height: 1;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .arrow.left { left: 10px; }
+      .arrow.right { right: 10px; }
+      .arrow:active { transform: translateY(-50%) scale(0.98); }
 
       /* subnav row */
       .subnav {
@@ -717,14 +823,8 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       }
       .amen-row:first-child { border-top: 0; }
 
-      .amen-label {
-        font-weight: 800;
-        color: #111;
-      }
-
-      .amen-value {
-        color: #111;
-      }
+      .amen-label { font-weight: 800; color: #111; }
+      .amen-value { color: #111; }
 
       .amen-value.columns {
         display: grid;
@@ -746,18 +846,23 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         .bookInner { position: static; }
         .mapWrap iframe { height: 300px; }
 
-        .amen-row {
-          grid-template-columns: 1fr;
-        }
-        .amen-value.columns {
-          grid-template-columns: repeat(2, minmax(160px, 1fr));
-        }
+        .amen-row { grid-template-columns: 1fr; }
+        .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+      }
+
+      /* ✅ Mobile behavior:
+         - Hide the 4 small photos entirely
+         - Show camera button + arrows on the main photo
+      */
+      @media (max-width: 640px) {
+        .smallGrid { display: none; }
+        .mobileCam { display: inline-flex; }
+        .arrow { display: inline-flex; }
+        .big img { height: 320px; }
       }
 
       @media (max-width: 520px) {
-        .amen-value.columns {
-          grid-template-columns: 1fr;
-        }
+        .amen-value.columns { grid-template-columns: 1fr; }
       }
     </style>
   </body>
