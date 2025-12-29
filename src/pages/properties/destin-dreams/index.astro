@@ -5,6 +5,8 @@
  * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (d1..d21)
  * - Camera button on bottom-right still links to /photos/
  * - Desktop/tablet keeps the 5-photo collage layout.
+ * ✅ NEW MOBILE CHANGE:
+ * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -401,7 +403,6 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
           heroImg.alt = photos[idx].alt;
         }
 
-        // Prevent arrows from navigating to /photos/ when tapped
         function onArrow(e, dir) {
           e.preventDefault();
           e.stopPropagation();
@@ -414,7 +415,6 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
 
-        // Optional: swipe support
         let startX = 0;
         heroImg.addEventListener(
           "touchstart",
@@ -428,13 +428,12 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
           (e) => {
             const endX = e.changedTouches?.[0]?.clientX || 0;
             const dx = endX - startX;
-            if (Math.abs(dx) < 40) return; // threshold
+            if (Math.abs(dx) < 40) return;
             setPhoto(idx + (dx < 0 ? 1 : -1));
           },
           { passive: true }
         );
 
-        // Start at first photo
         setPhoto(0);
       })();
     </script>
@@ -525,12 +524,12 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         font-weight: 900;
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
-        pointer-events: none; /* clicking anywhere else goes to /photos/ */
+        pointer-events: none;
       }
 
       .cam { font-size: 16px; }
 
-      /* ✅ Mobile arrows (hidden by default; enabled on mobile below) */
+      /* ✅ Mobile arrows */
       .arrow {
         position: absolute;
         top: 50%;
@@ -726,12 +725,20 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
-      /* ✅ Mobile behavior */
+      /* ✅ Mobile behavior + ✅ Booking widget above description (MOBILE ONLY) */
       @media (max-width: 640px) {
         .smallGrid { display: none; }
         .mobileCam { display: inline-flex; }
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
+
+        /* ✅ Reorder: booking widget first, then description */
+        .below { display: grid; grid-template-columns: 1fr; }
+        .below .book { order: 1; }
+        .below .desc { order: 2; }
+
+        /* ✅ Make the widget look natural full-width on mobile */
+        .bookInner { position: static; margin-bottom: 12px; }
       }
 
       @media (max-width: 520px) {
