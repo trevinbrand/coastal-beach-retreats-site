@@ -63,7 +63,7 @@ const slugFromHref = (href = "") =>
         <p class="location-label">Browse by location</p>
         <div class="location-buttons">
           <a class="loc-btn pcb-btn" href="#heavenly-hideaway">Panama City Beach</a>
-          <a class="loc-btn destin-btn" href="#destin-dreams">Destin</a>
+          <a class="loc-btn destin-btn" href="#destin-diamond">Destin</a>
         </div>
       </nav>
 
@@ -76,12 +76,16 @@ const slugFromHref = (href = "") =>
           {groups[city].map((p) => {
             const slug = slugFromHref(p.href);
 
-            // Only create anchors for the two featured buttons
+            // Anchors for jump buttons + Destin section entries
             const anchorId =
               slug === "heavenly-hideaway"
                 ? "heavenly-hideaway"
                 : slug === "destin-dreams"
                 ? "destin-dreams"
+                : slug === "destin-diamond"
+                ? "destin-diamond"
+                : slug === "fanta-sea"
+                ? "fanta-sea"
                 : null;
 
             return (

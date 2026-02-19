@@ -1,28 +1,28 @@
 ---
 /**
- * FILE: src/pages/properties/destin-diamond/photos/index.astro
- * Full Photos page for Destin Diamond
- * - Uses dd1.jpg ... dd33.jpg from /public/images/props/destin-diamond/
+ * FILE: src/pages/properties/fanta-sea/photos/index.astro
+ * Full Photos page for Fanta Sea
+ * - Uses FS1.jpeg ... FS33.jpeg from /public/images/props/fanta-sea/
  */
 import "../../../../styles/global.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (dd1.jpg ... dd33.jpg)
+// ✅ Photo setup (FS1.jpeg ... FS33.jpeg)
 const PHOTO_COUNT = 33;
-const PHOTO_BASE = "/images/props/destin-diamond";
+const PHOTO_BASE = "/images/props/fanta-sea";
 
-const pageTitle = "Destin Diamond Photos";
+const pageTitle = "Fanta Sea Photos";
 const subtitle =
-  "All photos for Destin Diamond — tap any image to open full size.";
-const backHref = "/properties/destin-diamond/";
+  "All photos for Waterscape Resort — A328. Tap any image to open full size.";
+const backHref = "/properties/fanta-sea/";
 
 // Build gallery list
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/dd${n}.jpg`,
-    alt: `Destin Diamond photo ${n}`,
+    src: `${PHOTO_BASE}/FS${n}.jpeg`,
+    alt: `Fanta Sea photo ${n}`,
   };
 });
 ---
@@ -33,7 +33,7 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta name="description" content="Full photo gallery for Destin Diamond." />
+    <meta name="description" content="Full photo gallery for Fanta Sea." />
   </head>
 
   <body>
@@ -73,9 +73,7 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
         padding: 12px 10px;
       }
 
-      .titlebar {
-        margin: 10px 0 14px;
-      }
+      .titlebar { margin: 10px 0 14px; }
 
       .topRow {
         display: flex;
@@ -94,7 +92,7 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 
       .sub {
         margin: 0;
-        opacity: 0.85;
+        opacity: .85;
         max-width: 860px;
       }
 
@@ -104,24 +102,22 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
         gap: 8px;
         padding: 10px 14px;
         border-radius: 12px;
-        border: 1px solid rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(0,0,0,.12);
         background: #fff;
         text-decoration: none;
         font-weight: 900;
-        color: rgba(25, 62, 127, 0.9);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        color: rgba(25,62,127,.9);
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
         white-space: nowrap;
       }
-      .btnBack:hover {
-        color: var(--brand-blue, #193e7f);
-      }
+      .btnBack:hover { color: var(--brand-blue, #193e7f); }
 
       .card {
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 0;
         padding: 14px;
         background: #fff;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 6px 18px rgba(0,0,0,.06);
       }
 
       .galleryGrid {
@@ -132,10 +128,10 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 
       .gItem {
         display: block;
-        border-radius: 14px;
+        border-radius: 0; /* square corners */
         overflow: hidden;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        background: rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(0,0,0,.04);
         text-decoration: none;
       }
 
@@ -147,24 +143,14 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
       }
 
       @media (max-width: 980px) {
-        .wrap {
-          padding: 12px 12px;
-        }
-        .galleryGrid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .gItem img {
-          height: 190px;
-        }
+        .wrap { padding: 12px 12px; }
+        .galleryGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gItem img { height: 190px; }
       }
 
       @media (max-width: 520px) {
-        .galleryGrid {
-          grid-template-columns: 1fr;
-        }
-        .gItem img {
-          height: 240px;
-        }
+        .galleryGrid { grid-template-columns: 1fr; }
+        .gItem img { height: 240px; }
       }
     </style>
   </body>

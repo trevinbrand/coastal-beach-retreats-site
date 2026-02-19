@@ -57,7 +57,7 @@ export const properties = [
     sizeLine: "1 Bedroom • 1 Bathroom • Sleeps 1-4",
     amenitiesLine: "Internet • Ocean View • Hot Tub",
     blurb:
-      "Unwind in this stylish Sterling Shores Resort third floor condo, featuring a private balcony with breathtaking Gulf views, a modern kitchen, and upscale resort amenities including a lagoon-style pool, private beach, fitness center, and a seasonal poolside bar.",
+      "Unwind in this stylish Sterling Shores Resort third-floor condo, featuring a private balcony with breathtaking Gulf views, a modern kitchen, and upscale resort amenities including a lagoon-style pool, private beach, fitness center, and a seasonal poolside bar.",
     noteBold: "",
     photosHref: "/properties/destin-dreams/#photos",
     availabilityHref: "/properties/destin-dreams/#availability",
@@ -66,5 +66,39 @@ export const properties = [
     image: "/images/props/destindreams-v2.jpg",
     city: "Destin, FL",
     resort: "Sterling Shores Resort"
+  },
+  {
+    id: "destin-diamond",
+    name: "Destin Diamond @ Destin, FL",
+    href: "/properties/destin-diamond/",
+    sizeLine: "— Bedrooms • — Bathrooms • Sleeps —",
+    amenitiesLine: "Internet • Near Beach • Resort Amenities",
+    blurb:
+      "Destin Diamond offers a bright, coastal escape designed for relaxation and comfort, with modern finishes and easy access to Destin’s world-famous beaches, dining, and shopping.",
+    noteBold: "",
+    photosHref: "/properties/destin-diamond/#photos",
+    availabilityHref: "/properties/destin-diamond/#availability",
+    detailsHref: "/properties/destin-diamond/",
+    inquireHref: "/contact/?property=destin-diamond",
+    image: "/images/props/destin-diamond.jpg",
+    city: "Destin, FL",
+    resort: ""
+  },
+  {
+    id: "fanta-sea",
+    name: "Fanta Sea @ Destin, FL",
+    href: "/properties/fanta-sea/",
+    sizeLine: "— Bedrooms • — Bathrooms • Sleeps —",
+    amenitiesLine: "Internet • Near Beach • Family Friendly",
+    blurb:
+      "Fanta Sea is a cheerful, beachy getaway perfect for families and friends, offering comfortable living spaces, coastal charm, and a prime Destin location close to the Gulf.",
+    noteBold: "",
+    photosHref: "/properties/fanta-sea/#photos",
+    availabilityHref: "/properties/fanta-sea/#availability",
+    detailsHref: "/properties/fanta-sea/",
+    inquireHref: "/contact/?property=fanta-sea",
+    image: "/images/props/fanta-sea.jpg",
+    city: "Destin, FL",
+    resort: ""
   }
 ];
