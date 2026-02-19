@@ -4,7 +4,7 @@ export const properties = [
     name: "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL",
     href: "/properties/heavenly-hideaway/",
     sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-10",
-    amenitiesLine: "Internet • Oceanfront • Hot Tub",
+    amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This eleventh-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled, features impressive floor-to-ceiling windows, tasteful décor, and elegant quartz countertops throughout the kitchen to create a warm, inviting atmosphere and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
@@ -21,7 +21,7 @@ export const properties = [
     name: "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL",
     href: "/properties/sailors-delight/",
     sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-9",
-    amenitiesLine: "Internet • Oceanfront • Hot Tub",
+    amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This ninth-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled and features nautical navy and white decor and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
@@ -38,7 +38,7 @@ export const properties = [
     name: "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL",
     href: "/properties/red-sky-nights/",
     sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-9",
-    amenitiesLine: "Internet • Oceanfront • Hot Tub",
+    amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This tenth-floor condo at the one-and-only Edgewater Beach & Golf Resort features an ocean-themed interior and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
@@ -55,7 +55,7 @@ export const properties = [
     name: "Destin Dreams @ Sterling Shores 311 Destin, FL",
     href: "/properties/destin-dreams/",
     sizeLine: "1 Bedroom • 1 Bathroom • Sleeps 1-4",
-    amenitiesLine: "Internet • Ocean View • Hot Tub",
+    amenitiesLine: "Internet • Gulf-View • Gulf-front • Hot Tub",
     blurb:
       "Unwind in this stylish Sterling Shores Resort third-floor condo, featuring a private balcony with breathtaking Gulf views, a modern kitchen, and upscale resort amenities including a lagoon-style pool, private beach, fitness center, and a seasonal poolside bar.",
     noteBold: "",
@@ -71,8 +71,8 @@ export const properties = [
     id: "destin-diamond",
     name: "Destin Diamond @ Destin, FL",
     href: "/properties/destin-diamond/",
-    sizeLine: "— Bedrooms • — Bathrooms • Sleeps —",
-    amenitiesLine: "Internet • Near Beach • Resort Amenities",
+    sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-4",
+    amenitiesLine: "Internet • Gulf-front • Resort Amenities",
     blurb:
       "Destin Diamond offers a bright, coastal escape designed for relaxation and comfort, with modern finishes and easy access to Destin’s world-famous beaches, dining, and shopping.",
     noteBold: "",
@@ -80,7 +80,7 @@ export const properties = [
     availabilityHref: "/properties/destin-diamond/#availability",
     detailsHref: "/properties/destin-diamond/",
     inquireHref: "/contact/?property=destin-diamond",
-    image: "/images/props/destin-diamond.jpg",
+    image: "/images/props/destin-diamond/dd1.jpg",
     city: "Destin, FL",
     resort: ""
   },
@@ -88,8 +88,8 @@ export const properties = [
     id: "fanta-sea",
     name: "Fanta Sea @ Destin, FL",
     href: "/properties/fanta-sea/",
-    sizeLine: "— Bedrooms • — Bathrooms • Sleeps —",
-    amenitiesLine: "Internet • Near Beach • Family Friendly",
+    sizeLine: "1 Bedroom + Bunk Nook • 2 Bathrooms • Sleeps 1-6",
+    amenitiesLine: "Internet • Gulf-front • Family Friendly",
     blurb:
       "Fanta Sea is a cheerful, beachy getaway perfect for families and friends, offering comfortable living spaces, coastal charm, and a prime Destin location close to the Gulf.",
     noteBold: "",
@@ -97,7 +97,7 @@ export const properties = [
     availabilityHref: "/properties/fanta-sea/#availability",
     detailsHref: "/properties/fanta-sea/",
     inquireHref: "/contact/?property=fanta-sea",
-    image: "/images/props/fanta-sea.jpg",
+    image: "/images/props/fanta-sea/fs1.jpg",
     city: "Destin, FL",
     resort: ""
   }

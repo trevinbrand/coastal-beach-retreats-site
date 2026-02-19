@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/fanta-sea/index.astro
  * - Mobile shows ONE hero image with arrows to cycle through ALL photos
  * - Camera badge shows photo count (tap image goes to /photos/)
- * - Desktop/tablet keeps the 5-photo collage
+ * - Desktop/tablet keeps the 5-photo collage (first 5 photos)
  * - On mobile ONLY, booking widget moves ABOVE the description
  *
  * NOTE: widget.js is loaded ONCE at the bottom.
@@ -12,39 +12,37 @@ import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-/** ✅ TODO: update these 3 things */
-const PHOTO_COUNT = 30; // <-- TODO: set your real count
-const PHOTO_BASE = "/images/props/fanta-sea"; // <-- TODO: create this folder in /public
+// ✅ Photos: fs1.jpg ... fs34.jpg in /public/images/props/fanta-sea/
+const PHOTO_COUNT = 34;
+const PHOTO_BASE = "/images/props/fanta-sea";
 const PHOTOS_PAGE_HREF = "/properties/fanta-sea/photos/";
 
-/** ✅ Precompute strings used in attributes */
+// ✅ Precompute strings used in attributes
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-/** ✅ TODO: choose your naming convention */
+// ✅ Build gallery list (used for collage + mobile slider)
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    // OPTION A: FS1.jpeg, FS2.jpeg...
-    src: `${PHOTO_BASE}/FS${n}.jpeg`,
-    // OPTION B: f1.jpeg, f2.jpeg...
-    // src: `${PHOTO_BASE}/f${n}.jpeg`,
+    src: `${PHOTO_BASE}/fs${n}.jpg`,
     alt: `Fanta Sea photo ${n}`,
   };
 });
 
+// ✅ Collage uses first 5 (same path)
 const photosTop = galleryPhotos.slice(0, 5);
 
-/** ✅ UPDATED TEXT */
+// ✅ Updated text
 const pageTitle = "🌊 Welcome to Fanta Sea at Waterscape Resort | A328";
 const subtitle = "Beachy, bright, and steps from the fun — your Waterscape escape.";
-const sizeLine = "X Bedrooms • X Bathrooms • Sleeps X"; // TODO
-const amenitiesLine = ["Internet", "Resort Pools", "Beach Access"]; // TODO
+const sizeLine = "1 Bedroom + Bunk nook • 2 Bathrooms • Sleeps 6";
+const amenitiesLine = ["Internet", "Resort Pools", "Beach Access"];
 
-/** ✅ TODO: OwnerRez IDs (replace with your real ones) */
-const OR_PROPERTY_ID = "REPLACE_ME";
-const OR_BOOKING_WIDGET_ID = "REPLACE_ME";
-const OR_REVIEWS_WIDGET_ID = "REPLACE_ME";
-const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
+// ✅ OwnerRez IDs (replace with your real ones)
+const OR_PROPERTY_ID = "c0b8169048144706b444df259a6db68d";
+const OR_BOOKING_WIDGET_ID = "554188faec574f7bb85d3c805ec98845";
+const OR_REVIEWS_WIDGET_ID = "5ee9e6bc937841e98af4a9a54eadf3c3";
+const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
 ---
 
 <!doctype html>
@@ -71,10 +69,29 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
       <!-- PHOTO COLLAGE + MOBILE HERO SLIDER -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-          <img id="heroImg" src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+          <img
+            id="heroImg"
+            src={photosTop[0].src}
+            alt={photosTop[0].alt}
+            loading="eager"
+          />
 
-          <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">‹</button>
-          <button class="arrow right" type="button" aria-label="Next photo" data-arrow="next">›</button>
+          <button
+            class="arrow left"
+            type="button"
+            aria-label="Previous photo"
+            data-arrow="prev"
+          >
+            ‹
+          </button>
+          <button
+            class="arrow right"
+            type="button"
+            aria-label="Next photo"
+            data-arrow="next"
+          >
+            ›
+          </button>
 
           <span class="mobileCam" aria-label={photosCountAria}>
             <span class="cam" aria-hidden="true">📷</span>
@@ -131,10 +148,72 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
             </span>
           </div>
 
+          <!-- ✅ FULL DESCRIPTION INSERTED -->
           <div class="longDesc">
-            <!-- ✅ TODO: replace with your real Fanta Sea description -->
             <p>
-              <strong>Fanta Sea at Waterscape Resort (A328)</strong> — description goes here.
+              Coastal Beach Retreats is proud to present <strong>Fanta Sea</strong>, a beautifully updated
+              1-bedroom, 2-bath with bunk nook condo located in the highly sought-after Waterscape Resort on
+              Okaloosa Island. Designed for comfort and relaxation, this inviting retreat offers peaceful pool
+              views, resort-style amenities, and easy access to one of the most family-friendly beaches on the
+              Emerald Coast.
+            </p>
+
+            <p><strong>🛌 Comfortable &amp; Thoughtfully Designed for Families</strong></p>
+            <p>
+              Fanta Sea comfortably accommodates up to 6 guests (per HOA guidelines). The layout includes a king
+              primary suite with private ensuite bath, balcony access, and flat-screen TV. A twin-over-twin bunk
+              alcove is perfect for kids, and a sleeper sofa in the living area provides additional sleeping
+              space. A second full bathroom adds extra convenience.
+            </p>
+            <p>
+              The open living space is ideal for unwinding after a day in the sun, while the private balcony
+              offers a relaxing spot for morning coffee or evening cocktails with serene pool views.
+            </p>
+
+            <p><strong>🍽️ Fully Equipped for Easy Vacation Living</strong></p>
+            <p>
+              The fully stocked kitchen features stainless steel appliances and granite countertops, making
+              vacation meals easy to prepare. A cozy dining area is perfect for gathering and planning your next
+              adventure. An in-unit washer and dryer ensure a stress-free stay from start to finish.
+            </p>
+
+            <p><strong>🌴 Waterscape Resort – A Destination in Itself</strong></p>
+            <p>
+              Waterscape feels like a Caribbean-style oasis with amenities for all ages. Guests enjoy four resort
+              pools, including a lazy river, a zero-entry pool with waterfalls, and a toddler splash area.
+              Additional amenities include two hot tubs, a seasonal poolside tiki bar, a fitness center with pool
+              views, poolside grills, a kids’ game room with organized activities, weekly poolside movie nights,
+              secured covered parking, and 24-hour onsite security.
+            </p>
+
+            <p><strong>🏖️ Complimentary Beach Gear for Your Stay</strong></p>
+            <p>
+              To make your beach days effortless, we provide 6 beach towels, 4 beach chairs, a shoulder-strap
+              cooler, and a beach umbrella—everything you need to relax and enjoy the beautiful Emerald Coast
+              without packing extra gear.
+            </p>
+
+            <p><strong>📍 Prime Okaloosa Island Location</strong></p>
+            <p>
+              Fanta Sea offers the best of both worlds—a laid-back island atmosphere just 10 minutes from
+              Destin’s dining, shopping, and nightlife. Nearby attractions include the Okaloosa Island Fishing
+              Pier, The Boardwalk with restaurants and shops, the Gulfarium Marine Adventure Park, and popular
+              beachside dining such as Old Bay Steamer and AJ’s Oyster Shanty. You can even stroll down the beach
+              to many local attractions.
+            </p>
+
+            <p><strong>❄️ Snowbirds Welcome</strong></p>
+            <p>
+              Discounted monthly winter rates are available November through February. Monthly stays require
+              arrival on the 1st and departure on the 1st of a subsequent month. An additional $150 cleaning fee
+              applies.
+            </p>
+
+            <p><strong>ℹ️ Important Guest Information</strong></p>
+            <p>
+              The primary renter must be at least 25 years old, sign a rental agreement within 48 hours of
+              booking, and be present for the duration of the stay. A $200 damage hold is required on a debit or
+              credit card in the renter’s name. Smoking, pets, and parties are not permitted.
             </p>
           </div>
         </div>
@@ -153,13 +232,11 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
 
       <section id="location" class="card">
         <h2 class="h2">Location</h2>
-        <!-- ✅ TODO: update address + map -->
         <p>Waterscape Resort • A328 • Fort Walton Beach, FL</p>
       </section>
 
       <section id="amenities" class="card">
         <h2 class="h2">Amenities</h2>
-        <!-- ✅ TODO: add your amenities table or copy one from another page -->
         <p>Coming soon.</p>
       </section>
 
@@ -188,6 +265,7 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
 
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
+    <!-- ✅ Mobile hero slider script (runs only on small screens) -->
     <script is:inline define:vars={{ galleryPhotos }}>
       (function () {
         const isMobile = window.matchMedia("(max-width: 640px)").matches;
