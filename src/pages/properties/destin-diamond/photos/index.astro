@@ -2,13 +2,13 @@
 /**
  * FILE: src/pages/properties/destin-diamond/photos/index.astro
  * Full Photos page for Destin Diamond
- * - Uses DD1.jpeg ... DD32.jpeg from /public/images/props/destin-diamond/
+ * - Uses dd1.jpg ... dd32.jpg from /public/images/props/destin-diamond/
  */
 import "../../../../styles/global.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (DD1.jpeg ... DD32.jpeg)
+// ✅ Photo setup (dd1.jpg ... dd32.jpg)
 const PHOTO_COUNT = 32;
 const PHOTO_BASE = "/images/props/destin-diamond";
 
@@ -21,12 +21,11 @@ const backHref = "/properties/destin-diamond/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/DD${n}.jpeg`,
+    src: `${PHOTO_BASE}/dd${n}.jpg`,
     alt: `Destin Diamond photo ${n}`,
   };
 });
 ---
-
 <!doctype html>
 <html lang="en">
   <head>

@@ -12,35 +12,33 @@ import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-/** ✅ TODO: update these 3 things */
-const PHOTO_COUNT = 30; // <-- TODO: set your real count
-const PHOTO_BASE = "/images/props/destin-diamond"; // <-- TODO: create this folder in /public
+/** ✅ Update these 3 things */
+const PHOTO_COUNT = 33; // <-- set your real count
+const PHOTO_BASE = "/images/props/destin-diamond"; // <-- folder in /public/images/props/destin-diamond
 const PHOTOS_PAGE_HREF = "/properties/destin-diamond/photos/";
 
 /** ✅ Precompute strings used in attributes */
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-/** ✅ TODO: choose your naming convention */
+/** ✅ Uses dd1.jpg ... dd32.jpg */
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    // OPTION A: DD1.jpeg, DD2.jpeg...
-    src: `${PHOTO_BASE}/DD${n}.jpeg`,
-    // OPTION B: d1.jpeg, d2.jpeg...
-    // src: `${PHOTO_BASE}/d${n}.jpeg`,
+    src: `${PHOTO_BASE}/dd${n}.jpg`,
     alt: `Destin Diamond photo ${n}`,
   };
 });
 
+// Collage uses first 5
 const photosTop = galleryPhotos.slice(0, 5);
 
-/** ✅ TODO: update text */
+/** ✅ Update text */
 const pageTitle = "Destin Diamond • Destin, FL"; // TODO
 const subtitle = "Your subtitle goes here."; // TODO
 const sizeLine = "X Bedrooms • X Bathrooms • Sleeps X"; // TODO
 const amenitiesLine = ["Internet", "Something", "Something"]; // TODO
 
-/** ✅ TODO: OwnerRez IDs (replace with your real ones) */
+/** ✅ OwnerRez IDs (replace with your real ones) */
 const OR_PROPERTY_ID = "REPLACE_ME";
 const OR_BOOKING_WIDGET_ID = "REPLACE_ME";
 const OR_REVIEWS_WIDGET_ID = "REPLACE_ME";
@@ -53,10 +51,7 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Destin Diamond — photos, details, and booking."
-    />
+    <meta name="description" content="Destin Diamond — photos, details, and booking." />
   </head>
 
   <body>
@@ -71,7 +66,12 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
       <!-- PHOTO COLLAGE + MOBILE HERO SLIDER -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-          <img id="heroImg" src={photosTop[0].src} alt={photosTop[0].alt} loading="eager" />
+          <img
+            id="heroImg"
+            src={photosTop[0].src}
+            alt={photosTop[0].alt}
+            loading="eager"
+          />
 
           <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">‹</button>
           <button class="arrow right" type="button" aria-label="Next photo" data-arrow="next">›</button>
@@ -132,7 +132,6 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
           </div>
 
           <div class="longDesc">
-            <!-- ✅ TODO: replace with Destin Diamond description -->
             <p><strong>Destin Diamond</strong> description goes here.</p>
           </div>
         </div>
@@ -151,13 +150,11 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
 
       <section id="location" class="card">
         <h2 class="h2">Location</h2>
-        <!-- ✅ TODO: update address + map -->
         <p>Destin, FL</p>
       </section>
 
       <section id="amenities" class="card">
         <h2 class="h2">Amenities</h2>
-        <!-- ✅ TODO: add your amenities table or copy one from another page -->
         <p>Coming soon.</p>
       </section>
 
@@ -186,6 +183,7 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
 
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
+    <!-- ✅ Mobile hero slider script (runs only on small screens) -->
     <script is:inline define:vars={{ galleryPhotos }}>
       (function () {
         const isMobile = window.matchMedia("(max-width: 640px)").matches;
@@ -218,17 +216,25 @@ const OR_CALENDAR_WIDGET_ID = "REPLACE_ME";
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
 
+        // Optional swipe
         let startX = 0;
-        heroImg.addEventListener("touchstart", (e) => {
-          startX = e.touches?.[0]?.clientX || 0;
-        }, { passive: true });
-
-        heroImg.addEventListener("touchend", (e) => {
-          const endX = e.changedTouches?.[0]?.clientX || 0;
-          const dx = endX - startX;
-          if (Math.abs(dx) < 40) return;
-          setPhoto(idx + (dx < 0 ? 1 : -1));
-        }, { passive: true });
+        heroImg.addEventListener(
+          "touchstart",
+          (e) => {
+            startX = e.touches?.[0]?.clientX || 0;
+          },
+          { passive: true }
+        );
+        heroImg.addEventListener(
+          "touchend",
+          (e) => {
+            const endX = e.changedTouches?.[0]?.clientX || 0;
+            const dx = endX - startX;
+            if (Math.abs(dx) < 40) return;
+            setPhoto(idx + (dx < 0 ? 1 : -1));
+          },
+          { passive: true }
+        );
 
         setPhoto(0);
       })();

@@ -2,14 +2,14 @@
 /**
  * FILE: src/pages/properties/fanta-sea/photos/index.astro
  * Full Photos page for Fanta Sea
- * - Uses FS1.jpeg ... FS33.jpeg from /public/images/props/fanta-sea/
+ * - Uses fs1.jpg ... fs34.jpg from /public/images/props/fanta-sea/
  */
 import "../../../../styles/global.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (FS1.jpeg ... FS33.jpeg)
-const PHOTO_COUNT = 33;
+// ✅ Photo setup (fs1.jpg ... fs34.jpg)
+const PHOTO_COUNT = 34;
 const PHOTO_BASE = "/images/props/fanta-sea";
 
 const pageTitle = "Fanta Sea Photos";
@@ -21,7 +21,7 @@ const backHref = "/properties/fanta-sea/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/FS${n}.jpeg`,
+    src: `${PHOTO_BASE}/fs${n}.jpg`,
     alt: `Fanta Sea photo ${n}`,
   };
 });
