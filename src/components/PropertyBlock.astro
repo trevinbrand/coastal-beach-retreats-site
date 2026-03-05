@@ -5,11 +5,13 @@ const { p } = Astro.props;
 <section class="block" aria-label={p.name}>
   <div class="body">
     <div class="img">
-      <img
-        src={p.image}
-        alt={p.name}
-        loading={p.id === "destin-dreams" ? "eager" : "lazy"}
-      />
+      <a class="imgLink" href={p.href} aria-label={`View ${p.name}`}>
+        <img
+          src={p.image}
+          alt={p.name}
+          loading={p.id === "destin-dreams" ? "eager" : "lazy"}
+        />
+      </a>
     </div>
 
     <div class="text">
@@ -24,16 +26,12 @@ const { p } = Astro.props;
 
       <p>{p.blurb}</p>
 
-      {p.noteBold && (
-        <p><strong>{p.noteBold}</strong></p>
-      )}
+      {p.noteBold && <p><strong>{p.noteBold}</strong></p>}
 
       <div class="actions">
         <a class="btn" href={p.photosHref}>Photos</a>
         <a class="btn" href={p.availabilityHref}>Availability</a>
         <a class="btn primary" href={p.detailsHref}>Details</a>
-
-        <!-- ✅ FIX: Inquire now goes to the property page -->
         <a class="btn" href={p.href}>Inquire</a>
       </div>
     </div>
@@ -46,6 +44,8 @@ const { p } = Astro.props;
       width: 100%;
       margin: 0;
       padding: 14px 0;
+      position: relative;
+      isolation: isolate; /* ✅ prevents outside overlays from hijacking clicks */
     }
 
     .body {
@@ -61,6 +61,17 @@ const { p } = Astro.props;
       overflow: hidden;
       border: 1px solid rgba(0,0,0,.12);
       background: rgba(0,0,0,.04);
+      position: relative;
+      z-index: 3; /* ✅ keep image area above nearby elements */
+    }
+
+    .imgLink {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 4; /* ✅ make the link itself the top clickable layer */
+      text-decoration: none;
     }
 
     .img img {
@@ -69,6 +80,8 @@ const { p } = Astro.props;
       height: 270px;
       object-fit: cover;
     }
+
+    .text { position: relative; z-index: 2; }
 
     .title {
       margin: 0 0 8px;
@@ -95,6 +108,8 @@ const { p } = Astro.props;
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 12px;
+      position: relative;
+      z-index: 2;
     }
 
     .btn {
@@ -117,13 +132,8 @@ const { p } = Astro.props;
     }
 
     @media (max-width: 980px) {
-      .body {
-        grid-template-columns: 1fr;
-      }
-
-      .img img {
-        height: 220px;
-      }
+      .body { grid-template-columns: 1fr; }
+      .img img { height: 220px; }
     }
   </style>
 </section>

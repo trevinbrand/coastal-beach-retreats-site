@@ -86,19 +86,20 @@ export const properties = [
   },
   {
     id: "fanta-sea",
-    name: "Fanta Sea @ Destin, FL",
+    name: "Fanta Sea @ Waterscape Resort A328 • Fort Walton Beach, FL",
     href: "/properties/fanta-sea/",
     sizeLine: "1 Bedroom + Bunk Nook • 2 Bathrooms • Sleeps 1-6",
-    amenitiesLine: "Internet • Gulf-front • Family Friendly",
+    amenitiesLine: "Internet • Resort Pools • Beach Access • Family Friendly",
     blurb:
-      "Fanta Sea is a cheerful, beachy getaway perfect for families and friends, offering comfortable living spaces, coastal charm, and a prime Destin location close to the Gulf.",
+      "Fanta Sea is a cheerful, beachy getaway perfect for families and friends, offering comfortable living spaces, coastal charm, and a prime location on Okaloosa Island close to the Gulf.",
     noteBold: "",
+    // ✅ lock ALL link targets to the same page so the homepage can't accidentally send you elsewhere
     photosHref: "/properties/fanta-sea/#photos",
     availabilityHref: "/properties/fanta-sea/#availability",
     detailsHref: "/properties/fanta-sea/",
     inquireHref: "/contact/?property=fanta-sea",
     image: "/images/props/fanta-sea/fs1.jpg",
-    city: "Destin, FL",
-    resort: ""
+    city: "Fort Walton Beach, FL",
+    resort: "Waterscape Resort"
   }
 ];

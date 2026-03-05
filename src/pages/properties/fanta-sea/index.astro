@@ -1,7 +1,7 @@
 ---
 /**
  * FILE: src/pages/properties/fanta-sea/index.astro
- * - Mobile shows ONE hero image with arrows to cycle through ALL photos
+ * - Mobile shows ONE hero image with arrows to cycle through ALL photos (fs1..fs34)
  * - Camera badge shows photo count (tap image goes to /photos/)
  * - Desktop/tablet keeps the 5-photo collage (first 5 photos)
  * - On mobile ONLY, booking widget moves ABOVE the description
@@ -32,13 +32,13 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 // ✅ Collage uses first 5 (same path)
 const photosTop = galleryPhotos.slice(0, 5);
 
-// ✅ Updated text
+// ✅ Page text
 const pageTitle = "🌊 Welcome to Fanta Sea at Waterscape Resort | A328";
 const subtitle = "Beachy, bright, and steps from the fun — your Waterscape escape.";
 const sizeLine = "1 Bedroom + Bunk nook • 2 Bathrooms • Sleeps 6";
 const amenitiesLine = ["Internet", "Resort Pools", "Beach Access"];
 
-// ✅ OwnerRez IDs (replace with your real ones)
+// ✅ OwnerRez IDs (your real ones)
 const OR_PROPERTY_ID = "c0b8169048144706b444df259a6db68d";
 const OR_BOOKING_WIDGET_ID = "554188faec574f7bb85d3c805ec98845";
 const OR_REVIEWS_WIDGET_ID = "5ee9e6bc937841e98af4a9a54eadf3c3";
@@ -76,20 +76,10 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
             loading="eager"
           />
 
-          <button
-            class="arrow left"
-            type="button"
-            aria-label="Previous photo"
-            data-arrow="prev"
-          >
+          <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">
             ‹
           </button>
-          <button
-            class="arrow right"
-            type="button"
-            aria-label="Next photo"
-            data-arrow="next"
-          >
+          <button class="arrow right" type="button" aria-label="Next photo" data-arrow="next">
             ›
           </button>
 
@@ -139,16 +129,16 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
             <span class="metaLabel">Amenities –</span>
             <span class="amenInline">
               {amenitiesLine.map((a, i) => (
-                <span class="amenItem">
+                <>
                   <span class="chip">{a}</span>
                   {i < amenitiesLine.length - 1 ? <span class="dot">•</span> : null}
-                </span>
+                </>
               ))}
               <a class="more" href="#amenities">(more...)</a>
             </span>
           </div>
 
-          <!-- ✅ FULL DESCRIPTION INSERTED -->
+          <!-- ✅ FULL DESCRIPTION (restored) -->
           <div class="longDesc">
             <p>
               Coastal Beach Retreats is proud to present <strong>Fanta Sea</strong>, a beautifully updated
@@ -230,14 +220,236 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
         </aside>
       </section>
 
+      <!-- ✅ LOCATION (Heavenly Hideaway style map) -->
       <section id="location" class="card">
         <h2 class="h2">Location</h2>
-        <p>Waterscape Resort • A328 • Fort Walton Beach, FL</p>
+        <p>
+          Waterscape Resort • A328 • Fort Walton Beach, FL<br />
+          1110 Santa Rosa Blvd Fort Walton Beach, FL 32548
+        </p>
+
+        <div class="mapWrap" aria-label="Map">
+          <iframe
+            title="Map: Fanta Sea location"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            src="https://www.google.com/maps?q=30.394848175954063,-86.5991825219331&z=16&output=embed"
+          ></iframe>
+
+          <a
+            class="mapLink"
+            href="https://www.google.com/maps/search/?api=1&query=1110%20Santa%20Rosa%20Blvd%2C%20Fort%20Walton%20Beach%2C%20FL%2032548"
+            target="_blank"
+            rel="noopener"
+          >
+            View on Google Maps →
+          </a>
+        </div>
       </section>
 
+      <!-- ✅ AMENITIES (restored + matches your screenshot format) -->
       <section id="amenities" class="card">
         <h2 class="h2">Amenities</h2>
-        <p>Coming soon.</p>
+
+        <div class="amenTable" role="table" aria-label="Amenities table">
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Property Type</div>
+            <div class="amenValue" role="cell">Condo</div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Check-In</div>
+            <div class="amenValue" role="cell">
+              A keypad is available 24 hours a day to provide entry for guests
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Elevator</div>
+            <div class="amenValue" role="cell">Yes</div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">House Rules</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Maximum occupancy: 6</li>
+                <li>Children welcome</li>
+                <li>Infants welcome</li>
+                <li>Smoking not allowed</li>
+                <li>Wheelchair inaccessible</li>
+                <li>Minimum age of primary renter: 21</li>
+                <li>Pets not allowed</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Setting &amp; View</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Beach</li>
+                <li>Ocean</li>
+                <li>Beachfront</li>
+                <li>Near Ocean</li>
+                <li>Oceanfront</li>
+                <li>Resort</li>
+                <li>Resort View</li>
+                <li>Resort Access</li>
+                <li>Private Beach Access</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">General</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Internet</li>
+                <li>WiFi</li>
+                <li>Free Internet</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Kitchen</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Kitchen</li>
+                <li>Refrigerator</li>
+                <li>Stove</li>
+                <li>Oven</li>
+                <li>Microwave</li>
+                <li>Dishwasher</li>
+                <li>Dishes &amp; Utensils</li>
+                <li>Coffee Maker</li>
+                <li>Toaster</li>
+                <li>Ice Maker</li>
+                <li>Freezer</li>
+                <li>Blender</li>
+                <li>Pots &amp; Pans</li>
+                <li>Dining Table</li>
+                <li>Baking Sheet</li>
+                <li>Barbeque/Grill Utensils</li>
+                <li>Wine Glasses</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Bathrooms</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>2 Bathrooms</li>
+                <li>Main Bathroom – Combination Tub/Shower, Toilet</li>
+                <li>Second Bathroom – Shower, Toilet</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Sleeping Arrangements</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>1 Bedroom, sleeps 4–6</li>
+                <li>Main Bedroom – 1 King Bed</li>
+                <li>Bunk Nook – 1 Bunk Bed</li>
+                <li>Living Area – 1 Sleeper Sofa</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Vehicles</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Parking</li>
+                <li>Garage</li>
+                <li>Free Parking</li>
+                <li>Free Parking On Premises</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Attractions</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Bay/Sound</li>
+                <li>Health/Beauty Spa</li>
+                <li>Marina</li>
+                <li>Museums</li>
+                <li>Water Parks</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Leisure</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Boating</li>
+                <li>Shopping</li>
+                <li>Water Sports</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Sports &amp; Adventure</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Fishing</li>
+                <li>Jet Skiing</li>
+                <li>Kayaking</li>
+                <li>Parasailing</li>
+                <li>Sailing</li>
+                <li>Snorkeling</li>
+                <li>Swimming</li>
+                <li>Wind Surfing</li>
+                <li>Mini Golf</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Safety</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Deadbolt Lock</li>
+                <li>Fire Extinguisher</li>
+                <li>Exterior Lighting</li>
+                <li>Smoke Detector</li>
+                <li>Enhanced Cleaning Practices</li>
+                <li>Cleaning Disinfection</li>
+                <li>Common Surface Disinfectant Cleaned</li>
+                <li>Linens High Temp Wash</li>
+                <li>Cleaning Products</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Expectations</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Cameras/Surveillance</li>
+                <li>Near Lake, River, or Water Body</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="amenRow" role="row">
+            <div class="amenLabel" role="rowheader">Accessibility</div>
+            <div class="amenValue" role="cell">
+              <ul class="amenList">
+                <li>Home Step Free Access</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="reviews" class="card">
@@ -263,6 +475,7 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
 
     <SiteFooter phone="(918) 734-3331" email="coastal-beach-retreats@gmail.com" />
 
+    <!-- ✅ Load OwnerRez widget script ONCE -->
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <!-- ✅ Mobile hero slider script (runs only on small screens) -->
@@ -306,7 +519,6 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
           },
           { passive: true }
         );
-
         heroImg.addEventListener(
           "touchend",
           (e) => {
@@ -384,7 +596,6 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
       .metaLabel { font-family: var(--font-heading, "Dancing Script", cursive); color: var(--accent-teal, #058789); font-weight: 700; font-size: 24px; white-space: nowrap; }
 
       .amenInline { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-      .amenItem { display: inline-flex; align-items: center; gap: 10px; }
       .chip { font-weight: 600; }
       .dot { opacity: .55; }
 
@@ -407,6 +618,70 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
       }
       .h2 { margin: 0 0 10px; font-size: 24px; color: var(--brand-blue, #193e7f); }
 
+      /* ✅ Map styles (Heavenly Hideaway match) */
+      .mapWrap {
+        margin-top: 12px;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: #fff;
+      }
+      .mapWrap iframe {
+        width: 100%;
+        height: 360px;
+        border: 0;
+        display: block;
+      }
+      .mapLink {
+        display: block;
+        padding: 10px 12px;
+        text-align: right;
+        font-weight: 800;
+        text-decoration: none;
+        color: rgba(25,62,127,.85);
+      }
+      .mapLink:hover { color: var(--brand-blue, #193e7f); }
+
+      /* ✅ Amenities table (matches your screenshot) */
+      .amenTable{
+        margin-top: 10px;
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .amenRow{
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 18px;
+        padding: 18px 18px;
+        border-top: 1px solid rgba(0,0,0,.08);
+        align-items: start;
+      }
+      .amenRow:first-child{ border-top: 0; }
+
+      .amenLabel{
+        font-weight: 900;
+        color: rgba(0,0,0,.78);
+        line-height: 1.25;
+      }
+
+      .amenValue{
+        color: rgba(0,0,0,.75);
+        line-height: 1.45;
+      }
+
+      .amenList{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px 26px;
+      }
+      .amenList li{ margin: 0; }
+
       @media (max-width: 980px) {
         .wrap { padding: 12px 12px; }
         .collage { grid-template-columns: 1fr; }
@@ -414,6 +689,10 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
         .small img { height: 160px; }
         .below { grid-template-columns: 1fr; }
         .bookInner { position: static; }
+        .mapWrap iframe { height: 300px; }
+
+        .amenRow { grid-template-columns: 1fr; }
+        .amenList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
 
       @media (max-width: 640px) {
@@ -427,6 +706,10 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
         .below .book { order: 1; }
         .below .desc { order: 2; }
         .bookInner { position: static; margin-bottom: 12px; }
+      }
+
+      @media (max-width: 520px) {
+        .amenList { grid-template-columns: 1fr; }
       }
     </style>
   </body>
