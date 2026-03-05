@@ -6,7 +6,6 @@
  * ✅ FIX: mobile drawer is fixed + panel is scrollable (works on iPhone)
  * ✅ Adds a close (X) button inside the mobile panel
  * ✅ Keeps desktop nav + mega menu hover behavior
- * ✅ Header contact text: "Contact the Owner, Shelly: (918) 734-3331"
  */
 
 const { phone = "(918) 734-3331" } = Astro.props;
@@ -87,12 +86,7 @@ const propertyGroups = [
 
     <!-- RIGHT -->
     <div class="right">
-      <!-- ✅ Updated contact wording -->
-      <a class="contact" href={telHref} aria-label={`Contact the Owner, Shelly at ${phone}`}>
-        <span class="contactLabel">Contact the Owner, Shelly:</span>
-        <span class="contactNum">{phone}</span>
-      </a>
-
+      <a class="contact" href={telHref}>{phone}</a>
       <a class="quote" href="/quote/">QUOTE / PRICING</a>
     </div>
   </div>
@@ -117,6 +111,7 @@ const propertyGroups = [
         </button>
       </div>
 
+      <!-- ✅ No duplicate Quote link in menu (kept only in top header) -->
       <div class="mSection">
         <a class="mLink" href="/">
           <span class="ico" aria-hidden="true">
@@ -207,14 +202,13 @@ const propertyGroups = [
           <span class="txt">Reviews</span>
         </a>
 
-        <!-- ✅ Updated wording inside mobile menu too -->
         <a class="mLink" href={telHref}>
           <span class="ico" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M6.5 3h3l1.2 5-2 1.2c1.2 2.5 3.3 4.6 5.8 5.8l1.2-2 5 1.2v3c0 1.1-.9 2-2 2C10.3 21.2 2.8 13.7 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="txt">Contact Shelly (Owner): {phone}</span>
+          <span class="txt">Shelly(Owner):{phone}</span>
         </a>
       </div>
     </div>
@@ -277,6 +271,7 @@ const propertyGroups = [
         accBtn.setAttribute("aria-expanded", String(!expanded));
         panel.classList.toggle("open", !expanded);
       });
+      // default open
       panel.classList.add("open");
     }
 
@@ -441,33 +436,13 @@ const propertyGroups = [
       display: flex;
       align-items: center;
       gap: 16px;
-      min-width: 0;
     }
 
-    /* ✅ Contact formatting */
     .contact {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 6px;
-      font-weight: 700;
-      text-decoration: none;
+      font-weight: 600;
+      text-decoration: underline;
       color: inherit;
       white-space: nowrap;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(25,62,127,.18);
-      background: rgba(25,62,127,.04);
-    }
-    .contact:hover{
-      background: rgba(25,62,127,.08);
-    }
-    .contactLabel{
-      opacity: .9;
-      font-weight: 800;
-    }
-    .contactNum{
-      text-decoration: underline;
-      text-underline-offset: 3px;
     }
 
     .quote {
@@ -555,10 +530,11 @@ const propertyGroups = [
       background: #fff;
       border-right: 1px solid rgba(0,0,0,.10);
       padding: 14px 14px 18px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow-y: auto;                  /* ✅ key */
+      -webkit-overflow-scrolling: touch; /* ✅ iOS momentum */
     }
 
+    /* Prevent page scroll behind menu (no touch-action: none; avoids iOS weirdness) */
     :global(body.noScroll){
       overflow: hidden;
     }
@@ -632,6 +608,7 @@ const propertyGroups = [
 
     .txt{ flex: 1; }
 
+    /* Accordion */
     .mAccordion{
       width: 100%;
       display: flex;
@@ -727,7 +704,7 @@ const propertyGroups = [
     @media (max-width: 1100px) {
       .nav { display: none; }
       .hamburger { display: inline-flex; }
-      .contact { display: none; } /* keep header clean on mobile */
+      .contact { display: none; }
     }
 
     @media (max-width: 420px){
