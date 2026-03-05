@@ -1,8 +1,14 @@
 ---
+/**
+ * FILE: src/components/SiteHeader.astro
+ * ✅ Cleaner mobile drawer menu + grouped properties + inline SVG icons (embedded, no set:html)
+ * ✅ Keeps your desktop nav + mega menu hover behavior
+ * ✅ Mobile drawer: card sections, better spacing, big tap targets, icons
+ */
 const { phone = "(918) 734-3331" } = Astro.props;
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 
-// ✅ Grouped props for “Properties” mega menu
+// ✅ Grouped props for “Properties” menu
 const propertyGroups = [
   {
     title: "Panama City Beach",
@@ -21,20 +27,6 @@ const propertyGroups = [
     ],
   },
 ];
-
-// ✅ Inline SVG icons (single source of truth)
-const ICONS = {
-  home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
-  props: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10.5L12 4l8 6.5V20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 20v-6h5v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
-  tour: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 17l-2 4m10-4 2 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 10l5 2-5 2z" fill="currentColor"/></svg>`,
-  map: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.1-6-11a6 6 0 1 1 12 0c0 5.9-6 11-6 11z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" fill="currentColor"/></svg>`,
-  cal: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3M17 3v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 7h16v14H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 11h16" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
-  reviews: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12c0 4-3.6 7-8 7-1.1 0-2.2-.2-3.2-.6L3 20l1.6-4.3C3.6 14.6 3 13.4 3 12c0-4 3.6-7 8-7s10 3 10 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 12h.01M12 12h.01M17 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
-  quote: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M17 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 12h8M8 16h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-  phone: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h3l2 6-2 1c1 2.5 3.5 5 6 6l1-2 6 2v3c0 1.1-.9 2-2 2C10.3 20 4 13.7 4 6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
-  caret: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 6 5-6z" fill="currentColor"/></svg>`,
-  x: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-};
 ---
 
 <header class="hdr site-header" data-header>
@@ -55,11 +47,10 @@ const ICONS = {
       <nav class="nav" aria-label="Primary">
         <a class="link" href="/">Home</a>
 
-        <!-- ✅ Properties mega menu -->
+        <!-- ✅ Desktop mega menu -->
         <div class="dropdown mega" data-dropdown>
           <button class="link dropbtn" type="button" aria-haspopup="true">
-            Properties
-            <span class="caret" set:html={ICONS.caret}></span>
+            Properties ▾
           </button>
 
           <div class="megaPanel" role="menu" aria-label="Properties menu">
@@ -96,109 +87,156 @@ const ICONS = {
     </div>
   </div>
 
-  <!-- ✅ MOBILE OVERLAY + DRAWER -->
-  <div class="backdrop" data-backdrop></div>
-
-  <aside class="drawer" aria-label="Mobile menu">
+  <!-- ✅ CLEANER MOBILE DRAWER -->
+  <div class="drawer" aria-label="Mobile menu">
     <div class="drawerTop">
-      <button class="closeBtn" type="button" aria-label="Close menu">
-        <span class="ico" set:html={ICONS.x}></span>
-      </button>
-
-      <a class="drawerQuote" href="/quote/">
-        <span class="ico" set:html={ICONS.quote}></span>
+      <a class="mQuote" href="/quote/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 2h12a2 2 0 0 1 2 2v17l-3-2-3 2-3-2-3 2-3-2V4a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M8 7h8M8 11h8M8 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
         Quote / Pricing
       </a>
     </div>
 
-    <div class="drawerBody">
-      <a class="ditem" href="/">
-        <span class="ico" set:html={ICONS.home}></span>
-        Home
-      </a>
-
-      <details class="dsection">
-        <summary>
-          <span class="sumLeft">
-            <span class="ico" set:html={ICONS.props}></span>
-            Properties
-          </span>
-          <span class="sumCaret" set:html={ICONS.caret}></span>
-        </summary>
-
-        <div class="dsub">
-          <a class="dsubLink all" href="/properties/">
-            View all properties →
-          </a>
-
-          {propertyGroups.map((group) => (
-            <div class="dgroup">
-              <div class="dgroupTitle">{group.title}</div>
-              <div class="dgroupLinks">
-                {group.items.map((p) => (
-                  <a class="dsubLink" href={p.href}>{p.label}</a>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </details>
-
-      <a class="ditem" href="/3d-condo-tours/">
-        <span class="ico" set:html={ICONS.tour}></span>
-        3D Condo Tours
-      </a>
-
-      <a class="ditem" href="/map/">
-        <span class="ico" set:html={ICONS.map}></span>
-        Map
-      </a>
-
-      <a class="ditem" href="/availability/">
-        <span class="ico" set:html={ICONS.cal}></span>
-        Availability
-      </a>
-
-      <a class="ditem" href="/reviews/">
-        <span class="ico" set:html={ICONS.reviews}></span>
-        Reviews
-      </a>
-
-      <a class="ditem" href={telHref}>
-        <span class="ico" set:html={ICONS.phone}></span>
-        {phone}
+    <div class="mSection">
+      <a class="mLink" href="/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="txt">Home</span>
       </a>
     </div>
-  </aside>
+
+    <div class="mSection">
+      <button class="mAccordion" type="button" aria-expanded="true" data-acc="props">
+        <span class="accLeft">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="txt">Properties</span>
+        </span>
+        <span class="chev" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+
+      <div class="mAccPanel" data-panel="props">
+        <a class="mPill" href="/properties/">
+          View all properties →
+        </a>
+
+        {propertyGroups.map((group) => (
+          <div class="mGroup">
+            <div class="mGroupTitle">{group.title}</div>
+            <div class="mGroupList">
+              {group.items.map((p) => (
+                <a class="mItem" href={p.href}>
+                  {p.label}
+                  <span class="mArrow" aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mSection">
+      <a class="mLink" href="/3d-condo-tours/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 7a2 2 0 0 1 2-2h7l2 2h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 11v6M9.5 13.5 12 11l2.5 2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="txt">3D Condo Tours</span>
+      </a>
+
+      <a class="mLink" href="/map/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 9.5a2 2 0 1 0 0 .01z" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+        <span class="txt">Map</span>
+      </a>
+
+      <a class="mLink" href="/availability/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 3v3M17 3v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 7h16M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M8 11h3M8 15h3M13 11h3M13 15h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="txt">Availability</span>
+      </a>
+
+      <a class="mLink" href="/reviews/">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.6 9 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="txt">Reviews</span>
+      </a>
+
+      <a class="mLink" href={telHref}>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6.5 3h3l1.2 5-2 1.2c1.2 2.5 3.3 4.6 5.8 5.8l1.2-2 5 1.2v3c0 1.1-.9 2-2 2C10.3 21.2 2.8 13.7 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="txt">Call {phone}</span>
+      </a>
+    </div>
+  </div>
 
   <script is:inline>
     const header = document.querySelector("[data-header]");
     const burgerBtn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
-    const closeBtn = header.querySelector(".closeBtn");
-    const backdrop = header.querySelector("[data-backdrop]");
 
-    function setOpen(open) {
-      burgerBtn.classList.toggle("open", open);
+    // Mobile drawer toggle
+    burgerBtn.addEventListener("click", () => {
+      const open = burgerBtn.classList.toggle("open");
       drawer.classList.toggle("open", open);
-      backdrop.classList.toggle("open", open);
-      burgerBtn.setAttribute("aria-expanded", open ? "true" : "false");
-      document.documentElement.classList.toggle("nav-locked", open);
+      burgerBtn.setAttribute("aria-expanded", open);
+      document.body.classList.toggle("noScroll", open);
+    });
+
+    // Close drawer on navigation (mobile)
+    drawer.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (!a) return;
+      burgerBtn.classList.remove("open");
+      drawer.classList.remove("open");
+      burgerBtn.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("noScroll");
+    });
+
+    // Accordion
+    const accBtn = drawer.querySelector('[data-acc="props"]');
+    const panel = drawer.querySelector('[data-panel="props"]');
+    if (accBtn && panel) {
+      accBtn.addEventListener("click", () => {
+        const expanded = accBtn.getAttribute("aria-expanded") === "true";
+        accBtn.setAttribute("aria-expanded", String(!expanded));
+        panel.classList.toggle("open", !expanded);
+      });
+      // default open
+      panel.classList.add("open");
     }
-
-    burgerBtn.addEventListener("click", () => setOpen(!drawer.classList.contains("open")));
-    closeBtn?.addEventListener("click", () => setOpen(false));
-    backdrop?.addEventListener("click", () => setOpen(false));
-
-    // Close on ESC
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setOpen(false);
-    });
-
-    // Close drawer after tapping a link (better UX on mobile)
-    drawer.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => setOpen(false));
-    });
 
     // Sticky header styling
     window.addEventListener("scroll", () => {
@@ -234,6 +272,7 @@ const ICONS = {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 14px;
     }
 
     .left {
@@ -261,21 +300,15 @@ const ICONS = {
       background: rgba(0,0,0,.05);
     }
 
-    /* ✅ Dropdown / Mega */
+    /* ✅ Desktop mega */
     .dropdown { position: relative; }
     .dropbtn {
       background: none;
       border: 0;
       font: inherit;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
 
-    .caret svg { width: 18px; height: 18px; display: block; }
-
-    /* keeps hover open while moving into dropdown */
     .dropdown::after {
       content: "";
       position: absolute;
@@ -285,7 +318,6 @@ const ICONS = {
       height: 14px;
     }
 
-    /* ✅ Mega panel (separate class so old styles can’t interfere) */
     .megaPanel{
       display: none;
       position: absolute;
@@ -373,6 +405,7 @@ const ICONS = {
       font-weight: 600;
       text-decoration: underline;
       color: inherit;
+      white-space: nowrap;
     }
 
     .quote {
@@ -437,84 +470,65 @@ const ICONS = {
       background: var(--brand-blue, #193e7f) !important;
       border-color: var(--brand-blue, #193e7f) !important;
     }
-    .site-header.is-scrolled .hamburger .hb { background: #fff !important; }
-
-    /* ✅ Mobile drawer + overlay */
-    .backdrop{
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(2px);
-      z-index: 998;
+    .site-header.is-scrolled .hamburger .hb {
+      background: #fff !important;
     }
-    .backdrop.open{ display: block; }
 
-    .drawer{
+    /* ✅ Mobile drawer base */
+    .drawer {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100dvh;
-      width: min(420px, 92vw);
+      padding: 14px 14px 18px;
       background: #fff;
-      z-index: 999;
-      border-right: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 22px 60px rgba(0,0,0,.20);
-      transform: translateX(-12px);
-      opacity: 0;
-      transition: transform .18s ease, opacity .18s ease;
-      overflow: hidden;
+      border-top: 1px solid rgba(0,0,0,.1);
     }
-    .drawer.open{
-      display: block;
-      transform: translateX(0);
-      opacity: 1;
+
+    .drawer.open { display: block; }
+
+    /* Prevent page scroll behind menu */
+    :global(body.noScroll){
+      overflow: hidden;
+      touch-action: none;
     }
 
     .drawerTop{
+      padding: 4px 0 12px;
+    }
+
+    .mQuote{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 18px;
+      border: 2px solid rgba(25,62,127,.25);
+      text-decoration: none;
+      font-weight: 900;
+      color: inherit;
+      background: rgba(25,62,127,.04);
+    }
+
+    .mSection{
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 18px;
+      padding: 10px;
+      margin-top: 12px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.05);
+      background: #fff;
+    }
+
+    .mLink{
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 14px 14px;
-      border-bottom: 1px solid rgba(0,0,0,.08);
-    }
-
-    .closeBtn{
-      width: 48px;
-      height: 48px;
+      padding: 12px 10px;
       border-radius: 14px;
-      border: 1px solid rgba(25,62,127,.25);
-      background: #fff;
-      color: var(--brand-blue, #193e7f);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .closeBtn svg{ width: 22px; height: 22px; }
-
-    .drawerQuote{
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 14px;
-      border-radius: 16px;
-      border: 2px solid var(--brand-blue, #193e7f);
-      font-weight: 900;
       text-decoration: none;
-      color: var(--brand-blue, #193e7f);
-      background: rgba(25,62,127,.04);
+      color: inherit;
+      font-weight: 800;
     }
-    .drawerQuote:hover{ background: rgba(25,62,127,.08); }
-    .drawerQuote svg{ width: 20px; height: 20px; }
-
-    .drawerBody{
-      padding: 8px 10px 18px;
-      overflow: auto;
-      height: calc(100dvh - 78px);
+    .mLink:hover{
+      background: rgba(25,62,127,.06);
     }
 
     .ico{
@@ -523,96 +537,116 @@ const ICONS = {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: rgba(25,62,127,.92);
-      flex: 0 0 auto;
+      flex: 0 0 22px;
+      color: rgba(25,62,127,.9);
     }
-    .ico svg{ width: 22px; height: 22px; display: block; }
+    .ico svg{ width: 22px; height: 22px; display:block; }
 
-    .ditem{
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 12px;
-      border-radius: 16px;
-      text-decoration: none;
-      color: var(--brand-blue, #193e7f);
-      font-weight: 800;
-    }
-    .ditem:hover{ background: rgba(25,62,127,.06); }
+    .txt{ flex: 1; }
 
-    .dsection{
-      margin: 8px 0;
-      border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.08);
-      overflow: hidden;
-      background: rgba(0,0,0,.01);
-    }
-
-    .dsection summary{
-      list-style: none;
-      cursor: pointer;
-      padding: 14px 12px;
+    /* Accordion */
+    .mAccordion{
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      padding: 12px 10px;
+      border-radius: 14px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
       font-weight: 900;
-      color: var(--brand-blue, #193e7f);
-      user-select: none;
+      text-align: left;
     }
-    .dsection summary::-webkit-details-marker{ display: none; }
+    .mAccordion:hover{ background: rgba(25,62,127,.06); }
 
-    .sumLeft{
+    .accLeft{
       display: inline-flex;
       align-items: center;
       gap: 12px;
     }
-    .sumCaret svg{ width: 18px; height: 18px; transition: transform .18s ease; }
-    details[open] .sumCaret svg{ transform: rotate(180deg); }
 
-    .dsub{ padding: 8px 10px 12px; }
+    .chev{
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .18s ease;
+      opacity: .9;
+    }
+    .chev svg{ width: 22px; height: 22px; }
 
-    .dsubLink{
-      display: block;
+    .mAccordion[aria-expanded="false"] .chev{
+      transform: rotate(-90deg);
+    }
+
+    .mAccPanel{
+      display: none;
+      padding: 8px 6px 2px;
+    }
+    .mAccPanel.open{ display:block; }
+
+    .mPill{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 12px 12px;
       border-radius: 14px;
       text-decoration: none;
+      font-weight: 900;
       color: rgba(25,62,127,.92);
-      font-weight: 800;
-    }
-    .dsubLink:hover{ background: rgba(25,62,127,.06); }
-
-    .dsubLink.all{
       background: rgba(25,62,127,.06);
-      border: 1px solid rgba(25,62,127,.10);
-      margin-bottom: 10px;
+      border: 1px solid rgba(25,62,127,.14);
+      margin: 6px 4px 12px;
     }
 
-    .dgroup{ margin-top: 8px; }
-    .dgroupTitle{
-      padding: 8px 8px 6px;
+    .mGroup{
+      padding: 10px 6px 2px;
+    }
+    .mGroupTitle{
       font-weight: 900;
       letter-spacing: .10em;
       font-size: 12px;
       text-transform: uppercase;
       color: rgba(25,62,127,.70);
+      margin: 0 6px 10px;
     }
-
-    .dgroupLinks{
+    .mGroupList{
       display: grid;
-      gap: 6px;
+      gap: 8px;
+      padding: 0 4px 8px;
     }
-
-    /* Lock page scroll when drawer is open */
-    :global(html.nav-locked),
-    :global(body.nav-locked){
-      overflow: hidden !important;
+    .mItem{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: inherit;
+      font-weight: 850;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(0,0,0,.02);
     }
+    .mItem:hover{
+      background: rgba(25,62,127,.06);
+    }
+    .mArrow{ opacity: .75; font-weight: 900; }
 
     @media (max-width: 1100px) {
       .nav { display: none; }
       .hamburger { display: inline-flex; }
       .contact { display: none; }
+    }
+
+    @media (max-width: 420px){
+      .quote{ padding: 12px 14px; border-radius: 14px; }
+      .hamburger{ width: 52px !important; height: 52px !important; }
+      .bar{ padding: 16px 10px; }
     }
   </style>
 </header>
