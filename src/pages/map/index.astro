@@ -1,404 +1,260 @@
 ---
-const { phone = "(918) 734-3331" } = Astro.props;
-const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
+import "../../styles/global.css";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
 
-// ✅ Grouped props for “Properties” mega menu
-const propertyGroups = [
+/**
+ * PROPERTY DEFINITIONS
+ * - Destin Dreams uses ADDRESS
+ * - All Panama City Beach properties use FIXED COORDINATES
+ * - Fanta Sea uses FIXED COORDINATES (Okaloosa Island)
+ * - Zoom level adjusted to be one unit closer
+ */
+const PCB_COORDS = "30.18528,-85.82094";
+const PCB_ZOOM = 17;
+
+type MapProp = {
+  id: string;
+  name: string;
+  meta: string;
+  coords?: string;
+  address?: string;
+};
+
+const props: MapProp[] = [
   {
-    title: "Panama City Beach",
-    items: [
-      { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
-      { href: "/properties/sailors-delight/", label: "Sailor’s Delight" },
-      { href: "/properties/red-sky-nights/", label: "Red Sky Nights" },
-    ],
+    id: "destin-dreams",
+    name: "Destin Dreams @ Sterling Shores 311",
+    meta: "1 br • 1 ba • Sleeps 1–4",
+    address: "1751 Scenic Hwy 98 Unit 311, Destin, FL 32541",
+  },
+
+  // ✅ NEW: Destin Diamond (address)
+  {
+    id: "destin-diamond",
+    name: "Destin Diamond @ Sterling Sands 111",
+    meta: "2 br • 2 ba • Sleeps 1–4",
+    address: "1080 Highway 98 E, Destin, FL 32541",
+  },
+
+  // ✅ NEW: Fanta Sea (coords)
+  {
+    id: "fanta-sea",
+    name: "Fanta Sea @ Waterscape Resort A328",
+    meta: "1 br + bunk • 2 ba • Sleeps 1–6",
+    coords: "30.394848175954063,-86.5991825219331",
+  },
+
+  {
+    id: "heavenly-hideaway",
+    name: "Heavenly Hideaway @ Edgewater Tower 1-1106",
+    meta: "2 br • 2 ba • Sleeps 1–10",
+    coords: PCB_COORDS,
   },
   {
-    title: "Destin / Okaloosa",
-    items: [
-      { href: "/properties/destin-dreams/", label: "Destin Dreams" },
-      { href: "/properties/destin-diamond/", label: "Destin Diamond" },
-      { href: "/properties/fanta-sea/", label: "Fanta Sea" },
-    ],
+    id: "red-sky-nights",
+    name: "Red Sky Nights @ Edgewater Tower 1-1002",
+    meta: "2 br • 2 ba • Sleeps 1–9",
+    coords: PCB_COORDS,
+  },
+  {
+    id: "sailors-delight",
+    name: "Sailor’s Delight @ Edgewater Tower 1-911",
+    meta: "2 br • 2 ba • Sleeps 1–9",
+    coords: PCB_COORDS,
   },
 ];
+
+// Default property
+const DEFAULT_ID = "red-sky-nights";
+const defaultProp = props.find((p) => p.id === DEFAULT_ID) ?? props[0];
+
+// ✅ TS-safe: address might be undefined on some props
+const defaultAddress = defaultProp.address ?? "";
+
+const initialMapSrc = defaultProp.coords
+  ? `https://www.google.com/maps?q=${defaultProp.coords}&z=${PCB_ZOOM}&output=embed`
+  : `https://www.google.com/maps?q=${encodeURIComponent(defaultAddress)}&z=17&output=embed`;
+
+const initialOpenSrc = defaultProp.coords
+  ? `https://www.google.com/maps?q=${defaultProp.coords}`
+  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultAddress)}`;
 ---
 
-<header class="hdr site-header" data-header>
-  <div class="bar">
-    <!-- LEFT: navigation -->
-    <div class="left">
-      <button
-        class="hamburger"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-      >
-        <span class="hb"></span>
-        <span class="hb"></span>
-        <span class="hb"></span>
-      </button>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Map | Coastal Beach Retreats</title>
+</head>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="link" href="/">Home</a>
+<body>
+  <SiteHeader phone="(918) 734-3331" />
 
-        <!-- ✅ Properties mega menu -->
-        <div class="dropdown mega" data-dropdown>
-          <button class="link dropbtn" type="button" aria-haspopup="true">
-            Properties ▾
-          </button>
+  <main class="map-wrap">
+    <h1 class="map-title">Map</h1>
 
-          <div class="megaPanel" role="menu" aria-label="Properties menu">
-            <a class="megaAll" href="/properties/">
-              View all properties →
-            </a>
+    <div class="map-layout">
+      <!-- MAP -->
+      <div class="map-frame">
+        <iframe
+          id="mapFrame"
+          src={initialMapSrc}
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Property Locations"
+        ></iframe>
 
-            <div class="megaGrid">
-              {propertyGroups.map((group) => (
-                <div class="megaGroup">
-                  <div class="megaHeading">{group.title}</div>
-                  {group.items.map((p) => (
-                    <a role="menuitem" class="megaLink" href={p.href}>
-                      {p.label}
-                    </a>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+        <div class="map-actions">
+          <a
+            id="openInMaps"
+            href={initialOpenSrc}
+            target="_blank"
+            rel="noopener"
+            class="open"
+          >
+            Open in Google Maps →
+          </a>
         </div>
+      </div>
 
-        <a class="link" href="/3d-condo-tours/">3D Condo Tours</a>
-        <a class="link" href="/map/">Map</a>
-        <a class="link" href="/availability/">Availability</a>
-        <a class="link" href="/reviews/">Reviews</a>
-      </nav>
+      <!-- PROPERTY LIST -->
+      <aside class="map-list">
+        {props.map((p) => (
+          <button
+            class={`map-card ${p.id === DEFAULT_ID ? "active" : ""}`}
+            type="button"
+            data-coords={p.coords ?? ""}
+            data-address={p.address ?? ""}
+          >
+            <strong>{p.name}</strong>
+            <span>{p.meta}</span>
+          </button>
+        ))}
+      </aside>
     </div>
+  </main>
 
-    <!-- RIGHT: phone + quote -->
-    <div class="right">
-      <a class="contact" href={telHref}>{phone}</a>
-      <a class="quote" href="/quote/">QUOTE / PRICING</a>
-    </div>
-  </div>
-
-  <!-- MOBILE DRAWER -->
-  <div class="drawer">
-    <a class="dlink" href="/">Home</a>
-
-    <details>
-      <summary>Properties</summary>
-
-      <a class="dlink sub" href="/properties/">View all properties →</a>
-
-      {propertyGroups.map((group) => (
-        <>
-          <div class="dgroup">{group.title}</div>
-          {group.items.map((p) => (
-            <a class="dlink sub" href={p.href}>{p.label}</a>
-          ))}
-        </>
-      ))}
-    </details>
-
-    <a class="dlink" href="/3d-condo-tours/">3D Condo Tours</a>
-    <a class="dlink" href="/map/">Map</a>
-    <a class="dlink" href="/availability/">Availability</a>
-    <a class="dlink" href="/reviews/">Reviews</a>
-    <a class="dlink" href="/quote/">Quote / Pricing</a>
-  </div>
+  <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
   <script is:inline>
-    const header = document.querySelector("[data-header]");
-    const burgerBtn = header.querySelector(".hamburger");
-    const drawer = header.querySelector(".drawer");
+    const frame = document.getElementById("mapFrame");
+    const openBtn = document.getElementById("openInMaps");
+    const cards = document.querySelectorAll(".map-card");
 
-    // Mobile drawer toggle
-    burgerBtn.addEventListener("click", () => {
-      const open = burgerBtn.classList.toggle("open");
-      drawer.classList.toggle("open", open);
-      burgerBtn.setAttribute("aria-expanded", open);
-    });
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        cards.forEach((c) => c.classList.remove("active"));
+        card.classList.add("active");
 
-    // Sticky header styling
-    window.addEventListener("scroll", () => {
-      header.classList.toggle("is-scrolled", window.scrollY > 10);
+        const coords = card.dataset.coords || "";
+        const address = card.dataset.address || "";
+
+        if (coords) {
+          frame.src = `https://www.google.com/maps?q=${coords}&z=17&output=embed`;
+          openBtn.href = `https://www.google.com/maps?q=${coords}`;
+        } else {
+          frame.src =
+            "https://www.google.com/maps?q=" +
+            encodeURIComponent(address) +
+            "&z=17&output=embed";
+          openBtn.href =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(address);
+        }
+      });
     });
   </script>
 
   <style>
-    .hdr,
-    .hdr * {
-      font-family: var(--font-nav, "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif) !important;
-    }
-
-    .hdr {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: #fff;
-      border-bottom: 1px solid rgba(0,0,0,.1);
-      color: var(--brand-blue, #193e7f);
-    }
-
-    .hdr.is-scrolled {
-      background: rgba(255,255,255,.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .bar {
+    .map-wrap {
       max-width: 1440px;
       margin: 0 auto;
       padding: 18px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .link {
-      text-decoration: none;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-weight: 600;
-      color: inherit;
-      white-space: nowrap;
-    }
-
-    .link:hover {
-      background: rgba(0,0,0,.05);
-    }
-
-    /* ✅ Dropdown / Mega */
-    .dropdown { position: relative; }
-    .dropbtn {
-      background: none;
-      border: 0;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    /* keeps hover open while moving into dropdown */
-    .dropdown::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 100%;
-      width: 100%;
-      height: 14px;
-    }
-
-    /* ✅ Mega panel (separate class so old .menu styles can’t interfere) */
-    .megaPanel{
-      display: none;
-      position: absolute;
-      top: calc(100% + 14px);
-      left: 0;
-      width: 640px;
-      max-width: min(640px, calc(100vw - 28px));
-      background: #fff;
-      border-radius: 18px;
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 18px 44px rgba(0,0,0,.14);
-      padding: 12px;
-      z-index: 1000;
-    }
-
-    .dropdown.mega:hover .megaPanel,
-    .dropdown.mega:focus-within .megaPanel{
-      display: block;
-    }
-
-    .megaAll{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      border-radius: 14px;
-      text-decoration: none;
-      font-weight: 900;
-      color: rgba(25,62,127,.92);
-      background: rgba(25,62,127,.06);
-      border: 1px solid rgba(25,62,127,.12);
+    .map-title {
+      font-family: var(--font-heading);
+      font-size: 36px;
       margin-bottom: 12px;
-    }
-    .megaAll:hover{
-      background: rgba(25,62,127,.10);
-      color: var(--brand-blue, #193e7f);
+      color: var(--brand-blue);
     }
 
-    .megaGrid{
+    .map-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 18px;
+    }
+
+    .map-frame iframe {
+      width: 100%;
+      height: 560px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: #fff;
+    }
+
+    .map-actions {
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .open {
+      text-decoration: none;
+      font-weight: 800;
+      color: rgba(25,62,127,.9);
+    }
+    .open:hover { color: var(--brand-blue); }
+
+    .map-list {
+      display: flex;
+      flex-direction: column;
       gap: 12px;
     }
 
-    .megaGroup{
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.08);
-      background: rgba(0,0,0,.02);
-    }
-
-    .megaHeading{
-      font-weight: 900;
-      letter-spacing: .10em;
-      font-size: 12px;
-      text-transform: uppercase;
-      color: rgba(25,62,127,.75);
-      margin: 2px 2px 10px;
-    }
-
-    .megaLink{
-      display: block;
-      padding: 10px 12px;
+    .map-card {
+      text-align: left;
+      padding: 14px;
       border-radius: 14px;
-      text-decoration: none;
-      color: inherit;
-      font-weight: 750;
-    }
-    .megaLink:hover{
-      background: rgba(25,62,127,.08);
+      border: 1px solid rgba(0,0,0,.12);
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      cursor: pointer;
+      font: inherit;
     }
 
-    @media (max-width: 720px){
-      .megaPanel{
-        width: calc(100vw - 28px);
-      }
-      .megaGrid{
+    .map-card strong {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      color: var(--brand-blue);
+      display: block;
+    }
+
+    .map-card span {
+      display: block;
+      margin-top: 4px;
+      opacity: .9;
+    }
+
+    .map-card:hover {
+      background: rgba(25,62,127,.05);
+    }
+
+    .map-card.active {
+      border-color: var(--accent-teal);
+      background: rgba(5,135,137,.08);
+    }
+
+    @media (max-width: 980px) {
+      .map-layout {
         grid-template-columns: 1fr;
       }
-    }
-
-    .right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .contact {
-      font-weight: 600;
-      text-decoration: underline;
-      color: inherit;
-    }
-
-    .quote {
-      padding: 14px 18px;
-      border-radius: 16px;
-      border: 2px solid currentColor;
-      font-weight: 700;
-      text-decoration: none;
-      color: inherit;
-      transition: all .2s ease;
-    }
-
-    .quote:hover {
-      background: currentColor;
-      color: #fff;
-    }
-
-    .hamburger {
-      display: none;
-      position: relative !important;
-      width: 56px !important;
-      height: 56px !important;
-      padding: 0 !important;
-      border-radius: 14px !important;
-      border: 2px solid rgba(25,62,127,.35) !important;
-      background: #fff !important;
-      cursor: pointer !important;
-      align-items: center !important;
-      justify-content: center !important;
-      -webkit-tap-highlight-color: transparent;
-      color: var(--brand-blue, #193e7f) !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-
-    .hamburger .hb {
-      display: block !important;
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      width: 28px !important;
-      height: 3px !important;
-      background: var(--brand-blue, #193e7f) !important;
-      border-radius: 999px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform-origin: center !important;
-      transition: transform .25s ease, opacity .2s ease !important;
-    }
-
-    .hamburger .hb:nth-child(1) { transform: translate(-50%, calc(-50% - 8px)) !important; }
-    .hamburger .hb:nth-child(2) { transform: translate(-50%, -50%) !important; }
-    .hamburger .hb:nth-child(3) { transform: translate(-50%, calc(-50% + 8px)) !important; }
-
-    .hamburger.open .hb:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg) !important; }
-    .hamburger.open .hb:nth-child(2) { opacity: 0 !important; }
-    .hamburger.open .hb:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg) !important; }
-
-    .site-header.is-scrolled .hamburger {
-      background: var(--brand-blue, #193e7f) !important;
-      border-color: var(--brand-blue, #193e7f) !important;
-    }
-    .site-header.is-scrolled .hamburger .hb {
-      background: #fff !important;
-    }
-
-    .drawer {
-      display: none;
-      padding: 16px 20px;
-      background: #fff;
-      border-top: 1px solid rgba(0,0,0,.1);
-    }
-
-    .drawer.open { display: block; }
-
-    .dlink {
-      display: block;
-      padding: 12px 6px;
-      font-weight: 600;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .dlink.sub{
-      padding-left: 16px;
-      opacity: .95;
-    }
-
-    .dgroup{
-      margin: 10px 6px 2px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      font-size: 12px;
-      text-transform: uppercase;
-      color: rgba(25,62,127,.75);
-    }
-
-    details summary {
-      cursor: pointer;
-      padding: 12px 6px;
-      font-weight: 700;
-      color: inherit;
-    }
-
-    @media (max-width: 1100px) {
-      .nav { display: none; }
-      .hamburger { display: inline-flex; }
-      .contact { display: none; }
+      .map-frame iframe {
+        height: 420px;
+      }
     }
   </style>
-</header>
+</body>
+</html>
