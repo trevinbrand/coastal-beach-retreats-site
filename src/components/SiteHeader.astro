@@ -6,7 +6,6 @@ const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 const propertyGroups = [
   {
     title: "Panama City Beach",
-    chip: "PCB",
     items: [
       { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
       { href: "/properties/sailors-delight/", label: "Sailor’s Delight" },
@@ -15,7 +14,6 @@ const propertyGroups = [
   },
   {
     title: "Destin / Okaloosa",
-    chip: "Destin",
     items: [
       { href: "/properties/destin-dreams/", label: "Destin Dreams" },
       { href: "/properties/destin-diamond/", label: "Destin Diamond" },
@@ -23,11 +21,25 @@ const propertyGroups = [
     ],
   },
 ];
+
+// ✅ Inline SVG icons (single source of truth)
+const ICONS = {
+  home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  props: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10.5L12 4l8 6.5V20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 20v-6h5v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  tour: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 17l-2 4m10-4 2 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 10l5 2-5 2z" fill="currentColor"/></svg>`,
+  map: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.1-6-11a6 6 0 1 1 12 0c0 5.9-6 11-6 11z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" fill="currentColor"/></svg>`,
+  cal: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3M17 3v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 7h16v14H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 11h16" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  reviews: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12c0 4-3.6 7-8 7-1.1 0-2.2-.2-3.2-.6L3 20l1.6-4.3C3.6 14.6 3 13.4 3 12c0-4 3.6-7 8-7s10 3 10 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 12h.01M12 12h.01M17 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
+  quote: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M17 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 12h8M8 16h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  phone: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h3l2 6-2 1c1 2.5 3.5 5 6 6l1-2 6 2v3c0 1.1-.9 2-2 2C10.3 20 4 13.7 4 6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  caret: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 6 5-6z" fill="currentColor"/></svg>`,
+  x: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+};
 ---
 
 <header class="hdr site-header" data-header>
   <div class="bar">
-    <!-- LEFT: navigation -->
+    <!-- LEFT -->
     <div class="left">
       <button
         class="hamburger"
@@ -46,7 +58,8 @@ const propertyGroups = [
         <!-- ✅ Properties mega menu -->
         <div class="dropdown mega" data-dropdown>
           <button class="link dropbtn" type="button" aria-haspopup="true">
-            Properties ▾
+            Properties
+            <span class="caret" set:html={ICONS.caret}></span>
           </button>
 
           <div class="megaPanel" role="menu" aria-label="Properties menu">
@@ -76,132 +89,115 @@ const propertyGroups = [
       </nav>
     </div>
 
-    <!-- RIGHT: phone + quote -->
+    <!-- RIGHT -->
     <div class="right">
       <a class="contact" href={telHref}>{phone}</a>
       <a class="quote" href="/quote/">QUOTE / PRICING</a>
     </div>
   </div>
 
-  <!-- MOBILE DRAWER (slide-in) -->
-  <div class="drawer" aria-label="Mobile menu">
+  <!-- ✅ MOBILE OVERLAY + DRAWER -->
+  <div class="backdrop" data-backdrop></div>
+
+  <aside class="drawer" aria-label="Mobile menu">
     <div class="drawerTop">
-      <div class="drawerTitle">Menu</div>
-      <button class="drawerClose" type="button" aria-label="Close menu">
-        ✕
+      <button class="closeBtn" type="button" aria-label="Close menu">
+        <span class="ico" set:html={ICONS.x}></span>
       </button>
+
+      <a class="drawerQuote" href="/quote/">
+        <span class="ico" set:html={ICONS.quote}></span>
+        Quote / Pricing
+      </a>
     </div>
 
-    <a class="dlink" href="/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">🏠</span>
-        <span>Home</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
-
-    <details class="dDetails">
-      <summary>
-        <span class="rowLeft">
-          <span class="ico" aria-hidden="true">🏡</span>
-          <span>Properties</span>
-        </span>
-      </summary>
-
-      <a class="dlink sub allprops" href="/properties/">
-        <span class="rowLeft">
-          <span class="ico mini" aria-hidden="true">📋</span>
-          <span>View all properties</span>
-        </span>
-        <span class="chev" aria-hidden="true">›</span>
+    <div class="drawerBody">
+      <a class="ditem" href="/">
+        <span class="ico" set:html={ICONS.home}></span>
+        Home
       </a>
 
-      {propertyGroups.map((group) => (
-        <>
-          <div class="dgroup">{group.title}</div>
-          {group.items.map((p) => (
-            <a class="dlink sub propRow" href={p.href}>
-              <span class="rowLeft">
-                <span class="chip">{group.chip}</span>
-                <span class="propName">{p.label}</span>
-              </span>
-              <span class="chev" aria-hidden="true">›</span>
-            </a>
+      <details class="dsection">
+        <summary>
+          <span class="sumLeft">
+            <span class="ico" set:html={ICONS.props}></span>
+            Properties
+          </span>
+          <span class="sumCaret" set:html={ICONS.caret}></span>
+        </summary>
+
+        <div class="dsub">
+          <a class="dsubLink all" href="/properties/">
+            View all properties →
+          </a>
+
+          {propertyGroups.map((group) => (
+            <div class="dgroup">
+              <div class="dgroupTitle">{group.title}</div>
+              <div class="dgroupLinks">
+                {group.items.map((p) => (
+                  <a class="dsubLink" href={p.href}>{p.label}</a>
+                ))}
+              </div>
+            </div>
           ))}
-        </>
-      ))}
-    </details>
+        </div>
+      </details>
 
-    <a class="dlink" href="/3d-condo-tours/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">🎥</span>
-        <span>3D Condo Tours</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
+      <a class="ditem" href="/3d-condo-tours/">
+        <span class="ico" set:html={ICONS.tour}></span>
+        3D Condo Tours
+      </a>
 
-    <a class="dlink" href="/map/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">🗺️</span>
-        <span>Map</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
+      <a class="ditem" href="/map/">
+        <span class="ico" set:html={ICONS.map}></span>
+        Map
+      </a>
 
-    <a class="dlink" href="/availability/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">📅</span>
-        <span>Availability</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
+      <a class="ditem" href="/availability/">
+        <span class="ico" set:html={ICONS.cal}></span>
+        Availability
+      </a>
 
-    <a class="dlink" href="/reviews/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">⭐</span>
-        <span>Reviews</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
+      <a class="ditem" href="/reviews/">
+        <span class="ico" set:html={ICONS.reviews}></span>
+        Reviews
+      </a>
 
-    <a class="dlink quoteRow" href="/quote/">
-      <span class="rowLeft">
-        <span class="ico" aria-hidden="true">💬</span>
-        <span>Quote / Pricing</span>
-      </span>
-      <span class="chev" aria-hidden="true">›</span>
-    </a>
-  </div>
+      <a class="ditem" href={telHref}>
+        <span class="ico" set:html={ICONS.phone}></span>
+        {phone}
+      </a>
+    </div>
+  </aside>
 
   <script is:inline>
     const header = document.querySelector("[data-header]");
     const burgerBtn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
-    const closeBtn = header.querySelector(".drawerClose");
+    const closeBtn = header.querySelector(".closeBtn");
+    const backdrop = header.querySelector("[data-backdrop]");
 
-    function setOpen(next) {
-      burgerBtn.classList.toggle("open", next);
-      drawer.classList.toggle("open", next);
-      burgerBtn.setAttribute("aria-expanded", next ? "true" : "false");
-      document.documentElement.classList.toggle("drawer-open", next);
-      document.body.classList.toggle("drawer-open", next);
+    function setOpen(open) {
+      burgerBtn.classList.toggle("open", open);
+      drawer.classList.toggle("open", open);
+      backdrop.classList.toggle("open", open);
+      burgerBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      document.documentElement.classList.toggle("nav-locked", open);
     }
 
     burgerBtn.addEventListener("click", () => setOpen(!drawer.classList.contains("open")));
     closeBtn?.addEventListener("click", () => setOpen(false));
+    backdrop?.addEventListener("click", () => setOpen(false));
 
-    // close when clicking outside drawer (on the dim backdrop)
-    header.addEventListener("click", (e) => {
-      const isOpen = drawer.classList.contains("open");
-      if (!isOpen) return;
-      const clickedInsideDrawer = drawer.contains(e.target);
-      const clickedBurger = burgerBtn.contains(e.target);
-      if (!clickedInsideDrawer && !clickedBurger) setOpen(false);
-    });
-
-    // close on ESC
+    // Close on ESC
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") setOpen(false);
+    });
+
+    // Close drawer after tapping a link (better UX on mobile)
+    drawer.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setOpen(false));
     });
 
     // Sticky header styling
@@ -261,7 +257,9 @@ const propertyGroups = [
       white-space: nowrap;
     }
 
-    .link:hover { background: rgba(0,0,0,.05); }
+    .link:hover {
+      background: rgba(0,0,0,.05);
+    }
 
     /* ✅ Dropdown / Mega */
     .dropdown { position: relative; }
@@ -270,8 +268,14 @@ const propertyGroups = [
       border: 0;
       font: inherit;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
+    .caret svg { width: 18px; height: 18px; display: block; }
+
+    /* keeps hover open while moving into dropdown */
     .dropdown::after {
       content: "";
       position: absolute;
@@ -281,6 +285,7 @@ const propertyGroups = [
       height: 14px;
     }
 
+    /* ✅ Mega panel (separate class so old styles can’t interfere) */
     .megaPanel{
       display: none;
       position: absolute;
@@ -314,7 +319,10 @@ const propertyGroups = [
       border: 1px solid rgba(25,62,127,.12);
       margin-bottom: 12px;
     }
-    .megaAll:hover{ background: rgba(25,62,127,.10); color: var(--brand-blue, #193e7f); }
+    .megaAll:hover{
+      background: rgba(25,62,127,.10);
+      color: var(--brand-blue, #193e7f);
+    }
 
     .megaGrid{
       display: grid;
@@ -346,7 +354,9 @@ const propertyGroups = [
       color: inherit;
       font-weight: 750;
     }
-    .megaLink:hover{ background: rgba(25,62,127,.08); }
+    .megaLink:hover{
+      background: rgba(25,62,127,.08);
+    }
 
     @media (max-width: 720px){
       .megaPanel{ width: calc(100vw - 28px); }
@@ -373,13 +383,15 @@ const propertyGroups = [
       text-decoration: none;
       color: inherit;
       transition: all .2s ease;
+      white-space: nowrap;
     }
 
-    .quote:hover { background: currentColor; color: #fff; }
+    .quote:hover {
+      background: currentColor;
+      color: #fff;
+    }
 
-    /* ------------------------------
-       Hamburger
-    -------------------------------- */
+    /* ✅ Hamburger */
     .hamburger {
       display: none;
       position: relative !important;
@@ -407,6 +419,8 @@ const propertyGroups = [
       height: 3px !important;
       background: var(--brand-blue, #193e7f) !important;
       border-radius: 999px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
       transform-origin: center !important;
       transition: transform .25s ease, opacity .2s ease !important;
     }
@@ -425,218 +439,174 @@ const propertyGroups = [
     }
     .site-header.is-scrolled .hamburger .hb { background: #fff !important; }
 
-    /* ------------------------------
-       MOBILE DRAWER (modern)
-    -------------------------------- */
-
-    html.drawer-open,
-    body.drawer-open{
-      overflow: hidden;
-    }
-
-    .site-header::before{
-      content: "";
+    /* ✅ Mobile drawer + overlay */
+    .backdrop{
+      display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.38);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .22s ease;
-      z-index: 1500;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(2px);
+      z-index: 998;
     }
-    .site-header:has(.drawer.open)::before{
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .backdrop.open{ display: block; }
 
     .drawer{
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
-      height: 100vh;
-      width: min(92vw, 390px);
-      padding: 14px 14px 18px;
+      height: 100dvh;
+      width: min(420px, 92vw);
       background: #fff;
+      z-index: 999;
       border-right: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 20px 60px rgba(0,0,0,.18);
-      transform: translateX(-102%);
-      transition: transform .22s ease;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.20);
+      transform: translateX(-12px);
+      opacity: 0;
+      transition: transform .18s ease, opacity .18s ease;
+      overflow: hidden;
     }
-
-    .drawer.open{ transform: translateX(0); }
+    .drawer.open{
+      display: block;
+      transform: translateX(0);
+      opacity: 1;
+    }
 
     .drawerTop{
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 6px 4px 10px;
+      gap: 12px;
+      padding: 14px 14px;
       border-bottom: 1px solid rgba(0,0,0,.08);
-      margin-bottom: 6px;
     }
 
-    .drawerTitle{
-      font-weight: 900;
-      font-size: 18px;
-      color: var(--brand-blue, #193e7f);
-      letter-spacing: .02em;
-    }
-
-    .drawerClose{
-      width: 44px;
-      height: 44px;
+    .closeBtn{
+      width: 48px;
+      height: 48px;
       border-radius: 14px;
-      border: 1px solid rgba(25,62,127,.22);
-      background: rgba(25,62,127,.06);
+      border: 1px solid rgba(25,62,127,.25);
+      background: #fff;
       color: var(--brand-blue, #193e7f);
-      font-weight: 900;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .drawerClose:active{ transform: scale(0.98); }
-
-    /* Row layout helpers */
-    .rowLeft{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-    .ico{
-      width: 28px;
-      height: 28px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      background: rgba(25,62,127,.08);
-      border: 1px solid rgba(25,62,127,.12);
-      font-size: 16px;
-      flex: 0 0 auto;
+      cursor: pointer;
     }
-    .ico.mini{
-      width: 24px;
-      height: 24px;
-      border-radius: 9px;
-      font-size: 14px;
-    }
-    .chev{
-      opacity: .6;
-      font-size: 22px;
-      line-height: 1;
-      flex: 0 0 auto;
-    }
+    .closeBtn svg{ width: 22px; height: 22px; }
 
-    .dlink{
-      display: flex;
+    .drawerQuote{
+      flex: 1;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 12px;
-      border-radius: 14px;
-      font-weight: 850;
-      font-size: 18px;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 2px solid var(--brand-blue, #193e7f);
+      font-weight: 900;
       text-decoration: none;
       color: var(--brand-blue, #193e7f);
       background: rgba(25,62,127,.04);
-      border: 1px solid rgba(25,62,127,.08);
-      -webkit-tap-highlight-color: transparent;
+    }
+    .drawerQuote:hover{ background: rgba(25,62,127,.08); }
+    .drawerQuote svg{ width: 20px; height: 20px; }
+
+    .drawerBody{
+      padding: 8px 10px 18px;
+      overflow: auto;
+      height: calc(100dvh - 78px);
     }
 
-    .dlink:hover{ background: rgba(25,62,127,.07); }
-    .dlink:active{ transform: scale(0.99); }
-
-    .dlink.sub{
-      font-size: 17px;
-      font-weight: 750;
-      padding: 12px 12px;
-      background: #fff;
-      border-color: rgba(0,0,0,.08);
-    }
-
-    /* Property row + chips */
-    .propRow{
-      background: #fff;
-    }
-    .chip{
+    .ico{
+      width: 22px;
+      height: 22px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 22px;
-      padding: 0 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: rgba(25,62,127,.95);
-      background: rgba(25,62,127,.10);
-      border: 1px solid rgba(25,62,127,.18);
+      color: rgba(25,62,127,.92);
       flex: 0 0 auto;
     }
-    .propName{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .ico svg{ width: 22px; height: 22px; display: block; }
 
-    .dDetails{
+    .ditem{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 12px;
       border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.10);
-      background: #fff;
+      text-decoration: none;
+      color: var(--brand-blue, #193e7f);
+      font-weight: 800;
+    }
+    .ditem:hover{ background: rgba(25,62,127,.06); }
+
+    .dsection{
+      margin: 8px 0;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.08);
       overflow: hidden;
+      background: rgba(0,0,0,.01);
     }
 
-    .dDetails summary{
+    .dsection summary{
       list-style: none;
       cursor: pointer;
       padding: 14px 12px;
-      font-weight: 900;
-      font-size: 18px;
-      color: var(--brand-blue, #193e7f);
-      background: rgba(0,0,0,.02);
-      border-bottom: 1px solid rgba(0,0,0,.08);
-      -webkit-tap-highlight-color: transparent;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-    }
-
-    .dDetails summary::-webkit-details-marker{ display: none; }
-    .dDetails summary::after{
-      content: "▾";
-      opacity: .75;
-      transform: translateY(1px);
-    }
-    .dDetails[open] summary::after{
-      content: "▴";
-    }
-
-    .dgroup{
-      margin: 12px 12px 6px;
       font-weight: 900;
-      letter-spacing: .12em;
+      color: var(--brand-blue, #193e7f);
+      user-select: none;
+    }
+    .dsection summary::-webkit-details-marker{ display: none; }
+
+    .sumLeft{
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sumCaret svg{ width: 18px; height: 18px; transition: transform .18s ease; }
+    details[open] .sumCaret svg{ transform: rotate(180deg); }
+
+    .dsub{ padding: 8px 10px 12px; }
+
+    .dsubLink{
+      display: block;
+      padding: 12px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: rgba(25,62,127,.92);
+      font-weight: 800;
+    }
+    .dsubLink:hover{ background: rgba(25,62,127,.06); }
+
+    .dsubLink.all{
+      background: rgba(25,62,127,.06);
+      border: 1px solid rgba(25,62,127,.10);
+      margin-bottom: 10px;
+    }
+
+    .dgroup{ margin-top: 8px; }
+    .dgroupTitle{
+      padding: 8px 8px 6px;
+      font-weight: 900;
+      letter-spacing: .10em;
       font-size: 12px;
       text-transform: uppercase;
-      color: rgba(25,62,127,.65);
+      color: rgba(25,62,127,.70);
     }
 
-    .allprops{
-      margin: 10px 10px 4px;
-      border-radius: 14px;
-      background: rgba(5,135,137,.10);
-      border-color: rgba(5,135,137,.22);
+    .dgroupLinks{
+      display: grid;
+      gap: 6px;
     }
 
-    .quoteRow{
-      background: rgba(25,62,127,.10);
-      border-color: rgba(25,62,127,.22);
+    /* Lock page scroll when drawer is open */
+    :global(html.nav-locked),
+    :global(body.nav-locked){
+      overflow: hidden !important;
     }
 
     @media (max-width: 1100px) {
