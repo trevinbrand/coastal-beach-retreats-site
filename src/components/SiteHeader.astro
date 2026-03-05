@@ -2,8 +2,10 @@
 /**
  * FILE: src/components/SiteHeader.astro
  * ✅ Cleaner mobile drawer menu + grouped properties + inline SVG icons
- * ✅ Removes the duplicate Quote inside the mobile menu
- * ✅ FIX: mobile drawer becomes fixed + scrollable (works on iPhone)
+ * ✅ No duplicate Quote inside the mobile menu
+ * ✅ FIX: mobile drawer is fixed + panel is scrollable (works on iPhone)
+ * ✅ Adds a close (X) button inside the mobile panel
+ * ✅ Keeps desktop nav + mega menu hover behavior
  */
 
 const { phone = "(918) 734-3331" } = Astro.props;
@@ -39,6 +41,7 @@ const propertyGroups = [
         type="button"
         aria-label="Open menu"
         aria-expanded="false"
+        aria-controls="mobileMenu"
       >
         <span class="hb"></span>
         <span class="hb"></span>
@@ -89,10 +92,26 @@ const propertyGroups = [
   </div>
 
   <!-- ✅ MOBILE DRAWER OVERLAY (scrollable) -->
-  <div class="drawer" aria-label="Mobile menu" aria-hidden="true">
+  <div
+    id="mobileMenu"
+    class="drawer"
+    aria-label="Mobile menu"
+    aria-hidden="true"
+  >
     <div class="drawerPanel" role="dialog" aria-label="Mobile menu panel">
-      <!-- ✅ Removed the duplicate Quote/Pricing block here -->
+      <div class="drawerHeader">
+        <div class="drawerTitle">Menu</div>
 
+        <button class="closeBtn" type="button" aria-label="Close menu" data-close>
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- ✅ No duplicate Quote link in menu (kept only in top header) -->
       <div class="mSection">
         <a class="mLink" href="/">
           <span class="ico" aria-hidden="true">
@@ -121,7 +140,7 @@ const propertyGroups = [
           </span>
         </button>
 
-        <div class="mAccPanel" data-panel="props">
+        <div class="mAccPanel open" data-panel="props">
           <a class="mPill" href="/properties/">
             View all properties →
           </a>
@@ -199,36 +218,48 @@ const propertyGroups = [
     const header = document.querySelector("[data-header]");
     const burgerBtn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
+    const closeBtn = header.querySelector("[data-close]");
 
-    // Mobile drawer toggle
-    burgerBtn.addEventListener("click", () => {
-      const open = burgerBtn.classList.toggle("open");
-      drawer.classList.toggle("open", open);
-      drawer.setAttribute("aria-hidden", open ? "false" : "true");
-      burgerBtn.setAttribute("aria-expanded", open ? "true" : "false");
-      document.body.classList.toggle("noScroll", open);
-    });
+    function openMenu() {
+      burgerBtn.classList.add("open");
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      burgerBtn.setAttribute("aria-expanded", "true");
+      document.body.classList.add("noScroll");
+    }
 
-    // Close drawer on navigation (mobile)
-    drawer.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (!a) return;
+    function closeMenu() {
       burgerBtn.classList.remove("open");
       drawer.classList.remove("open");
       drawer.setAttribute("aria-hidden", "true");
       burgerBtn.setAttribute("aria-expanded", "false");
       document.body.classList.remove("noScroll");
+    }
+
+    // Toggle menu
+    burgerBtn.addEventListener("click", () => {
+      const isOpen = burgerBtn.classList.contains("open");
+      isOpen ? closeMenu() : openMenu();
     });
 
-    // Close drawer if tap on overlay (outside panel)
+    // Close button
+    closeBtn?.addEventListener("click", closeMenu);
+
+    // Close drawer on navigation tap
     drawer.addEventListener("click", (e) => {
-      if (e.target === drawer) {
-        burgerBtn.classList.remove("open");
-        drawer.classList.remove("open");
-        drawer.setAttribute("aria-hidden", "true");
-        burgerBtn.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("noScroll");
-      }
+      const a = e.target.closest("a");
+      if (!a) return;
+      closeMenu();
+    });
+
+    // Close when tapping overlay (outside panel)
+    drawer.addEventListener("click", (e) => {
+      if (e.target === drawer) closeMenu();
+    });
+
+    // ESC closes menu
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
     });
 
     // Accordion
@@ -483,7 +514,7 @@ const propertyGroups = [
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.16);
+      background: rgba(0,0,0,.18);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       z-index: 1200;
@@ -494,19 +525,52 @@ const propertyGroups = [
       position: absolute;
       left: 0;
       top: 0;
-      width: min(440px, 92vw);
+      width: min(460px, 92vw);
       height: 100dvh;
       background: #fff;
       border-right: 1px solid rgba(0,0,0,.10);
-      padding: 14px 14px 18px; /* ✅ tighter */
-      overflow-y: auto;                 /* ✅ key */
-      -webkit-overflow-scrolling: touch;/* ✅ iOS momentum */
+      padding: 14px 14px 18px;
+      overflow-y: auto;                  /* ✅ key */
+      -webkit-overflow-scrolling: touch; /* ✅ iOS momentum */
     }
 
+    /* Prevent page scroll behind menu (no touch-action: none; avoids iOS weirdness) */
     :global(body.noScroll){
       overflow: hidden;
-      touch-action: none;
     }
+
+    .drawerHeader{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 4px 10px;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 2;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      margin: -6px -4px 10px;
+    }
+
+    .drawerTitle{
+      font-weight: 900;
+      color: rgba(25,62,127,.92);
+      letter-spacing: .02em;
+    }
+
+    .closeBtn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: #fff;
+      cursor: pointer;
+    }
+    .closeBtn:hover{ background: rgba(25,62,127,.06); }
 
     .mSection{
       border: 1px solid rgba(0,0,0,.10);
@@ -521,7 +585,7 @@ const propertyGroups = [
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 10px; /* ✅ tighter */
+      padding: 12px 10px;
       border-radius: 14px;
       text-decoration: none;
       color: inherit;
@@ -551,7 +615,7 @@ const propertyGroups = [
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px 10px; /* ✅ tighter */
+      padding: 12px 10px;
       border-radius: 14px;
       border: 0;
       background: transparent;
@@ -647,6 +711,7 @@ const propertyGroups = [
       .quote{ padding: 12px 14px; border-radius: 14px; }
       .hamburger{ width: 52px !important; height: 52px !important; }
       .bar{ padding: 16px 10px; }
+      .drawerPanel{ width: 92vw; }
     }
   </style>
 </header>
