@@ -1,10 +1,11 @@
 ---
 /**
  * FILE: src/components/SiteHeader.astro
- * ✅ Cleaner mobile drawer menu + grouped properties + inline SVG icons (embedded, no set:html)
- * ✅ Keeps your desktop nav + mega menu hover behavior
- * ✅ Mobile drawer: card sections, better spacing, big tap targets, icons
+ * ✅ Cleaner mobile drawer menu + grouped properties + inline SVG icons
+ * ✅ Removes the duplicate Quote inside the mobile menu
+ * ✅ FIX: mobile drawer becomes fixed + scrollable (works on iPhone)
  */
+
 const { phone = "(918) 734-3331" } = Astro.props;
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 
@@ -87,118 +88,110 @@ const propertyGroups = [
     </div>
   </div>
 
-  <!-- ✅ CLEANER MOBILE DRAWER -->
-  <div class="drawer" aria-label="Mobile menu">
-    <div class="drawerTop">
-      <a class="mQuote" href="/quote/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 2h12a2 2 0 0 1 2 2v17l-3-2-3 2-3-2-3 2-3-2V4a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M8 7h8M8 11h8M8 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </span>
-        Quote / Pricing
-      </a>
-    </div>
+  <!-- ✅ MOBILE DRAWER OVERLAY (scrollable) -->
+  <div class="drawer" aria-label="Mobile menu" aria-hidden="true">
+    <div class="drawerPanel" role="dialog" aria-label="Mobile menu panel">
+      <!-- ✅ Removed the duplicate Quote/Pricing block here -->
 
-    <div class="mSection">
-      <a class="mLink" href="/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">Home</span>
-      </a>
-    </div>
-
-    <div class="mSection">
-      <button class="mAccordion" type="button" aria-expanded="true" data-acc="props">
-        <span class="accLeft">
+      <div class="mSection">
+        <a class="mLink" href="/">
           <span class="ico" aria-hidden="true">
             <svg viewBox="0 0 24 24">
-              <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="txt">Properties</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </button>
+          <span class="txt">Home</span>
+        </a>
+      </div>
 
-      <div class="mAccPanel" data-panel="props">
-        <a class="mPill" href="/properties/">
-          View all properties →
+      <div class="mSection">
+        <button class="mAccordion" type="button" aria-expanded="true" data-acc="props">
+          <span class="accLeft">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="txt">Properties</span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+
+        <div class="mAccPanel" data-panel="props">
+          <a class="mPill" href="/properties/">
+            View all properties →
+          </a>
+
+          {propertyGroups.map((group) => (
+            <div class="mGroup">
+              <div class="mGroupTitle">{group.title}</div>
+              <div class="mGroupList">
+                {group.items.map((p) => (
+                  <a class="mItem" href={p.href}>
+                    {p.label}
+                    <span class="mArrow" aria-hidden="true">→</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mSection">
+        <a class="mLink" href="/3d-condo-tours/">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 7a2 2 0 0 1 2-2h7l2 2h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 11v6M9.5 13.5 12 11l2.5 2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="txt">3D Condo Tours</span>
         </a>
 
-        {propertyGroups.map((group) => (
-          <div class="mGroup">
-            <div class="mGroupTitle">{group.title}</div>
-            <div class="mGroupList">
-              {group.items.map((p) => (
-                <a class="mItem" href={p.href}>
-                  {p.label}
-                  <span class="mArrow" aria-hidden="true">→</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
+        <a class="mLink" href="/map/">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 9.5a2 2 0 1 0 0 .01z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </span>
+          <span class="txt">Map</span>
+        </a>
+
+        <a class="mLink" href="/availability/">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 3v3M17 3v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 7h16M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M8 11h3M8 15h3M13 11h3M13 15h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="txt">Availability</span>
+        </a>
+
+        <a class="mLink" href="/reviews/">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.6 9 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="txt">Reviews</span>
+        </a>
+
+        <a class="mLink" href={telHref}>
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M6.5 3h3l1.2 5-2 1.2c1.2 2.5 3.3 4.6 5.8 5.8l1.2-2 5 1.2v3c0 1.1-.9 2-2 2C10.3 21.2 2.8 13.7 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="txt">Call {phone}</span>
+        </a>
       </div>
-    </div>
-
-    <div class="mSection">
-      <a class="mLink" href="/3d-condo-tours/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 7a2 2 0 0 1 2-2h7l2 2h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M12 11v6M9.5 13.5 12 11l2.5 2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">3D Condo Tours</span>
-      </a>
-
-      <a class="mLink" href="/map/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M12 9.5a2 2 0 1 0 0 .01z" fill="none" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </span>
-        <span class="txt">Map</span>
-      </a>
-
-      <a class="mLink" href="/availability/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 3v3M17 3v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 7h16M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M8 11h3M8 15h3M13 11h3M13 15h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="txt">Availability</span>
-      </a>
-
-      <a class="mLink" href="/reviews/">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.6 9 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">Reviews</span>
-      </a>
-
-      <a class="mLink" href={telHref}>
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M6.5 3h3l1.2 5-2 1.2c1.2 2.5 3.3 4.6 5.8 5.8l1.2-2 5 1.2v3c0 1.1-.9 2-2 2C10.3 21.2 2.8 13.7 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">Call {phone}</span>
-      </a>
     </div>
   </div>
 
@@ -211,7 +204,8 @@ const propertyGroups = [
     burgerBtn.addEventListener("click", () => {
       const open = burgerBtn.classList.toggle("open");
       drawer.classList.toggle("open", open);
-      burgerBtn.setAttribute("aria-expanded", open);
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      burgerBtn.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.classList.toggle("noScroll", open);
     });
 
@@ -221,8 +215,20 @@ const propertyGroups = [
       if (!a) return;
       burgerBtn.classList.remove("open");
       drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
       burgerBtn.setAttribute("aria-expanded", "false");
       document.body.classList.remove("noScroll");
+    });
+
+    // Close drawer if tap on overlay (outside panel)
+    drawer.addEventListener("click", (e) => {
+      if (e.target === drawer) {
+        burgerBtn.classList.remove("open");
+        drawer.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+        burgerBtn.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("noScroll");
+      }
     });
 
     // Accordion
@@ -452,8 +458,6 @@ const propertyGroups = [
       height: 3px !important;
       background: var(--brand-blue, #193e7f) !important;
       border-radius: 999px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
       transform-origin: center !important;
       transition: transform .25s ease, opacity .2s ease !important;
     }
@@ -474,38 +478,34 @@ const propertyGroups = [
       background: #fff !important;
     }
 
-    /* ✅ Mobile drawer base */
-    .drawer {
+    /* ✅ Mobile overlay + scroll fix */
+    .drawer{
       display: none;
-      padding: 14px 14px 18px;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.16);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1200;
+    }
+    .drawer.open{ display:block; }
+
+    .drawerPanel{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: min(440px, 92vw);
+      height: 100dvh;
       background: #fff;
-      border-top: 1px solid rgba(0,0,0,.1);
+      border-right: 1px solid rgba(0,0,0,.10);
+      padding: 14px 14px 18px; /* ✅ tighter */
+      overflow-y: auto;                 /* ✅ key */
+      -webkit-overflow-scrolling: touch;/* ✅ iOS momentum */
     }
 
-    .drawer.open { display: block; }
-
-    /* Prevent page scroll behind menu */
     :global(body.noScroll){
       overflow: hidden;
       touch-action: none;
-    }
-
-    .drawerTop{
-      padding: 4px 0 12px;
-    }
-
-    .mQuote{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      padding: 14px 14px;
-      border-radius: 18px;
-      border: 2px solid rgba(25,62,127,.25);
-      text-decoration: none;
-      font-weight: 900;
-      color: inherit;
-      background: rgba(25,62,127,.04);
     }
 
     .mSection{
@@ -521,7 +521,7 @@ const propertyGroups = [
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 10px;
+      padding: 12px 10px; /* ✅ tighter */
       border-radius: 14px;
       text-decoration: none;
       color: inherit;
@@ -551,7 +551,7 @@ const propertyGroups = [
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px 10px;
+      padding: 12px 10px; /* ✅ tighter */
       border-radius: 14px;
       border: 0;
       background: transparent;
