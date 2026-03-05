@@ -2,15 +2,24 @@
 const { phone = "(918) 734-3331" } = Astro.props;
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 
-const propertyLinks = [
-  { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
-  { href: "/properties/sailors-delight/", label: "Sailor's Delight" },
-  { href: "/properties/red-sky-nights/", label: "Red Sky Nights" },
-
-  // ✅ Destin properties
-  { href: "/properties/destin-dreams/", label: "Destin Dreams" },
-  { href: "/properties/destin-diamond/", label: "Destin Diamond" },
-  { href: "/properties/fanta-sea/", label: "Fanta Sea" }
+// ✅ Grouped props for “Properties” mega menu
+const propertyGroups = [
+  {
+    title: "Panama City Beach",
+    items: [
+      { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
+      { href: "/properties/sailors-delight/", label: "Sailor’s Delight" },
+      { href: "/properties/red-sky-nights/", label: "Red Sky Nights" },
+    ],
+  },
+  {
+    title: "Destin / Okaloosa",
+    items: [
+      { href: "/properties/destin-dreams/", label: "Destin Dreams" },
+      { href: "/properties/destin-diamond/", label: "Destin Diamond" },
+      { href: "/properties/fanta-sea/", label: "Fanta Sea" },
+    ],
+  },
 ];
 ---
 
@@ -32,21 +41,33 @@ const propertyLinks = [
       <nav class="nav" aria-label="Primary">
         <a class="link" href="/">Home</a>
 
-        <div class="dropdown" data-dropdown>
-          <button class="link dropbtn" type="button">
+        <!-- ✅ Properties mega menu -->
+        <div class="dropdown mega" data-dropdown>
+          <button class="link dropbtn" type="button" aria-haspopup="true">
             Properties ▾
           </button>
 
-          <div class="menu" role="menu" aria-label="Properties menu">
-            {propertyLinks.map((p) => (
-              <a role="menuitem" href={p.href}>{p.label}</a>
-            ))}
+          <div class="megaPanel" role="menu" aria-label="Properties menu">
+            <a class="megaAll" href="/properties/">
+              View all properties →
+            </a>
+
+            <div class="megaGrid">
+              {propertyGroups.map((group) => (
+                <div class="megaGroup">
+                  <div class="megaHeading">{group.title}</div>
+                  {group.items.map((p) => (
+                    <a role="menuitem" class="megaLink" href={p.href}>
+                      {p.label}
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <!-- ✅ Goes to the NEW page we'll create below -->
         <a class="link" href="/3d-condo-tours/">3D Condo Tours</a>
-
         <a class="link" href="/map/">Map</a>
         <a class="link" href="/availability/">Availability</a>
         <a class="link" href="/reviews/">Reviews</a>
@@ -66,8 +87,16 @@ const propertyLinks = [
 
     <details>
       <summary>Properties</summary>
-      {propertyLinks.map((p) => (
-        <a class="dlink" href={p.href}>{p.label}</a>
+
+      <a class="dlink sub" href="/properties/">View all properties →</a>
+
+      {propertyGroups.map((group) => (
+        <>
+          <div class="dgroup">{group.title}</div>
+          {group.items.map((p) => (
+            <a class="dlink sub" href={p.href}>{p.label}</a>
+          ))}
+        </>
       ))}
     </details>
 
@@ -151,10 +180,8 @@ const propertyLinks = [
       background: rgba(0,0,0,.05);
     }
 
-    .dropdown {
-      position: relative;
-    }
-
+    /* ✅ Dropdown / Mega */
+    .dropdown { position: relative; }
     .dropbtn {
       background: none;
       border: 0;
@@ -162,6 +189,7 @@ const propertyLinks = [
       cursor: pointer;
     }
 
+    /* keeps hover open while moving into dropdown */
     .dropdown::after {
       content: "";
       position: absolute;
@@ -171,34 +199,86 @@ const propertyLinks = [
       height: 14px;
     }
 
-    .menu {
+    /* ✅ Mega panel (separate class so old .menu styles can’t interfere) */
+    .megaPanel{
       display: none;
       position: absolute;
       top: calc(100% + 14px);
       left: 0;
+      width: 640px;
+      max-width: min(640px, calc(100vw - 28px));
       background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 12px 28px rgba(0,0,0,.12);
-      padding: 8px;
-      min-width: 220px;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.10);
+      box-shadow: 0 18px 44px rgba(0,0,0,.14);
+      padding: 12px;
       z-index: 1000;
     }
 
-    .dropdown:hover .menu,
-    .dropdown:focus-within .menu {
+    .dropdown.mega:hover .megaPanel,
+    .dropdown.mega:focus-within .megaPanel{
       display: block;
     }
 
-    .menu a {
+    .megaAll{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 900;
+      color: rgba(25,62,127,.92);
+      background: rgba(25,62,127,.06);
+      border: 1px solid rgba(25,62,127,.12);
+      margin-bottom: 12px;
+    }
+    .megaAll:hover{
+      background: rgba(25,62,127,.10);
+      color: var(--brand-blue, #193e7f);
+    }
+
+    .megaGrid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .megaGroup{
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(0,0,0,.02);
+    }
+
+    .megaHeading{
+      font-weight: 900;
+      letter-spacing: .10em;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(25,62,127,.75);
+      margin: 2px 2px 10px;
+    }
+
+    .megaLink{
       display: block;
       padding: 10px 12px;
+      border-radius: 14px;
       text-decoration: none;
-      border-radius: 10px;
       color: inherit;
+      font-weight: 750;
+    }
+    .megaLink:hover{
+      background: rgba(25,62,127,.08);
     }
 
-    .menu a:hover {
-      background: rgba(0,0,0,.05);
+    @media (max-width: 720px){
+      .megaPanel{
+        width: calc(100vw - 28px);
+      }
+      .megaGrid{
+        grid-template-columns: 1fr;
+      }
     }
 
     .right {
@@ -292,6 +372,20 @@ const propertyLinks = [
       font-weight: 600;
       text-decoration: none;
       color: inherit;
+    }
+
+    .dlink.sub{
+      padding-left: 16px;
+      opacity: .95;
+    }
+
+    .dgroup{
+      margin: 10px 6px 2px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(25,62,127,.75);
     }
 
     details summary {
