@@ -6,6 +6,7 @@ const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 const propertyGroups = [
   {
     title: "Panama City Beach",
+    chip: "PCB",
     items: [
       { href: "/properties/heavenly-hideaway/", label: "Heavenly Hideaway" },
       { href: "/properties/sailors-delight/", label: "Sailor’s Delight" },
@@ -14,6 +15,7 @@ const propertyGroups = [
   },
   {
     title: "Destin / Okaloosa",
+    chip: "Destin",
     items: [
       { href: "/properties/destin-dreams/", label: "Destin Dreams" },
       { href: "/properties/destin-diamond/", label: "Destin Diamond" },
@@ -81,42 +83,125 @@ const propertyGroups = [
     </div>
   </div>
 
-  <!-- MOBILE DRAWER -->
-  <div class="drawer">
-    <a class="dlink" href="/">Home</a>
+  <!-- MOBILE DRAWER (slide-in) -->
+  <div class="drawer" aria-label="Mobile menu">
+    <div class="drawerTop">
+      <div class="drawerTitle">Menu</div>
+      <button class="drawerClose" type="button" aria-label="Close menu">
+        ✕
+      </button>
+    </div>
 
-    <details>
-      <summary>Properties</summary>
+    <a class="dlink" href="/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">🏠</span>
+        <span>Home</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
 
-      <a class="dlink sub" href="/properties/">View all properties →</a>
+    <details class="dDetails">
+      <summary>
+        <span class="rowLeft">
+          <span class="ico" aria-hidden="true">🏡</span>
+          <span>Properties</span>
+        </span>
+      </summary>
+
+      <a class="dlink sub allprops" href="/properties/">
+        <span class="rowLeft">
+          <span class="ico mini" aria-hidden="true">📋</span>
+          <span>View all properties</span>
+        </span>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
 
       {propertyGroups.map((group) => (
         <>
           <div class="dgroup">{group.title}</div>
           {group.items.map((p) => (
-            <a class="dlink sub" href={p.href}>{p.label}</a>
+            <a class="dlink sub propRow" href={p.href}>
+              <span class="rowLeft">
+                <span class="chip">{group.chip}</span>
+                <span class="propName">{p.label}</span>
+              </span>
+              <span class="chev" aria-hidden="true">›</span>
+            </a>
           ))}
         </>
       ))}
     </details>
 
-    <a class="dlink" href="/3d-condo-tours/">3D Condo Tours</a>
-    <a class="dlink" href="/map/">Map</a>
-    <a class="dlink" href="/availability/">Availability</a>
-    <a class="dlink" href="/reviews/">Reviews</a>
-    <a class="dlink" href="/quote/">Quote / Pricing</a>
+    <a class="dlink" href="/3d-condo-tours/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">🎥</span>
+        <span>3D Condo Tours</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
+
+    <a class="dlink" href="/map/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">🗺️</span>
+        <span>Map</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
+
+    <a class="dlink" href="/availability/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">📅</span>
+        <span>Availability</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
+
+    <a class="dlink" href="/reviews/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">⭐</span>
+        <span>Reviews</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
+
+    <a class="dlink quoteRow" href="/quote/">
+      <span class="rowLeft">
+        <span class="ico" aria-hidden="true">💬</span>
+        <span>Quote / Pricing</span>
+      </span>
+      <span class="chev" aria-hidden="true">›</span>
+    </a>
   </div>
 
   <script is:inline>
     const header = document.querySelector("[data-header]");
     const burgerBtn = header.querySelector(".hamburger");
     const drawer = header.querySelector(".drawer");
+    const closeBtn = header.querySelector(".drawerClose");
 
-    // Mobile drawer toggle
-    burgerBtn.addEventListener("click", () => {
-      const open = burgerBtn.classList.toggle("open");
-      drawer.classList.toggle("open", open);
-      burgerBtn.setAttribute("aria-expanded", open);
+    function setOpen(next) {
+      burgerBtn.classList.toggle("open", next);
+      drawer.classList.toggle("open", next);
+      burgerBtn.setAttribute("aria-expanded", next ? "true" : "false");
+      document.documentElement.classList.toggle("drawer-open", next);
+      document.body.classList.toggle("drawer-open", next);
+    }
+
+    burgerBtn.addEventListener("click", () => setOpen(!drawer.classList.contains("open")));
+    closeBtn?.addEventListener("click", () => setOpen(false));
+
+    // close when clicking outside drawer (on the dim backdrop)
+    header.addEventListener("click", (e) => {
+      const isOpen = drawer.classList.contains("open");
+      if (!isOpen) return;
+      const clickedInsideDrawer = drawer.contains(e.target);
+      const clickedBurger = burgerBtn.contains(e.target);
+      if (!clickedInsideDrawer && !clickedBurger) setOpen(false);
+    });
+
+    // close on ESC
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
     });
 
     // Sticky header styling
@@ -176,9 +261,7 @@ const propertyGroups = [
       white-space: nowrap;
     }
 
-    .link:hover {
-      background: rgba(0,0,0,.05);
-    }
+    .link:hover { background: rgba(0,0,0,.05); }
 
     /* ✅ Dropdown / Mega */
     .dropdown { position: relative; }
@@ -189,7 +272,6 @@ const propertyGroups = [
       cursor: pointer;
     }
 
-    /* keeps hover open while moving into dropdown */
     .dropdown::after {
       content: "";
       position: absolute;
@@ -199,7 +281,6 @@ const propertyGroups = [
       height: 14px;
     }
 
-    /* ✅ Mega panel (separate class so old .menu styles can’t interfere) */
     .megaPanel{
       display: none;
       position: absolute;
@@ -233,10 +314,7 @@ const propertyGroups = [
       border: 1px solid rgba(25,62,127,.12);
       margin-bottom: 12px;
     }
-    .megaAll:hover{
-      background: rgba(25,62,127,.10);
-      color: var(--brand-blue, #193e7f);
-    }
+    .megaAll:hover{ background: rgba(25,62,127,.10); color: var(--brand-blue, #193e7f); }
 
     .megaGrid{
       display: grid;
@@ -268,17 +346,11 @@ const propertyGroups = [
       color: inherit;
       font-weight: 750;
     }
-    .megaLink:hover{
-      background: rgba(25,62,127,.08);
-    }
+    .megaLink:hover{ background: rgba(25,62,127,.08); }
 
     @media (max-width: 720px){
-      .megaPanel{
-        width: calc(100vw - 28px);
-      }
-      .megaGrid{
-        grid-template-columns: 1fr;
-      }
+      .megaPanel{ width: calc(100vw - 28px); }
+      .megaGrid{ grid-template-columns: 1fr; }
     }
 
     .right {
@@ -303,11 +375,11 @@ const propertyGroups = [
       transition: all .2s ease;
     }
 
-    .quote:hover {
-      background: currentColor;
-      color: #fff;
-    }
+    .quote:hover { background: currentColor; color: #fff; }
 
+    /* ------------------------------
+       Hamburger
+    -------------------------------- */
     .hamburger {
       display: none;
       position: relative !important;
@@ -335,8 +407,6 @@ const propertyGroups = [
       height: 3px !important;
       background: var(--brand-blue, #193e7f) !important;
       border-radius: 999px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
       transform-origin: center !important;
       transition: transform .25s ease, opacity .2s ease !important;
     }
@@ -353,46 +423,220 @@ const propertyGroups = [
       background: var(--brand-blue, #193e7f) !important;
       border-color: var(--brand-blue, #193e7f) !important;
     }
-    .site-header.is-scrolled .hamburger .hb {
-      background: #fff !important;
+    .site-header.is-scrolled .hamburger .hb { background: #fff !important; }
+
+    /* ------------------------------
+       MOBILE DRAWER (modern)
+    -------------------------------- */
+
+    html.drawer-open,
+    body.drawer-open{
+      overflow: hidden;
     }
 
-    .drawer {
-      display: none;
-      padding: 16px 20px;
+    .site-header::before{
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
+      z-index: 1500;
+    }
+    .site-header:has(.drawer.open)::before{
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: min(92vw, 390px);
+      padding: 14px 14px 18px;
       background: #fff;
-      border-top: 1px solid rgba(0,0,0,.1);
+      border-right: 1px solid rgba(0,0,0,.10);
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      transform: translateX(-102%);
+      transition: transform .22s ease;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .drawer.open { display: block; }
+    .drawer.open{ transform: translateX(0); }
 
-    .dlink {
-      display: block;
-      padding: 12px 6px;
-      font-weight: 600;
+    .drawerTop{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 4px 10px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      margin-bottom: 6px;
+    }
+
+    .drawerTitle{
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--brand-blue, #193e7f);
+      letter-spacing: .02em;
+    }
+
+    .drawerClose{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(25,62,127,.22);
+      background: rgba(25,62,127,.06);
+      color: var(--brand-blue, #193e7f);
+      font-weight: 900;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .drawerClose:active{ transform: scale(0.98); }
+
+    /* Row layout helpers */
+    .rowLeft{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .ico{
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(25,62,127,.08);
+      border: 1px solid rgba(25,62,127,.12);
+      font-size: 16px;
+      flex: 0 0 auto;
+    }
+    .ico.mini{
+      width: 24px;
+      height: 24px;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+    .chev{
+      opacity: .6;
+      font-size: 22px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .dlink{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 12px;
+      border-radius: 14px;
+      font-weight: 850;
+      font-size: 18px;
       text-decoration: none;
-      color: inherit;
+      color: var(--brand-blue, #193e7f);
+      background: rgba(25,62,127,.04);
+      border: 1px solid rgba(25,62,127,.08);
+      -webkit-tap-highlight-color: transparent;
     }
+
+    .dlink:hover{ background: rgba(25,62,127,.07); }
+    .dlink:active{ transform: scale(0.99); }
 
     .dlink.sub{
-      padding-left: 16px;
-      opacity: .95;
+      font-size: 17px;
+      font-weight: 750;
+      padding: 12px 12px;
+      background: #fff;
+      border-color: rgba(0,0,0,.08);
+    }
+
+    /* Property row + chips */
+    .propRow{
+      background: #fff;
+    }
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(25,62,127,.95);
+      background: rgba(25,62,127,.10);
+      border: 1px solid rgba(25,62,127,.18);
+      flex: 0 0 auto;
+    }
+    .propName{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dDetails{
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .dDetails summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 12px;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--brand-blue, #193e7f);
+      background: rgba(0,0,0,.02);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      -webkit-tap-highlight-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .dDetails summary::-webkit-details-marker{ display: none; }
+    .dDetails summary::after{
+      content: "▾";
+      opacity: .75;
+      transform: translateY(1px);
+    }
+    .dDetails[open] summary::after{
+      content: "▴";
     }
 
     .dgroup{
-      margin: 10px 6px 2px;
+      margin: 12px 12px 6px;
       font-weight: 900;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
       font-size: 12px;
       text-transform: uppercase;
-      color: rgba(25,62,127,.75);
+      color: rgba(25,62,127,.65);
     }
 
-    details summary {
-      cursor: pointer;
-      padding: 12px 6px;
-      font-weight: 700;
-      color: inherit;
+    .allprops{
+      margin: 10px 10px 4px;
+      border-radius: 14px;
+      background: rgba(5,135,137,.10);
+      border-color: rgba(5,135,137,.22);
+    }
+
+    .quoteRow{
+      background: rgba(25,62,127,.10);
+      border-color: rgba(25,62,127,.22);
     }
 
     @media (max-width: 1100px) {
