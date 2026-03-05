@@ -23,6 +23,24 @@ nav a,
 }
 
 /* ------------------------------
+   Remove ALL rounded corners site-wide
+-------------------------------- */
+
+img {
+  border-radius: 0 !important;
+}
+
+button,
+.btn,
+.quote,
+.locCard,
+.locCta,
+.card,
+iframe {
+  border-radius: 0 !important;
+}
+
+/* ------------------------------
    Brand variables
 -------------------------------- */
 :root {
@@ -47,7 +65,7 @@ body {
 
   /* Base font */
   font-family: var(--font-nav);
-  color: #111; /* ✅ DEFAULT BODY TEXT = BLACK */
+  color: #111; /* DEFAULT BODY TEXT = BLACK */
 }
 
 /* Page padding wrapper */
@@ -64,9 +82,9 @@ p,
 .longDesc,
 .longDesc p {
   font-family: var(--font-nav);
-  font-size: 16px;     /* ✅ reduced by 2px */
+  font-size: 16px;
   line-height: 1.7;
-  color: #111;         /* ✅ black text */
+  color: #111;
 }
 
 /* ------------------------------
@@ -209,7 +227,7 @@ h4 {
   min-width: 220px;
   min-height: 44px;
   padding: 12px 16px;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgba(0,0,0,.25);
   font-weight: 600;
   text-decoration: none;

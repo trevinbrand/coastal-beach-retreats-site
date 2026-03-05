@@ -54,18 +54,66 @@ const slugFromHref = (href = "") =>
         />
       </section>
 
-      <!-- LOCATION SELECT (arrow scroll target) -->
-      <nav
-        class="location-switcher"
+      <!-- ✅ LOCATION SELECT (PHOTO CARDS) -->
+      <section
+        class="locCards"
         id="location-select"
         aria-label="Browse by location"
       >
-        <p class="location-label">Browse by location</p>
-        <div class="location-buttons">
-          <a class="loc-btn pcb-btn" href="#heavenly-hideaway">Panama City Beach</a>
-          <a class="loc-btn destin-btn" href="#destin-diamond">Destin</a>
+        <p class="locLabel">Browse by location</p>
+
+        <div class="locGrid">
+          <!-- Panama City Beach card -->
+          <a
+            class="locCard"
+            href="#heavenly-hideaway"
+            aria-label="Browse Panama City Beach properties"
+          >
+            <img
+              class="locImg"
+              src="/images/home/location-pcb.jpg"
+              alt="Panama City Beach"
+              loading="lazy"
+            />
+            <div class="locOverlay" aria-hidden="true"></div>
+
+            <div class="locText">
+              <div class="locTitle">Panama City Beach</div>
+              <div class="locSub">Edgewater Resort condos</div>
+              <div class="locMeta">
+                Heavenly Hideaway • Sailor’s Delight • Red Sky Nights
+              </div>
+            </div>
+
+            <div class="locCta">View properties →</div>
+          </a>
+
+          <!-- Destin / Okaloosa card (✅ starts at Destin Dreams) -->
+          <a
+            class="locCard"
+            href="#destin-dreams"
+            aria-label="Browse Destin / Okaloosa Island properties"
+          >
+            <img
+              class="locImg"
+              src="/images/home/location-destin.jpg"
+              alt="Destin / Okaloosa Island"
+              loading="lazy"
+            />
+            <div class="locOverlay" aria-hidden="true"></div>
+
+            <div class="locText">
+              <div class="locTitle">Destin / Okaloosa Island</div>
+              <div class="locSub">
+                Sterling Shores • Sterling Sands • Waterscape
+              </div>
+              <div class="locMeta">Destin Dreams • Destin Diamond • Fanta Sea</div>
+            </div>
+
+            <div class="locCta">View properties →</div>
+          </a>
         </div>
-      </nav>
+      </section>
 
       <!-- PROPERTIES -->
       {orderedCities.map((city) => (
@@ -91,7 +139,11 @@ const slugFromHref = (href = "") =>
             return (
               <div class="prop">
                 {anchorId && (
-                  <span id={anchorId} class="jump-anchor" aria-hidden="true"></span>
+                  <span
+                    id={anchorId}
+                    class="jump-anchor"
+                    aria-hidden="true"
+                  ></span>
                 )}
                 <PropertyBlock p={p} />
               </div>
@@ -144,7 +196,7 @@ const slugFromHref = (href = "") =>
 
       .rule {
         border: 0;
-        border-top: 1px solid rgba(0,0,0,.10);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
         margin: 12px 0 16px;
       }
 
@@ -161,13 +213,163 @@ const slugFromHref = (href = "") =>
         scroll-margin-top: 96px;
       }
 
+      /* ✅ Location photo cards (hard override global link styles) */
+      .locCards {
+        margin: 10px 0 18px;
+      }
+
+      .locLabel {
+        margin: 0 0 12px;
+        text-align: center;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        color: rgba(0, 0, 0, 0.72);
+        font-size: 18px;
+      }
+
+      .locGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      /* Hard reset link look */
+      a.locCard,
+      a.locCard:visited,
+      a.locCard:hover,
+      a.locCard:active {
+        color: inherit !important;
+        text-decoration: none !important;
+      }
+
+      /* Prevent any global underlines inside */
+      .locCard * {
+        text-decoration: none !important;
+      }
+
+      .locCard {
+        position: relative;
+        display: block;
+
+        /* ✅ square corners (no rounding) */
+        border-radius: 0;
+        overflow: hidden;
+
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: #fff;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        min-height: 220px;
+        isolation: isolate;
+        transform: translateZ(0);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .locCard:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+      }
+
+      .locImg {
+        width: 100%;
+        height: 260px;
+        display: block;
+        object-fit: cover;
+
+        /* ✅ ensure image itself has no rounding */
+        border-radius: 0;
+      }
+
+      .locOverlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.62) 0%,
+          rgba(0, 0, 0, 0.28) 45%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+        z-index: 1;
+      }
+
+      .locText {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 18px; /* ✅ no overlap with top-right CTA */
+        z-index: 2;
+        color: #fff;
+
+        /* ✅ keep text clear of the CTA in top-right */
+        padding-right: 160px;
+      }
+
+      .locTitle {
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: 0.01em;
+        margin: 0 0 4px;
+      }
+
+      .locSub {
+        font-size: 15px;
+        font-weight: 700;
+        opacity: 0.95;
+        margin: 0 0 6px;
+      }
+
+      .locMeta {
+        font-size: 14px;
+        opacity: 0.92;
+        line-height: 1.35;
+      }
+
+      /* ✅ Move CTA to TOP-RIGHT (fixes overlap) */
+      .locCta {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 3;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 8px 12px;
+
+        /* ✅ square corners */
+        border-radius: 0;
+
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+
+        font-weight: 900;
+        font-size: 14px;
+
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+
       @media (max-width: 980px) {
         .wrap {
           padding: 12px 12px;
         }
+
         .jump-anchor {
           margin-top: -88px;
           padding-top: 88px;
+        }
+
+        .locGrid {
+          grid-template-columns: 1fr;
+        }
+
+        .locImg {
+          height: 240px;
+        }
+
+        .locText {
+          padding-right: 0; /* CTA still top-right, less chance of overlap on narrow */
         }
       }
     </style>
