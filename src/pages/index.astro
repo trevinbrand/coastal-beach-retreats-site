@@ -137,8 +137,6 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
 
         <!-- PCB -->
         <section class="section propGroup" data-group="pcb" hidden>
-          <h3 class="city-heading">Panama City Beach, FL</h3>
-
           {pcbProps.map((p) => (
             <div class="prop">
               <PropertyBlock p={p} />
@@ -148,8 +146,6 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
 
         <!-- Destin / Okaloosa -->
         <section class="section propGroup" data-group="destin" hidden>
-          <h3 class="city-heading">Destin / Okaloosa Island</h3>
-
           {destinProps.map((p) => (
             <div class="prop">
               <PropertyBlock p={p} />
@@ -246,10 +242,6 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
 
       .prop {
         margin: 0 0 6px;
-      }
-
-      .city-heading {
-        margin: 8px 0 12px;
       }
 
       .reviews-title {
