@@ -16,16 +16,12 @@ for (const p of properties) {
   (groups[key] ??= []).push(p);
 }
 
-// Order cities
-const cityOrder = ["Panama City Beach, FL", "Destin, FL"];
-const orderedCities = [
-  ...cityOrder.filter((c) => groups[c]),
-  ...Object.keys(groups).filter((c) => !cityOrder.includes(c)),
-];
+// Explicit groups
+const pcbCity = "Panama City Beach, FL";
+const destinCity = "Destin, FL";
 
-// Helper: pull slug from p.href (stable)
-const slugFromHref = (href = "") =>
-  href.replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+const pcbProps = groups[pcbCity] ?? [];
+const destinProps = groups[destinCity] ?? [];
 ---
 
 <!doctype html>
@@ -61,12 +57,14 @@ const slugFromHref = (href = "") =>
         aria-label="Browse by location"
       >
         <p class="locLabel">Browse by location</p>
+        <p class="locHelper">Choose a location to view available condos.</p>
 
         <div class="locGrid">
           <!-- Panama City Beach card -->
-          <a
+          <button
             class="locCard"
-            href="#heavenly-hideaway"
+            type="button"
+            data-location="pcb"
             aria-label="Browse Panama City Beach properties"
           >
             <img
@@ -86,12 +84,13 @@ const slugFromHref = (href = "") =>
             </div>
 
             <div class="locCta">View properties →</div>
-          </a>
+          </button>
 
-          <!-- Destin / Okaloosa card (✅ starts at Destin Dreams) -->
-          <a
+          <!-- Destin / Okaloosa card -->
+          <button
             class="locCard"
-            href="#destin-dreams"
+            type="button"
+            data-location="destin"
             aria-label="Browse Destin / Okaloosa Island properties"
           >
             <img
@@ -111,46 +110,47 @@ const slugFromHref = (href = "") =>
             </div>
 
             <div class="locCta">View properties →</div>
-          </a>
+          </button>
         </div>
       </section>
 
-      <!-- PROPERTIES -->
-      {orderedCities.map((city) => (
-        <section class="section">
-          {/* Keep Destin heading only */}
-          {city === "Destin, FL" && <h2 class="city-heading">{city}</h2>}
+      <!-- ✅ PROPERTY RESULTS -->
+      <section id="property-results" class="resultsWrap" aria-live="polite">
+        <div class="resultsTop">
+          <h2 class="resultsHeading" id="resultsHeading">Available Condos</h2>
 
-          {groups[city].map((p) => {
-            const slug = slugFromHref(p.href);
+          <button
+            class="clearBtn"
+            id="clearSelection"
+            type="button"
+            hidden
+          >
+            Show all locations
+          </button>
+        </div>
 
-            // Anchors for jump buttons + Destin section entries
-            const anchorId =
-              slug === "heavenly-hideaway"
-                ? "heavenly-hideaway"
-                : slug === "destin-dreams"
-                ? "destin-dreams"
-                : slug === "destin-diamond"
-                ? "destin-diamond"
-                : slug === "fanta-sea"
-                ? "fanta-sea"
-                : null;
+        <!-- PCB -->
+        <section class="section propGroup" data-group="pcb" hidden>
+          <h3 class="city-heading">Panama City Beach, FL</h3>
 
-            return (
-              <div class="prop">
-                {anchorId && (
-                  <span
-                    id={anchorId}
-                    class="jump-anchor"
-                    aria-hidden="true"
-                  ></span>
-                )}
-                <PropertyBlock p={p} />
-              </div>
-            );
-          })}
+          {pcbProps.map((p) => (
+            <div class="prop">
+              <PropertyBlock p={p} />
+            </div>
+          ))}
         </section>
-      ))}
+
+        <!-- Destin -->
+        <section class="section propGroup" data-group="destin" hidden>
+          <h3 class="city-heading">Destin / Okaloosa Island</h3>
+
+          {destinProps.map((p) => (
+            <div class="prop">
+              <PropertyBlock p={p} />
+            </div>
+          ))}
+        </section>
+      </section>
 
       <!-- REVIEWS -->
       <section class="section" id="reviews">
@@ -170,8 +170,64 @@ const slugFromHref = (href = "") =>
     <!-- ✅ Load OwnerRez widget script ONCE -->
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
+    <script is:inline>
+      (() => {
+        const cards = document.querySelectorAll(".locCard");
+        const groups = document.querySelectorAll(".propGroup");
+        const resultsHeading = document.getElementById("resultsHeading");
+        const resultsWrap = document.getElementById("property-results");
+        const clearBtn = document.getElementById("clearSelection");
+
+        function showGroup(groupName) {
+          groups.forEach((group) => {
+            group.hidden = group.dataset.group !== groupName;
+          });
+
+          cards.forEach((card) => {
+            card.classList.toggle("active", card.dataset.location === groupName);
+          });
+
+          if (groupName === "pcb") {
+            resultsHeading.textContent = "Panama City Beach Condos";
+          } else if (groupName === "destin") {
+            resultsHeading.textContent = "Destin / Okaloosa Island Condos";
+          } else {
+            resultsHeading.textContent = "Available Condos";
+          }
+
+          clearBtn.hidden = !groupName;
+
+          resultsWrap?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+
+        cards.forEach((card) => {
+          card.addEventListener("click", () => {
+            const location = card.dataset.location;
+            showGroup(location);
+          });
+        });
+
+        clearBtn?.addEventListener("click", () => {
+          groups.forEach((group) => {
+            group.hidden = true;
+          });
+
+          cards.forEach((card) => card.classList.remove("active"));
+          resultsHeading.textContent = "Available Condos";
+          clearBtn.hidden = true;
+
+          document.getElementById("location-select")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      })();
+    </script>
+
     <style>
-      /* ✅ Match your property page spacing */
       .wrap {
         max-width: 1440px;
         margin: 0 auto;
@@ -200,31 +256,29 @@ const slugFromHref = (href = "") =>
         margin: 12px 0 16px;
       }
 
-      /* ✅ Reliable anchor offset for sticky header */
-      .jump-anchor {
-        display: block;
-        height: 1px;
-        margin-top: -96px; /* offset = sticky header height */
-        padding-top: 96px;
-      }
-
-      /* Also keep the nav target from hiding under header */
-      #location-select {
+      #location-select,
+      #property-results {
         scroll-margin-top: 96px;
       }
 
-      /* ✅ Location photo cards (hard override global link styles) */
       .locCards {
         margin: 10px 0 18px;
       }
 
       .locLabel {
-        margin: 0 0 12px;
+        margin: 0 0 8px;
         text-align: center;
         font-weight: 900;
         letter-spacing: 0.02em;
         color: rgba(0, 0, 0, 0.72);
         font-size: 18px;
+      }
+
+      .locHelper {
+        margin: 0 0 14px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.62);
+        font-size: 15px;
       }
 
       .locGrid {
@@ -233,35 +287,22 @@ const slugFromHref = (href = "") =>
         gap: 16px;
       }
 
-      /* Hard reset link look */
-      a.locCard,
-      a.locCard:visited,
-      a.locCard:hover,
-      a.locCard:active {
-        color: inherit !important;
-        text-decoration: none !important;
-      }
-
-      /* Prevent any global underlines inside */
-      .locCard * {
-        text-decoration: none !important;
-      }
-
       .locCard {
         position: relative;
         display: block;
-
-        /* ✅ square corners (no rounding) */
+        width: 100%;
+        padding: 0;
         border-radius: 0;
         overflow: hidden;
-
         border: 1px solid rgba(0, 0, 0, 0.12);
         background: #fff;
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
         min-height: 220px;
         isolation: isolate;
         transform: translateZ(0);
-        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        cursor: pointer;
+        text-align: left;
       }
 
       .locCard:hover {
@@ -269,13 +310,16 @@ const slugFromHref = (href = "") =>
         box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
       }
 
+      .locCard.active {
+        border-color: rgba(25, 62, 127, 0.65);
+        box-shadow: 0 0 0 2px rgba(25, 62, 127, 0.14), 0 14px 34px rgba(0, 0, 0, 0.12);
+      }
+
       .locImg {
         width: 100%;
         height: 260px;
         display: block;
         object-fit: cover;
-
-        /* ✅ ensure image itself has no rounding */
         border-radius: 0;
       }
 
@@ -295,11 +339,9 @@ const slugFromHref = (href = "") =>
         position: absolute;
         left: 16px;
         right: 16px;
-        bottom: 18px; /* ✅ no overlap with top-right CTA */
+        bottom: 18px;
         z-index: 2;
         color: #fff;
-
-        /* ✅ keep text clear of the CTA in top-right */
         padding-right: 160px;
       }
 
@@ -323,41 +365,59 @@ const slugFromHref = (href = "") =>
         line-height: 1.35;
       }
 
-      /* ✅ Move CTA to TOP-RIGHT (fixes overlap) */
       .locCta {
         position: absolute;
         top: 16px;
         right: 16px;
         z-index: 3;
-
         display: inline-flex;
         align-items: center;
         gap: 8px;
-
         padding: 8px 12px;
-
-        /* ✅ square corners */
         border-radius: 0;
-
         background: rgba(0, 0, 0, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.25);
         color: #fff;
-
         font-weight: 900;
         font-size: 14px;
-
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
+      }
+
+      .resultsWrap {
+        margin: 8px 0 6px;
+      }
+
+      .resultsTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+
+      .resultsHeading {
+        margin: 0;
+      }
+
+      .clearBtn {
+        padding: 10px 14px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: #fff;
+        border-radius: 0;
+        cursor: pointer;
+        font-weight: 800;
+        color: rgba(25, 62, 127, 0.9);
+      }
+
+      .clearBtn:hover {
+        background: rgba(25, 62, 127, 0.05);
       }
 
       @media (max-width: 980px) {
         .wrap {
           padding: 12px 12px;
-        }
-
-        .jump-anchor {
-          margin-top: -88px;
-          padding-top: 88px;
         }
 
         .locGrid {
@@ -369,7 +429,7 @@ const slugFromHref = (href = "") =>
         }
 
         .locText {
-          padding-right: 0; /* CTA still top-right, less chance of overlap on narrow */
+          padding-right: 0;
         }
       }
     </style>
