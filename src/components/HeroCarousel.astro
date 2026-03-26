@@ -1,21 +1,37 @@
 ---
 const slides = [
-  "/images/props/heavenly-1106.jpg",
-  "/images/hero/heroimage2.jpg",
-  "/images/hero/heroimage3.jpg",
-  "/images/hero/heroimage4.jpg",
+  {
+    webp: "/images/props/heavenly-1106.webp",
+    fallback: "/images/props/heavenly-1106.jpg",
+  },
+  {
+    webp: "/images/hero/heroimage2.webp",
+    fallback: "/images/hero/heroimage2.jpg",
+  },
+  {
+    webp: "/images/hero/heroimage3.webp",
+    fallback: "/images/hero/heroimage3.jpg",
+  },
+  {
+    webp: "/images/hero/heroimage4.webp",
+    fallback: "/images/hero/heroimage4.jpg",
+  },
 ];
 ---
 
 <section class="hero hero-full" aria-label="Homepage photos">
   <div class="frame">
-    {slides.map((src, i) => (
-      <img
-        class={`slide ${i === 0 ? "active" : ""}`}
-        src={src}
-        alt="Coastal Beach Retreats hero image"
-        loading={i === 0 ? "eager" : "lazy"}
-      />
+    {slides.map((slide, i) => (
+      <picture class={`slide ${i === 0 ? "active" : ""}`}>
+        <source srcset={slide.webp} type="image/webp" />
+        <img
+          src={slide.fallback}
+          alt="Coastal Beach Retreats hero image"
+          loading={i === 0 ? "eager" : "lazy"}
+          fetchpriority={i === 0 ? "high" : "auto"}
+          decoding="async"
+        />
+      </picture>
     ))}
 
     <div class="arrows">
@@ -27,7 +43,6 @@ const slides = [
       </button>
     </div>
 
-    <!-- Down arrow to location selector -->
     <a href="#location-select" class="scroll-down" aria-label="Scroll to locations">↓</a>
   </div>
 
@@ -47,21 +62,18 @@ const slides = [
         slides[idx]?.classList.add("active");
       };
 
-      // Button clicks (arrows)
       btns.forEach((b) =>
         b.addEventListener("click", () => show(idx + Number(b.dataset.dir)))
       );
 
-      // Auto-advance every 6s (optional)
       const timer = setInterval(() => show(idx + 1), 6000);
 
-      // ---- Swipe support ----
       let startX = 0;
       let startY = 0;
       let dragging = false;
 
-      const SWIPE_MIN_X = 50; // pixels
-      const SWIPE_MAX_Y = 60; // allow some vertical movement
+      const SWIPE_MIN_X = 50;
+      const SWIPE_MAX_Y = 60;
 
       frame?.addEventListener(
         "touchstart",
@@ -104,8 +116,8 @@ const slides = [
           const dy = t.clientY - startY;
 
           if (Math.abs(dx) >= SWIPE_MIN_X && Math.abs(dy) <= SWIPE_MAX_Y) {
-            if (dx < 0) show(idx + 1); // swipe left -> next
-            else show(idx - 1); // swipe right -> prev
+            if (dx < 0) show(idx + 1);
+            else show(idx - 1);
           }
         },
         { passive: true }
@@ -114,12 +126,11 @@ const slides = [
   </script>
 
   <style>
-    /* Full-bleed hero */
     .hero-full {
       width: 100vw;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: 0; /* full width */
+      padding: 0;
     }
 
     .frame {
@@ -135,10 +146,17 @@ const slides = [
       display: none;
       width: 100%;
       height: clamp(200px, 32vw, 480px);
-      object-fit: cover;
     }
+
     .slide.active {
       display: block;
+    }
+
+    .slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .arrows {
@@ -176,38 +194,33 @@ const slides = [
       transform: scale(0.95);
     }
 
-    /* Down arrow */
     .scroll-down {
       position: absolute;
       left: 50%;
       bottom: 18px;
       transform: translateX(-50%);
       z-index: 5;
-
       width: 44px;
       height: 44px;
       border-radius: 999px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       background: rgba(0, 0, 0, 0.45);
       color: #fff;
       text-decoration: none;
       font-size: 22px;
-
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
 
-    /* Mobile: slightly smaller controls */
     @media (max-width: 640px) {
       .arrow {
         width: 36px;
         height: 36px;
         font-size: 22px;
       }
+
       .scroll-down {
         width: 40px;
         height: 40px;

@@ -2,14 +2,15 @@
 /**
  * FILE: src/pages/properties/destin-diamond/photos/index.astro
  * Full Photos page for Destin Diamond
- * - Uses dd1.jpg ... dd32.jpg from /public/images/props/destin-diamond/
+ * - Uses thumb-dd1.webp ... thumb-dd32.webp for gallery thumbnails
+ * - Uses dd1.webp ... dd32.webp for full-size images
  */
 import "../../../../styles/global.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (dd1.jpg ... dd32.jpg)
-const PHOTO_COUNT = 32;
+// ✅ Photo setup
+const PHOTO_COUNT = 33;
 const PHOTO_BASE = "/images/props/destin-diamond";
 
 const pageTitle = "Destin Diamond Photos";
@@ -21,7 +22,8 @@ const backHref = "/properties/destin-diamond/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/dd${n}.jpg`,
+    full: `${PHOTO_BASE}/dd${n}.webp`,
+    thumb: `${PHOTO_BASE}/thumb-dd${n}.webp`,
     alt: `Destin Diamond photo ${n}`,
   };
 });
@@ -54,9 +56,17 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 
       <section class="card" aria-label="Photo gallery">
         <div class="galleryGrid">
-          {galleryPhotos.map((ph) => (
-            <a class="gItem" href={ph.src} target="_blank" rel="noopener">
-              <img src={ph.src} alt={ph.alt} loading="lazy" />
+          {galleryPhotos.map((ph, i) => (
+            <a class="gItem" href={ph.full} target="_blank" rel="noopener">
+              <img
+                src={ph.thumb}
+                alt={ph.alt}
+                loading={i < 4 ? "eager" : "lazy"}
+                fetchpriority={i < 4 ? "high" : "auto"}
+                decoding="async"
+                width="800"
+                height="533"
+              />
             </a>
           ))}
         </div>
@@ -109,7 +119,10 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
         box-shadow: 0 6px 18px rgba(0,0,0,.06);
         white-space: nowrap;
       }
-      .btnBack:hover { color: var(--brand-blue, #193e7f); }
+
+      .btnBack:hover {
+        color: var(--brand-blue, #193e7f);
+      }
 
       .card {
         border: 1px solid rgba(0,0,0,.12);
@@ -142,14 +155,27 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
       }
 
       @media (max-width: 980px) {
-        .wrap { padding: 12px 12px; }
-        .galleryGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .gItem img { height: 190px; }
+        .wrap {
+          padding: 12px 12px;
+        }
+
+        .galleryGrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .gItem img {
+          height: 190px;
+        }
       }
 
       @media (max-width: 520px) {
-        .galleryGrid { grid-template-columns: 1fr; }
-        .gItem img { height: 240px; }
+        .galleryGrid {
+          grid-template-columns: 1fr;
+        }
+
+        .gItem img {
+          height: 240px;
+        }
       }
     </style>
   </body>

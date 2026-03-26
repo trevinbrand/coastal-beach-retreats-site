@@ -18,16 +18,10 @@ for (const p of properties) {
 
 // Explicit groups
 const pcbCity = "Panama City Beach, FL";
-
-// ✅ Destin / Okaloosa group includes nearby markets too
-const destinOkaloosaCities = [
-  "Destin, FL",
-  "Fort Walton Beach, FL",
-  "Okaloosa Island, FL",
-];
+const destinCity = "Destin, FL";
 
 const pcbProps = groups[pcbCity] ?? [];
-const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
+const destinProps = groups[destinCity] ?? [];
 ---
 
 <!doctype html>
@@ -62,8 +56,8 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
         id="location-select"
         aria-label="Browse by location"
       >
-        <p class="locLabel">Browse by location</p>
-        <p class="locHelper">Choose a location to view available condos.</p>
+        <p class="locLabel">Explore Our Beach Destinations</p>
+        <p class="locHelper">Choose your Emerald Coast Getaway</p>
 
         <div class="locGrid">
           <!-- Panama City Beach card -->
@@ -123,7 +117,6 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
       <!-- ✅ PROPERTY RESULTS -->
       <section id="property-results" class="resultsWrap" aria-live="polite">
         <div class="resultsTop">
-          <h2 class="resultsHeading" id="resultsHeading">Available Condos</h2>
 
           <button
             class="clearBtn"
@@ -137,6 +130,8 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
 
         <!-- PCB -->
         <section class="section propGroup" data-group="pcb" hidden>
+          <h3 class="city-heading">Panama City Beach, FL</h3>
+
           {pcbProps.map((p) => (
             <div class="prop">
               <PropertyBlock p={p} />
@@ -144,8 +139,10 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
           ))}
         </section>
 
-        <!-- Destin / Okaloosa -->
+        <!-- Destin -->
         <section class="section propGroup" data-group="destin" hidden>
+          <h3 class="city-heading">Destin / Okaloosa Island</h3>
+
           {destinProps.map((p) => (
             <div class="prop">
               <PropertyBlock p={p} />
@@ -244,6 +241,10 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
         margin: 0 0 6px;
       }
 
+      .city-heading {
+        margin: 8px 0 12px;
+      }
+
       .reviews-title {
         margin: 0 0 8px;
       }
@@ -269,7 +270,8 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
         font-weight: 900;
         letter-spacing: 0.02em;
         color: rgba(0, 0, 0, 0.72);
-        font-size: 18px;
+        font-size: 34px;
+        line-height: 1.1;
       }
 
       .locHelper {
@@ -428,6 +430,11 @@ const destinProps = destinOkaloosaCities.flatMap((city) => groups[city] ?? []);
 
         .locText {
           padding-right: 0;
+        }
+
+        .locLabel {
+          font-size: 28px;
+          line-height: 1.15;
         }
       }
     </style>
