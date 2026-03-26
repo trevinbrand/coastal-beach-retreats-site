@@ -13,18 +13,19 @@ import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
 /** ✅ Update these 3 things */
-const PHOTO_COUNT = 33; // <-- set your real count
-const PHOTO_BASE = "/images/props/destin-diamond"; // <-- folder in /public/images/props/destin-diamond
+const PHOTO_COUNT = 33;
+const PHOTO_BASE = "/images/props/destin-diamond";
 const PHOTOS_PAGE_HREF = "/properties/destin-diamond/photos/";
 
 /** ✅ Precompute strings used in attributes */
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-/** ✅ Uses dd1.jpg ... dd32.jpg */
+/** ✅ Uses thumb-dd1.webp ... thumb-dd33.webp for page previews */
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/dd${n}.jpg`,
+    src: `${PHOTO_BASE}/thumb-dd${n}.webp`,
+    full: `${PHOTO_BASE}/dd${n}.webp`,
     alt: `Destin Diamond photo ${n}`,
   };
 });
@@ -33,10 +34,10 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 const photosTop = galleryPhotos.slice(0, 5);
 
 /** ✅ Update text */
-const pageTitle = "Destin Diamond • Destin, FL"; 
-const subtitle = "Destin Diamond 🌊 Beachfront Condo at Sterling Sands in Destin, Florida Unit 111"; 
-const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-4"; 
-const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"]; 
+const pageTitle = "Destin Diamond • Destin, FL";
+const subtitle = "Destin Diamond 🌊 Beachfront Condo at Sterling Sands in Destin, Florida Unit 111";
+const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-4";
+const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
 /** ✅ OwnerRez IDs (replace with your real ones) */
 const OR_PROPERTY_ID = "d4f06489762941e6ae16e3cc23edbec2";
@@ -71,6 +72,10 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1200"
+            height="800"
           />
 
           <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">‹</button>
@@ -84,16 +89,44 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
 
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="533"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="533"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="533"
+            />
           </a>
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="533"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
@@ -131,7 +164,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
             </span>
           </div>
 
-          <!-- ✅ FULL DESCRIPTION (added) -->
           <div class="longDesc">
             <p>
               Coastal Beach Retreats is proud to present <strong>Sterling Sands 111</strong>, a beautifully
@@ -227,7 +259,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         </aside>
       </section>
 
-      <!-- ✅ LOCATION (Heavenly Hideaway style map) -->
       <section id="location" class="card">
         <h2 class="h2">Location</h2>
         <p>
@@ -254,7 +285,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         </div>
       </section>
 
-      <!-- ✅ AMENITIES (MATCHES YOUR OTHER PAGES FORMAT) -->
       <section id="amenities" class="card">
         <h2 class="h2">&ensp;Amenities</h2>
 
@@ -526,7 +556,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
 
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
-    <!-- ✅ Mobile hero slider script (runs only on small screens) -->
     <script is:inline define:vars={{ galleryPhotos }}>
       (function () {
         const isMobile = window.matchMedia("(max-width: 640px)").matches;
@@ -559,7 +588,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
 
-        // Optional swipe
         let startX = 0;
         heroImg.addEventListener(
           "touchstart",
@@ -668,7 +696,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
       }
       .h2 { margin: 0 0 10px; font-size: 24px; color: var(--brand-blue, #193e7f); }
 
-      /* ✅ Map styles (Heavenly Hideaway match) */
       .mapWrap {
         margin-top: 12px;
         border-radius: 14px;
@@ -692,7 +719,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
       }
       .mapLink:hover { color: var(--brand-blue, #193e7f); }
 
-      /* ✅ amenities table (same format as your other pages) */
       .amenities-table {
         margin-top: 8px;
         border-radius: 14px;
@@ -739,7 +765,6 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
 
-        /* ✅ booking widget above description (mobile only) */
         .below { display: grid; grid-template-columns: 1fr; }
         .below .book { order: 1; }
         .below .desc { order: 2; }
