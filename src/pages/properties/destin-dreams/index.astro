@@ -1,18 +1,18 @@
 ---
 /**
  * FILE: src/pages/properties/destin-dreams/index.astro
- * ✅ MOBILE CHANGE:
- * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (d1..d21)
- * - Camera button on bottom-right still links to /photos/
- * - Desktop/tablet keeps the 5-photo collage layout.
- * ✅ NEW MOBILE CHANGE:
- * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
+ * UPDATED FOR FASTER PHOTO LOADING:
+ * - Uses .webp for all images
+ * - Preloads the first hero image
+ * - Uses fetchpriority="high" on the first/top image
+ * - Keeps mobile slider and desktop collage layout
+ * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (d1.jpeg ... d21.jpeg)
+// ✅ Photo setup (d1.webp ... d21.webp)
 const PHOTO_COUNT = 21;
 
 // ✅ Folder where images live in /public
@@ -28,7 +28,7 @@ const photosCountAria = `${PHOTO_COUNT} photos`;
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/d${n}.jpeg`,
+    src: `${PHOTO_BASE}/d${n}.webp`,
     alt: `Destin Dreams photo ${n}`,
   };
 });
@@ -60,6 +60,9 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
       name="description"
       content="Destin Dreams at Sterling Shores 311 — photos, details, and booking."
     />
+
+    <!-- ✅ Preload first/top hero image -->
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>
@@ -80,6 +83,10 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1600"
+            height="900"
           />
 
           <!-- ✅ Mobile arrows (only visible on mobile) -->
@@ -110,20 +117,48 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         <!-- RIGHT GRID (hidden on mobile) -->
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE (desktop/tablet) -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}

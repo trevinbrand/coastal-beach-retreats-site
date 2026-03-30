@@ -1,49 +1,40 @@
 ---
 /**
  * FILE: src/pages/properties/red-sky-nights/index.astro
- * ✅ MOBILE CHANGES ADDED (same as Destin Dreams):
- * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (RSN1..RSN45)
- * - Camera button on bottom-right shows photo count and still links to /photos/ (tap image = /photos/)
- * - Desktop/tablet keeps the 5-photo collage layout.
- *
- * ✅ NEW MOBILE CHANGE:
- * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
- *
- * NOTE: widget.js is loaded ONCE at the bottom.
+ * UPDATED FOR FASTER PHOTO LOADING:
+ * - Uses .webp for all images
+ * - Preloads the first hero image
+ * - Uses fetchpriority="high" on the first/top image
+ * - Keeps mobile slider and desktop collage layout
+ * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (RSN1.jpeg ... RSN45.jpeg)
+// ✅ Photo setup (RSN1.webp ... RSN45.webp)
 const PHOTO_COUNT = 45;
-
-// ✅ Must match the folder you said is working on the photos page
 const PHOTO_BASE = "/images/props/red-sky-nights";
-
-// ✅ Where the separate photos page lives:
 const PHOTOS_PAGE_HREF = "/properties/red-sky-nights/photos/";
-
-// ✅ Precompute strings used in attributes
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-// Build full list (still used to create the collage preview + mobile slider)
+// Build full list
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/RSN${n}.jpeg`,
+    src: `${PHOTO_BASE}/RSN${n}.webp`,
     alt: `Red Sky Nights photo ${n}`,
   };
 });
 
-// Collage uses first 5 (desktop/tablet)
+// Collage uses first 5
 const photosTop = galleryPhotos.slice(0, 5);
 
 const pageTitle =
   "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL";
 const subtitle = "Reduced rates, same amazing experience @ Edgewater.";
 
-// These show ABOVE the description like your screenshot
+// These show ABOVE the description
 const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-10";
 const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
@@ -64,6 +55,9 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
       name="description"
       content="Red Sky Nights at Edgewater Tower 1-1002 — photos, details, and booking."
     />
+
+    <!-- ✅ Preload first/top hero image -->
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>
@@ -75,18 +69,22 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         <p class="sub">{subtitle}</p>
       </header>
 
-      <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO SLIDER (1 photo with arrows) -->
+      <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO SLIDER -->
       <section class="collage" id="photos" aria-label="Photo preview">
-        <!-- BIG LEFT (always visible; becomes the ONLY photo on mobile) -->
+        <!-- BIG LEFT -->
         <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
           <img
             id="heroImg"
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1600"
+            height="900"
           />
 
-          <!-- ✅ Mobile arrows (only visible on mobile) -->
+          <!-- Mobile arrows -->
           <button
             class="arrow left"
             type="button"
@@ -104,30 +102,57 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
             ›
           </button>
 
-          <!-- ✅ Mobile camera button (bottom-right) -->
+          <!-- Mobile camera button -->
           <span class="mobileCam" aria-label={photosCountAria}>
             <span class="cam" aria-hidden="true">📷</span>
             {PHOTO_COUNT}
           </span>
         </a>
 
-        <!-- RIGHT GRID (hidden on mobile) -->
+        <!-- RIGHT GRID -->
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
-          <!-- LAST TILE WITH PHOTO COUNT BADGE (desktop/tablet) -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
@@ -148,7 +173,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
 
       <!-- DETAILS + BOOKING WIDGET -->
       <section class="below" id="details" aria-label="Details and booking">
-        <!-- LEFT -->
         <div class="desc">
           <div class="metaLine">
             <span class="metaLabel">Size –</span>
@@ -168,7 +192,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
             </span>
           </div>
 
-          <!-- ✅ UPDATED DESCRIPTION -->
           <div class="longDesc">
             <p>
               Coastal Beach Retreats is excited to present this tenth-floor condo located in Tower 1 at the
@@ -240,7 +263,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
           </div>
         </div>
 
-        <!-- RIGHT: booking widget -->
         <aside class="book">
           <div class="bookInner">
             <div
@@ -421,10 +443,10 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
-    <!-- ✅ Load OwnerRez widget script ONCE -->
+    <!-- Load OwnerRez widget script ONCE -->
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
-    <!-- ✅ Mobile hero slider script (runs only on small screens) -->
+    <!-- Mobile hero slider -->
     <script is:inline define:vars={{ galleryPhotos }}>
       (function () {
         const isMobile = window.matchMedia("(max-width: 640px)").matches;
@@ -457,7 +479,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));
 
-        // Optional swipe
         let startX = 0;
         heroImg.addEventListener(
           "touchstart",
@@ -497,7 +518,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
       }
       .sub { margin: 0; opacity: .85; }
 
-      /* Collage */
       .collage {
         display: grid;
         grid-template-columns: 1.55fr 1fr;
@@ -535,7 +555,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         display: block;
       }
 
-      /* desktop badge on last tile */
       .countBadge {
         position: absolute;
         right: 10px;
@@ -552,7 +571,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         backdrop-filter: blur(6px);
       }
 
-      /* ✅ Mobile camera button (shown on mobile only) */
       .mobileCam {
         position: absolute;
         right: 10px;
@@ -567,11 +585,10 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         font-weight: 900;
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
-        pointer-events: none; /* tap image still goes to /photos/ */
+        pointer-events: none;
       }
       .cam { font-size: 16px; }
 
-      /* ✅ Mobile arrows (hidden by default) */
       .arrow {
         position: absolute;
         top: 50%;
@@ -594,7 +611,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
       .arrow.right { right: 10px; }
       .arrow:active { transform: translateY(-50%) scale(0.98); }
 
-      /* subnav row */
       .subnav {
         display: flex;
         gap: 22px;
@@ -613,7 +629,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
       }
       .subnav a:hover { color: var(--brand-blue, #193e7f); }
 
-      /* description + widget area */
       .below {
         display: grid;
         grid-template-columns: 1.6fr 1fr;
@@ -680,7 +695,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         box-shadow: 0 6px 18px rgba(0,0,0,.06);
       }
 
-      /* cards */
       .card {
         border: 1px solid rgba(0,0,0,.12);
         border-radius: 16px;
@@ -696,7 +710,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         color: var(--brand-blue, #193e7f);
       }
 
-      /* map */
       .mapWrap {
         margin-top: 12px;
         border-radius: 14px;
@@ -720,7 +733,6 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
       }
       .mapLink:hover { color: var(--brand-blue, #193e7f); }
 
-      /* amenities table */
       .amenities-table {
         margin-top: 8px;
         border-radius: 14px;
@@ -760,19 +772,16 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
         .amen-value.columns { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       }
 
-      /* ✅ Mobile behavior + ✅ move booking widget above description (mobile only) */
       @media (max-width: 640px) {
         .smallGrid { display: none; }
         .mobileCam { display: inline-flex; }
         .arrow { display: inline-flex; }
         .big img { height: 320px; }
 
-        /* ✅ Reorder: booking widget first, then description */
         .below { display: grid; grid-template-columns: 1fr; }
         .below .book { order: 1; }
         .below .desc { order: 2; }
 
-        /* ✅ Make it look natural on mobile */
         .bookInner { position: static; margin-bottom: 12px; }
       }
 

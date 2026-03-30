@@ -1,12 +1,12 @@
 ---
 /**
  * FILE: src/pages/properties/destin-diamond/index.astro
- * - Mobile shows ONE hero image with arrows to cycle through ALL photos
- * - Camera badge shows photo count (tap image goes to /photos/)
- * - Desktop/tablet keeps the 5-photo collage
- * - On mobile ONLY, booking widget moves ABOVE the description
- *
- * NOTE: widget.js is loaded ONCE at the bottom.
+ * UPDATED FOR FASTER PHOTO LOADING:
+ * - Keeps .webp preview images
+ * - Preloads the first hero image
+ * - Uses fetchpriority="high" on the first/top image
+ * - Keeps mobile slider and desktop collage layout
+ * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
@@ -39,7 +39,7 @@ const subtitle = "Destin Diamond 🌊 Beachfront Condo at Sterling Sands in Dest
 const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-4";
 const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 
-/** ✅ OwnerRez IDs (replace with your real ones) */
+/** ✅ OwnerRez IDs */
 const OR_PROPERTY_ID = "d4f06489762941e6ae16e3cc23edbec2";
 const OR_BOOKING_WIDGET_ID = "e1923f2eaa344430a02d0dfd6835a4fd";
 const OR_REVIEWS_WIDGET_ID = "c92c43f6983e41c6a05dfda2bea6985c";
@@ -53,6 +53,9 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle} | Coastal Beach Retreats</title>
     <meta name="description" content="Destin Diamond — photos, details, and booking." />
+
+    <!-- ✅ Preload first/top hero image -->
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>

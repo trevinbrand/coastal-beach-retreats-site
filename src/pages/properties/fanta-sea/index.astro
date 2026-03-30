@@ -12,7 +12,7 @@ import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Photos: fs1.jpg ... fs34.jpg in /public/images/props/fanta-sea/
+// ✅ Photos: fs1.webp ... fs34.webp in /public/images/props/fanta-sea/
 const PHOTO_COUNT = 34;
 const PHOTO_BASE = "/images/props/fanta-sea";
 const PHOTOS_PAGE_HREF = "/properties/fanta-sea/photos/";
@@ -24,7 +24,7 @@ const photosCountAria = `${PHOTO_COUNT} photos`;
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/fs${n}.jpg`,
+    src: `${PHOTO_BASE}/fs${n}.webp`,
     alt: `Fanta Sea photo ${n}`,
   };
 });
@@ -55,6 +55,7 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
       name="description"
       content="Fanta Sea at Waterscape Resort (A328) — photos, details, and booking."
     />
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>
@@ -74,6 +75,10 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1600"
+            height="900"
           />
 
           <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">
@@ -91,16 +96,44 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
 
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}

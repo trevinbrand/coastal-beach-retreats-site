@@ -1,21 +1,18 @@
 ---
 /**
  * FILE: src/pages/properties/heavenly-hideaway/index.astro
- * ✅ MOBILE CHANGES ADDED (same as Destin Dreams):
- * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (h1..h35)
- * - Camera button on bottom-right shows photo count and still links to /photos/ (tap image = /photos/)
- * - Desktop/tablet keeps the 5-photo collage layout.
- *
- * ✅ NEW MOBILE CHANGE:
- * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
- *
- * NOTE: I also removed the duplicate widget.js tags inside sections and load it ONCE at the bottom.
+ * UPDATED FOR FASTER PHOTO LOADING:
+ * - Uses .webp for all images
+ * - Preloads the first hero image
+ * - Uses fetchpriority="high" on the first/top image
+ * - Keeps mobile slider and desktop collage layout
+ * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (h1.jpeg ... h35.jpeg)
+// ✅ Photo setup (h1.webp ... h35.webp)
 const PHOTO_COUNT = 35;
 
 // ✅ Update this folder if needed
@@ -27,11 +24,11 @@ const PHOTOS_PAGE_HREF = "/properties/heavenly-hideaway/photos/";
 // ✅ Precompute strings used in attributes
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-// Build full list (still used to create the collage preview + mobile slider)
+// Build full list
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/h${n}.jpeg`,
+    src: `${PHOTO_BASE}/h${n}.webp`,
     alt: `Heavenly Hideaway photo ${n}`,
   };
 });
@@ -58,6 +55,9 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       name="description"
       content="Heavenly Hideaway at Edgewater Tower 1-1106 — photos, details, and booking."
     />
+
+    <!-- ✅ Preload first/top hero image -->
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>
@@ -78,6 +78,10 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1600"
+            height="900"
           />
 
           <!-- ✅ Mobile arrows (only visible on mobile) -->
@@ -108,18 +112,46 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <!-- RIGHT GRID (hidden on mobile) -->
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE (desktop/tablet) -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}

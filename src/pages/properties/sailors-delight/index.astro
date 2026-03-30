@@ -1,21 +1,18 @@
 ---
 /**
  * FILE: src/pages/properties/sailors-delight/index.astro
- * ✅ MOBILE CHANGES ADDED (same as Destin Dreams / Red Sky Nights):
- * - Mobile shows ONE hero image with left/right arrows to cycle through ALL photos (RS1..RS47)
- * - Camera badge on bottom-right shows count and links to /photos/ (tap image = /photos/)
- * - Desktop/tablet keeps the 5-photo collage layout.
- *
- * ✅ NEW MOBILE CHANGE:
- * - On mobile ONLY, the OwnerRez Booking/Inquiry widget moves ABOVE the description.
- *
- * NOTE: widget.js is loaded ONCE at the bottom.
+ * UPDATED FOR FASTER PHOTO LOADING:
+ * - Uses .webp for all images
+ * - Preloads the first hero image
+ * - Uses fetchpriority="high" on the first/top image
+ * - Keeps mobile slider and desktop collage layout
+ * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
-// ✅ Photo setup (RS1.jpeg ... RS47.jpeg)
+// ✅ Photo setup (RS1.webp ... RS47.webp)
 const PHOTO_COUNT = 47;
 
 // ✅ Update this folder if needed
@@ -27,11 +24,11 @@ const PHOTOS_PAGE_HREF = "/properties/sailors-delight/photos/";
 // ✅ Precompute strings used in attributes
 const photosCountAria = `${PHOTO_COUNT} photos`;
 
-// Build full list (still used to create the collage preview + mobile slider)
+// Build full list
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    src: `${PHOTO_BASE}/RS${n}.jpeg`,
+    src: `${PHOTO_BASE}/RS${n}.webp`,
     alt: `Sailor's Delight photo ${n}`,
   };
 });
@@ -43,7 +40,7 @@ const pageTitle =
   "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL";
 const subtitle = "Oceanfront comfort + resort amenities — make it a beach week.";
 
-// These show ABOVE the description like your screenshot
+// These show ABOVE the description
 const sizeLine = "2 Bedrooms • 2 Bathrooms • Sleeps 1-9";
 const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
 ---
@@ -58,6 +55,9 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       name="description"
       content="Sailor's Delight at Edgewater Tower 1-911 — photos, details, and booking."
     />
+
+    <!-- ✅ Preload first/top hero image -->
+    <link rel="preload" as="image" href={photosTop[0].src} />
   </head>
 
   <body>
@@ -78,6 +78,10 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             src={photosTop[0].src}
             alt={photosTop[0].alt}
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1600"
+            height="900"
           />
 
           <!-- ✅ Mobile arrows (only visible on mobile) -->
@@ -108,20 +112,48 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         <!-- RIGHT GRID (hidden on mobile) -->
         <div class="smallGrid" aria-hidden="true">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[1].src} alt={photosTop[1].alt} loading="lazy" />
+            <img
+              src={photosTop[1].src}
+              alt={photosTop[1].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[2].src} alt={photosTop[2].alt} loading="lazy" />
+            <img
+              src={photosTop[2].src}
+              alt={photosTop[2].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[3].src} alt={photosTop[3].alt} loading="lazy" />
+            <img
+              src={photosTop[3].src}
+              alt={photosTop[3].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
           </a>
 
           <!-- LAST TILE WITH PHOTO COUNT BADGE -->
           <a class="small last" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-            <img src={photosTop[4].src} alt={photosTop[4].alt} loading="lazy" />
+            <img
+              src={photosTop[4].src}
+              alt={photosTop[4].alt}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
             <span class="countBadge" aria-label={photosCountAria}>
               <span class="cam" aria-hidden="true">📷</span>
               {PHOTO_COUNT}
@@ -503,7 +535,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         font-weight: 900;
         border: 1px solid rgba(255,255,255,.18);
         backdrop-filter: blur(6px);
-        pointer-events: none; /* tap image still goes to /photos/ */
+        pointer-events: none;
       }
 
       .cam { font-size: 16px; }

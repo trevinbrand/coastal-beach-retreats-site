@@ -8,7 +8,7 @@ import { properties } from "../data/properties.js";
 
 type Property = (typeof properties)[number];
 
-// Group properties by city (TypeScript-safe)
+// Group properties by city
 const groups: Record<string, Property[]> = {};
 
 for (const p of properties) {
@@ -16,12 +16,19 @@ for (const p of properties) {
   (groups[key] ??= []).push(p);
 }
 
-// Explicit groups
 const pcbCity = "Panama City Beach, FL";
 const destinCity = "Destin, FL";
 
+// PCB properties
 const pcbProps = groups[pcbCity] ?? [];
-const destinProps = groups[destinCity] ?? [];
+
+// Always include Waterscape / Fanta Sea with Destin / Okaloosa section
+const destinProps = properties.filter((p) =>
+  p.city === destinCity ||
+  p.name.toLowerCase().includes("waterscape") ||
+  p.name.toLowerCase().includes("fanta sea") ||
+  p.href.toLowerCase().includes("fanta-sea")
+);
 ---
 
 <!doctype html>
@@ -32,7 +39,7 @@ const destinProps = groups[destinCity] ?? [];
     <title>Coastal Beach Retreats</title>
     <meta
       name="description"
-      content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach and Destin."
+      content="Discover Coastal Beach Retreats – luxury beachfront vacation rentals in Panama City Beach, Destin, and Okaloosa Island."
     />
   </head>
 
@@ -42,117 +49,66 @@ const destinProps = groups[destinCity] ?? [];
     <HeroCarousel />
 
     <main class="wrap">
-      <section class="brand-divider">
-        <img
-          src="/images/coastal-beach-retreats-welcome.png"
-          alt="Welcome to Coastal Beach Retreats"
-          loading="eager"
-        />
-      </section>
+      <section class="browseBar" aria-label="Browse properties">
+        <div class="browseBarTop">
+          <h2 class="section-title">Discover your perfect beach stay</h2>
+        </div>
 
-      <!-- ✅ LOCATION SELECT (PHOTO CARDS) -->
-      <section
-        class="locCards"
-        id="location-select"
-        aria-label="Browse by location"
-      >
-        <p class="locLabel">Explore Our Beach Destinations</p>
-        <p class="locHelper">Choose your Emerald Coast Getaway</p>
-
-        <div class="locGrid">
-          <!-- Panama City Beach card -->
-          <button
-            class="locCard"
-            type="button"
-            data-location="pcb"
-            aria-label="Browse Panama City Beach properties"
-          >
-            <img
-              class="locImg"
-              src="/images/home/location-pcb.jpg"
-              alt="Panama City Beach"
-              loading="lazy"
-            />
-            <div class="locOverlay" aria-hidden="true"></div>
-
-            <div class="locText">
-              <div class="locTitle">Panama City Beach</div>
-              <div class="locSub">Edgewater Resort condos</div>
-              <div class="locMeta">
-                Heavenly Hideaway • Sailor’s Delight • Red Sky Nights
-              </div>
-            </div>
-
-            <div class="locCta">View properties →</div>
+        <div class="browseFilters" role="tablist" aria-label="Destination filters">
+          <button class="filterBtn is-active" type="button" data-filter="all" aria-pressed="true">
+            All
           </button>
-
-          <!-- Destin / Okaloosa card -->
-          <button
-            class="locCard"
-            type="button"
-            data-location="destin"
-            aria-label="Browse Destin / Okaloosa Island properties"
-          >
-            <img
-              class="locImg"
-              src="/images/home/location-destin.jpg"
-              alt="Destin / Okaloosa Island"
-              loading="lazy"
-            />
-            <div class="locOverlay" aria-hidden="true"></div>
-
-            <div class="locText">
-              <div class="locTitle">Destin / Okaloosa Island</div>
-              <div class="locSub">
-                Sterling Shores • Sterling Sands • Waterscape
-              </div>
-              <div class="locMeta">Destin Dreams • Destin Diamond • Fanta Sea</div>
-            </div>
-
-            <div class="locCta">View properties →</div>
+          <button class="filterBtn" type="button" data-filter="pcb" aria-pressed="false">
+            Panama City Beach
+          </button>
+          <button class="filterBtn" type="button" data-filter="destin" aria-pressed="false">
+            Destin / Okaloosa Island
           </button>
         </div>
       </section>
 
-      <!-- ✅ PROPERTY RESULTS -->
-      <section id="property-results" class="resultsWrap" aria-live="polite">
-        <div class="resultsTop">
-
-          <button
-            class="clearBtn"
-            id="clearSelection"
-            type="button"
-            hidden
-          >
-            Show all locations
-          </button>
-        </div>
-
+      <section class="resultsWrap">
         <!-- PCB -->
-        <section class="section propGroup" data-group="pcb" hidden>
-          <h3 class="city-heading">Panama City Beach, FL</h3>
+        <section class="section propGroup" data-group="pcb">
+          <div class="groupHeader">
+            <p class="groupEyebrow">Panama City Beach</p>
+            <h2 class="city-heading">Edgewater Resort Condos</h2>
+            <p class="groupHelper">
+              Gulf-front favorites in the heart of Panama City Beach.
+            </p>
+          </div>
 
-          {pcbProps.map((p) => (
-            <div class="prop">
-              <PropertyBlock p={p} />
-            </div>
-          ))}
+          <div class="groupProps">
+            {pcbProps.map((p) => (
+              <div class="prop">
+                <PropertyBlock p={p} />
+              </div>
+            ))}
+          </div>
         </section>
 
-        <!-- Destin -->
-        <section class="section propGroup" data-group="destin" hidden>
-          <h3 class="city-heading">Destin / Okaloosa Island</h3>
+        <!-- DESTIN -->
+        <section class="section propGroup" data-group="destin">
+          <div class="groupHeader">
+            <p class="groupEyebrow">Destin / Okaloosa Island</p>
+            <h2 class="city-heading">Emerald Coast Condos</h2>
+            <p class="groupHelper">
+              Beachfront favorites across Sterling Shores, Sterling Sands, and Waterscape.
+            </p>
+          </div>
 
-          {destinProps.map((p) => (
-            <div class="prop">
-              <PropertyBlock p={p} />
-            </div>
-          ))}
+          <div class="groupProps">
+            {destinProps.map((p) => (
+              <div class="prop">
+                <PropertyBlock p={p} />
+              </div>
+            ))}
+          </div>
         </section>
       </section>
 
       <!-- REVIEWS -->
-      <section class="section" id="reviews">
+      <section class="section reviewsSection" id="reviews">
         <h2 class="reviews-title">Guest Reviews</h2>
         <hr class="rule" />
 
@@ -164,65 +120,36 @@ const destinProps = groups[destinCity] ?? [];
       </section>
     </main>
 
-    <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
+    <SiteFooter
+      phone="(918) 734-3331"
+      email="coastalbeachretreats@gmail.com"
+    />
 
-    <!-- ✅ Load OwnerRez widget script ONCE -->
     <script is:inline src="https://app.ownerrez.com/widget.js"></script>
 
     <script is:inline>
       (() => {
-        const cards = document.querySelectorAll(".locCard");
-        const groups = document.querySelectorAll(".propGroup");
-        const resultsHeading = document.getElementById("resultsHeading");
-        const resultsWrap = document.getElementById("property-results");
-        const clearBtn = document.getElementById("clearSelection");
+        const buttons = Array.from(document.querySelectorAll(".filterBtn"));
+        const groups = Array.from(document.querySelectorAll(".propGroup"));
 
-        function showGroup(groupName) {
+        function setFilter(filter) {
+          buttons.forEach((btn) => {
+            const active = btn.dataset.filter === filter;
+            btn.classList.toggle("is-active", active);
+            btn.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+
           groups.forEach((group) => {
-            group.hidden = group.dataset.group !== groupName;
-          });
-
-          cards.forEach((card) => {
-            card.classList.toggle("active", card.dataset.location === groupName);
-          });
-
-          if (groupName === "pcb") {
-            resultsHeading.textContent = "Panama City Beach Condos";
-          } else if (groupName === "destin") {
-            resultsHeading.textContent = "Destin / Okaloosa Island Condos";
-          } else {
-            resultsHeading.textContent = "Available Condos";
-          }
-
-          clearBtn.hidden = !groupName;
-
-          resultsWrap?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+            const show = filter === "all" || group.dataset.group === filter;
+            group.hidden = !show;
           });
         }
 
-        cards.forEach((card) => {
-          card.addEventListener("click", () => {
-            const location = card.dataset.location;
-            showGroup(location);
-          });
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => setFilter(btn.dataset.filter || "all"));
         });
 
-        clearBtn?.addEventListener("click", () => {
-          groups.forEach((group) => {
-            group.hidden = true;
-          });
-
-          cards.forEach((card) => card.classList.remove("active"));
-          resultsHeading.textContent = "Available Condos";
-          clearBtn.hidden = true;
-
-          document.getElementById("location-select")?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        });
+        setFilter("all");
       })();
     </script>
 
@@ -230,211 +157,184 @@ const destinProps = groups[destinCity] ?? [];
       .wrap {
         max-width: 1440px;
         margin: 0 auto;
-        padding: 12px 10px;
+        padding: 8px 14px 14px;
       }
 
       .section {
-        padding: 14px 0;
+        padding: 10px 0;
       }
 
-      .prop {
+      .browseBar {
+        margin: 0 0 18px;
+        padding: 10px 0 14px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .browseBarTop {
+        margin-bottom: 14px;
+        text-align: center;
+      }
+
+      .browseEyebrow {
         margin: 0 0 6px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #058789;
+      }
+
+      .browseTitle {
+        margin: 0;
+        font-size: 34px;
+        line-height: 1.08;
+        font-family: "Dancing Script", cursive;
+        color: #193e7f;
+        font-weight: 700;
+      }
+
+      .browseFilters {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .filterBtn {
+        appearance: none;
+        border: 1px solid rgba(25, 62, 127, 0.16);
+        background: rgba(25, 62, 127, 0.04);
+        color: #193e7f;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      }
+
+      .filterBtn:hover {
+        background: rgba(25, 62, 127, 0.08);
+        border-color: rgba(25, 62, 127, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .filterBtn.is-active {
+        background: #193e7f;
+        border-color: #193e7f;
+        color: #fff;
+      }
+
+      .resultsWrap {
+        margin-top: 0;
+      }
+
+      .propGroup {
+        margin: 0 0 22px;
+      }
+
+      .groupHeader {
+        margin: 0 0 10px;
+        padding: 0 0 8px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .groupEyebrow {
+        margin: 0 0 3px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #058789;
       }
 
       .city-heading {
-        margin: 8px 0 12px;
+        margin: 0 0 4px;
+        font-size: 22px;
+        line-height: 1.1;
+        font-family: "Dancing Script", cursive;
+        color: #193e7f;
+        font-weight: 700;
+      }
+
+      .groupHelper {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.62);
+      }
+
+      .groupProps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .prop {
+        min-width: 0;
+        height: 100%;
+      }
+
+      .reviewsSection {
+        padding-top: 4px;
       }
 
       .reviews-title {
         margin: 0 0 8px;
+        font-size: 26px;
+        line-height: 1.1;
+        color: #193e7f;
       }
 
       .rule {
         border: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
-        margin: 12px 0 16px;
+        margin: 10px 0 16px;
       }
 
-      #location-select,
-      #property-results {
-        scroll-margin-top: 96px;
-      }
-
-      .locCards {
-        margin: 10px 0 18px;
-      }
-
-      .locLabel {
-        margin: 0 0 8px;
-        text-align: center;
-        font-weight: 900;
-        letter-spacing: 0.02em;
-        color: rgba(0, 0, 0, 0.72);
-        font-size: 34px;
-        line-height: 1.1;
-      }
-
-      .locHelper {
-        margin: 0 0 14px;
-        text-align: center;
-        color: rgba(0, 0, 0, 0.62);
-        font-size: 15px;
-      }
-
-      .locGrid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      .locCard {
-        position: relative;
-        display: block;
-        width: 100%;
-        padding: 0;
-        border-radius: 0;
-        overflow: hidden;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        background: #fff;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-        min-height: 220px;
-        isolation: isolate;
-        transform: translateZ(0);
-        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-        cursor: pointer;
-        text-align: left;
-      }
-
-      .locCard:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
-      }
-
-      .locCard.active {
-        border-color: rgba(25, 62, 127, 0.65);
-        box-shadow: 0 0 0 2px rgba(25, 62, 127, 0.14), 0 14px 34px rgba(0, 0, 0, 0.12);
-      }
-
-      .locImg {
-        width: 100%;
-        height: 260px;
-        display: block;
-        object-fit: cover;
-        border-radius: 0;
-      }
-
-      .locOverlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.62) 0%,
-          rgba(0, 0, 0, 0.28) 45%,
-          rgba(0, 0, 0, 0.1) 100%
-        );
-        z-index: 1;
-      }
-
-      .locText {
-        position: absolute;
-        left: 16px;
-        right: 16px;
-        bottom: 18px;
-        z-index: 2;
-        color: #fff;
-        padding-right: 160px;
-      }
-
-      .locTitle {
-        font-size: 22px;
-        font-weight: 900;
-        letter-spacing: 0.01em;
-        margin: 0 0 4px;
-      }
-
-      .locSub {
-        font-size: 15px;
-        font-weight: 700;
-        opacity: 0.95;
-        margin: 0 0 6px;
-      }
-
-      .locMeta {
-        font-size: 14px;
-        opacity: 0.92;
-        line-height: 1.35;
-      }
-
-      .locCta {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        z-index: 3;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border-radius: 0;
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #fff;
-        font-weight: 900;
-        font-size: 14px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-      }
-
-      .resultsWrap {
-        margin: 8px 0 6px;
-      }
-
-      .resultsTop {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 8px;
-      }
-
-      .resultsHeading {
-        margin: 0;
-      }
-
-      .clearBtn {
-        padding: 10px 14px;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        background: #fff;
-        border-radius: 0;
-        cursor: pointer;
-        font-weight: 800;
-        color: rgba(25, 62, 127, 0.9);
-      }
-
-      .clearBtn:hover {
-        background: rgba(25, 62, 127, 0.05);
-      }
-
-      @media (max-width: 980px) {
-        .wrap {
-          padding: 12px 12px;
+      @media (max-width: 1280px) {
+        .groupProps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
         }
 
-        .locGrid {
+        .browseTitle {
+          font-size: 30px;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .groupProps {
           grid-template-columns: 1fr;
+          gap: 14px;
         }
 
-        .locImg {
-          height: 240px;
+        .wrap {
+          padding: 8px 12px 12px;
         }
 
-        .locText {
-          padding-right: 0;
+        .browseBar {
+          margin-bottom: 14px;
+          padding-bottom: 10px;
         }
 
-        .locLabel {
-          font-size: 28px;
-          line-height: 1.15;
+        .browseTitle {
+          font-size: 26px;
+        }
+
+        .city-heading {
+          font-size: 20px;
+        }
+
+        .groupHelper {
+          font-size: 13px;
+        }
+
+        .reviews-title {
+          font-size: 22px;
         }
       }
     </style>
