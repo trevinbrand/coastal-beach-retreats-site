@@ -776,22 +776,41 @@ const propertyGroups = [
     @media (max-width: 1100px) {
       .bar {
         grid-template-columns: auto 1fr auto;
+        align-items: center;
+        padding: 10px 14px;
+        min-height: 84px;
+        gap: 12px;
       }
 
       .nav { display: none; }
       .hamburger { display: inline-flex; }
       .contact { display: none; }
 
+      .left,
+      .right {
+        gap: 12px;
+      }
+
       .centerBrand {
         position: static;
         left: auto;
         top: auto;
         transform: none;
-        justify-content: center;
+        justify-self: center;
+        align-self: center;
       }
 
       .centerBrand img {
-        max-width: 240px;
+        max-width: 220px;
+        max-height: 64px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .quote {
+        padding: 12px 16px;
+        border-radius: 14px;
       }
     }
 
@@ -801,7 +820,10 @@ const propertyGroups = [
 
       .bar {
         grid-template-columns: auto 1fr auto;
-        padding: 16px 10px;
+        align-items: center;
+        padding: 8px 12px;
+        min-height: 76px;
+        gap: 10px;
       }
 
       .centerBrand {
@@ -812,15 +834,38 @@ const propertyGroups = [
       }
 
       .centerBrand img {
-        max-width: 190px;
+        max-width: 180px;
+        max-height: 52px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .quote {
+        padding: 10px 12px;
+        font-size: 13px;
       }
     }
 
     @media (max-width: 420px){
-      .quote{ padding: 12px 14px; border-radius: 14px; }
-      .hamburger{ width: 52px !important; height: 52px !important; }
-      .bar{ padding: 14px 10px; }
-      .drawerPanel{ width: 92vw; }
+      .quote {
+        padding: 10px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+      }
+
+      .hamburger {
+        width: 50px !important;
+        height: 50px !important;
+      }
+
+      .bar {
+        padding: 8px 10px;
+        min-height: 70px;
+        gap: 8px;
+      }
+
+      .drawerPanel { width: 92vw; }
 
       .centerBrand {
         position: static;
@@ -831,6 +876,10 @@ const propertyGroups = [
 
       .centerBrand img {
         max-width: 150px;
+        max-height: 44px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
       }
     }
   </style>

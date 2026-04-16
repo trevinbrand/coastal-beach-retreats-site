@@ -17,15 +17,46 @@ const tours = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>3D Condo Tours | Coastal Beach Retreats</title>
+
+    <title>3D Condo Tours in Panama City Beach | Coastal Beach Retreats</title>
+
     <meta
       name="description"
-      content="Explore our condos with interactive 3D Matterport tours."
+      content="Explore interactive 3D condo tours from Coastal Beach Retreats. Walk through our Panama City Beach vacation rental with a virtual Matterport tour before you book."
     />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://coastalbeachretreats.com/3d-condo-tours/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="3D Condo Tours in Panama City Beach | Coastal Beach Retreats" />
+    <meta
+      property="og:description"
+      content="Take an interactive 3D virtual tour of our vacation rental before booking. Explore Sailor's Delight with a Matterport walkthrough from Coastal Beach Retreats."
+    />
+    <meta property="og:url" content="https://coastalbeachretreats.com/3d-condo-tours/" />
+    <meta property="og:site_name" content="Coastal Beach Retreats" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="3D Condo Tours in Panama City Beach | Coastal Beach Retreats" />
+    <meta
+      name="twitter:description"
+      content="Explore our vacation rental with an interactive Matterport 3D condo tour before you book."
+    />
+
     <link rel="icon" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />
     <link rel="apple-touch-icon" href="/images/logo.png" />
+
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "3D Condo Tours in Panama City Beach | Coastal Beach Retreats",
+        "url": "https://coastalbeachretreats.com/3d-condo-tours/",
+        "description": "Explore interactive 3D condo tours from Coastal Beach Retreats. Walk through our Panama City Beach vacation rental with a virtual Matterport tour before you book."
+      }
+    </script>
   </head>
 
   <body>
@@ -34,17 +65,33 @@ const tours = [
     <main class="wrap">
       <header class="titlebar">
         <h1 class="h1">3D Condo Tours</h1>
-        <p class="sub">Explore our spaces in a full interactive walk-through.</p>
+        <p class="sub">
+          Explore our vacation rentals with interactive Matterport walk-throughs before you book.
+        </p>
       </header>
+
+      <section class="introCard" aria-label="About our 3D condo tours">
+        <h2 class="introTitle">Virtual Tours of Our Beach Vacation Rentals</h2>
+        <p class="introText">
+          Browse our interactive 3D condo tours to get a closer look at layout, furnishings, views,
+          and overall space before your stay. These virtual walk-throughs make it easy to explore
+          our beachfront vacation rentals online and feel confident about choosing the right condo
+          for your trip.
+        </p>
+      </section>
 
       {tours.map((t) => (
         <section class="card" id={t.id} aria-label={t.title}>
-          <h2 class="h2">{t.title}</h2>
+          <h2 class="h2">{t.title} 3D Tour</h2>
 
-          <div class="embed" aria-label={`${t.title} embed`}>
+          <p class="tourText">
+            Take a virtual Matterport tour of {t.title} and explore the condo room by room before booking.
+          </p>
+
+          <div class="embed" aria-label={`${t.title} 3D tour embed`}>
             <iframe
               src={t.src}
-              title={t.title}
+              title={`${t.title} 3D Matterport Tour`}
               loading="lazy"
               allowfullscreen
               allow="fullscreen; xr-spatial-tracking"
@@ -59,6 +106,16 @@ const tours = [
           </p>
         </section>
       ))}
+
+      <section class="seoBlock" aria-label="More about our virtual condo tours">
+        <h2 class="seoTitle">Why Use a Virtual Condo Tour Before Booking?</h2>
+        <p class="seoText">
+          A 3D condo tour helps guests preview the layout and feel of a vacation rental before arrival.
+          You can see how the living space flows, view bedrooms and bathrooms, and get a better sense
+          of the property than standard photos alone. Coastal Beach Retreats offers virtual tours to
+          make booking direct easier and more transparent.
+        </p>
+      </section>
     </main>
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
@@ -70,14 +127,43 @@ const tours = [
         padding: 12px 10px;
       }
 
-      .titlebar { margin: 10px 0 14px; }
+      .titlebar {
+        margin: 10px 0 14px;
+      }
+
       .h1 {
         margin: 0 0 6px;
         font-size: 34px;
         line-height: 1.1;
         color: var(--brand-blue, #193e7f);
       }
-      .sub { margin: 0; opacity: .85; }
+
+      .sub {
+        margin: 0;
+        opacity: 0.85;
+      }
+
+      .introCard {
+        margin: 0 0 14px;
+        padding: 16px;
+        border: 1px solid rgba(25, 62, 127, 0.08);
+        border-radius: 16px;
+        background: rgba(25, 62, 127, 0.03);
+      }
+
+      .introTitle {
+        margin: 0 0 8px;
+        font-size: 24px;
+        line-height: 1.2;
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .introText {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.65;
+        color: rgba(0, 0, 0, 0.72);
+      }
 
       .card {
         border: 1px solid rgba(0,0,0,.12);
@@ -94,7 +180,13 @@ const tours = [
         color: var(--brand-blue, #193e7f);
       }
 
-      /* Responsive 16:9 iframe */
+      .tourText {
+        margin: 0 0 12px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(0, 0, 0, 0.72);
+      }
+
       .embed {
         position: relative;
         width: 100%;
@@ -104,6 +196,7 @@ const tours = [
         border: 1px solid rgba(0,0,0,.12);
         background: rgba(0,0,0,.04);
       }
+
       .embed iframe {
         position: absolute;
         inset: 0;
@@ -113,16 +206,56 @@ const tours = [
         display: block;
       }
 
-      .openRow { margin: 10px 0 0; }
+      .openRow {
+        margin: 10px 0 0;
+      }
+
       .openLink {
         font-weight: 800;
         text-decoration: none;
         color: rgba(25,62,127,.85);
       }
-      .openLink:hover { color: var(--brand-blue, #193e7f); }
+
+      .openLink:hover {
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .seoBlock {
+        margin: 14px 0 6px;
+        padding: 16px;
+        border: 1px solid rgba(25, 62, 127, 0.08);
+        border-radius: 16px;
+        background: rgba(25, 62, 127, 0.03);
+      }
+
+      .seoTitle {
+        margin: 0 0 8px;
+        font-size: 22px;
+        line-height: 1.2;
+        color: var(--brand-blue, #193e7f);
+      }
+
+      .seoText {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.65;
+        color: rgba(0, 0, 0, 0.72);
+      }
 
       @media (max-width: 980px) {
-        .wrap { padding: 12px 12px; }
+        .wrap {
+          padding: 12px 12px;
+        }
+
+        .h1 {
+          font-size: 30px;
+        }
+
+        .introTitle,
+        .h2,
+        .seoTitle {
+          font-size: 22px;
+        }
       }
     </style>
   </body>
