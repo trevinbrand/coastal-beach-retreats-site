@@ -224,6 +224,11 @@ const propertyGroups = [
     </div>
   </div>
 
+  <script>
+    import { manageDialogFocus } from "../scripts/dialogFocus.js";
+    manageDialogFocus(document.querySelector(".drawerPanel"));
+  </script>
+
   <script is:inline>
     const header = document.querySelector("[data-header]");
     const burgerBtn = header.querySelector(".hamburger");
@@ -236,9 +241,12 @@ const propertyGroups = [
       drawer.setAttribute("aria-hidden", "false");
       burgerBtn.setAttribute("aria-expanded", "true");
       document.body.classList.add("noScroll");
+      drawer.querySelector(".drawerPanel").dispatchEvent(new Event("modal-open"));
     }
 
     function closeMenu() {
+      if (!drawer.classList.contains("open")) return;
+      drawer.querySelector(".drawerPanel").dispatchEvent(new Event("modal-close"));
       burgerBtn.classList.remove("open");
       drawer.classList.remove("open");
       drawer.setAttribute("aria-hidden", "true");

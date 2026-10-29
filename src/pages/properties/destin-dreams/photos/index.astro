@@ -102,6 +102,11 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 
     <SiteFooter phone="(918) 734-3331" email="coastalbeachretreats@gmail.com" />
 
+    <script>
+      import { manageDialogFocus } from "../../../../scripts/dialogFocus.js";
+      manageDialogFocus(document.getElementById("lightbox"));
+    </script>
+
     <script is:inline define:vars={{ galleryPhotos }}>
       (() => {
         const photos = JSON.parse(JSON.stringify(galleryPhotos || []));
@@ -135,9 +140,11 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
           lightbox.classList.add("is-open");
           lightbox.setAttribute("aria-hidden", "false");
           document.body.classList.add("lbOpen");
+          lightbox.dispatchEvent(new Event("modal-open"));
         }
 
         function closeLightbox() {
+          lightbox.dispatchEvent(new Event("modal-close"));
           lightbox.classList.remove("is-open");
           lightbox.setAttribute("aria-hidden", "true");
           document.body.classList.remove("lbOpen");
