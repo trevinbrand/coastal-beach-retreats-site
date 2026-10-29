@@ -1,8 +1,17 @@
-/*
-  Cache-Control: public, max-age=31536000, immutable
+# Pages revalidate, including the homepage, directory URLs, and HTML files.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*/
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-/index.html
-  Cache-Control: public, max-age=0, must-revalidate
+# Images can change without a filename change, so cache them for one day.
+/images/*
+  Cache-Control: public, max-age=86400
+
+# Astro-generated assets have content hashes in their filenames.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
