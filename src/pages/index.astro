@@ -96,7 +96,7 @@ const destinProps = properties.filter((p) =>
         </div>
       </section>
 
-      <section class="browseBar" aria-label="Browse properties">
+      <section class="browseBar" id="properties" aria-label="Browse properties">
         <div class="browseBarTop">
           <h1 class="srOnly">Destin, Okaloosa Island & Panama City Beach Vacation Rentals | Coastal Beach Retreats</h1>
           <h2 class="section-title">Discover your next coastal escape</h2>
@@ -165,7 +165,7 @@ const destinProps = properties.filter((p) =>
           </p>
           <p class="seoText">
             Guests can browse condos in top beachfront resorts with easy beach access, pools, and convenient locations near local
-            dining, shopping, and attractions. Start by viewing <a href="/properties/">all vacation rentals</a>, explore the
+            dining, shopping, and attractions. Start by viewing <a href="/#properties">all vacation rentals</a>, explore the
             <a href="/map/">property map</a>, or check <a href="/availability/">availability</a> for your travel dates.
           </p>
         </div>
@@ -259,6 +259,7 @@ const destinProps = properties.filter((p) =>
       }
 
       .browseBar {
+        scroll-margin-top: 120px;
         margin: 0 0 8px;
         padding: 6px 0 12px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
