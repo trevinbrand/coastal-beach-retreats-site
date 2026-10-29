@@ -1,28 +1,28 @@
 ---
 /**
- * FILE: src/pages/properties/sailors-delight/photos/index.astro
- * Full Photos page for Sailor's Delight
- * - Uses thumb-RS1.webp ... thumb-RS47.webp for gallery thumbnails
- * - Uses RS1.jpeg ... RS47.jpeg for full-size lightbox images
+ * FILE: src/pages/properties/red-sky-nights/photos/index.astro
+ * Full Photos page for Red Sky Nights
+ * - Uses thumb-RSN1.webp ... thumb-RSN45.webp for gallery thumbnails
+ * - Uses RSN1.jpeg ... RSN45.jpeg for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
-const PHOTO_COUNT = 47;
-const PHOTO_BASE = "/images/props/sailors";
+const PHOTO_COUNT = 45;
+const PHOTO_BASE = "/images/props/red-sky-nights";
 
-const pageTitle = "Sailor's Delight Photos";
+const pageTitle = "Red Sky Nights Photos";
 const subtitle =
-  "All photos for Tower 1-911 at Edgewater — tap any image to view and scroll through the gallery.";
-const backHref = "/properties/sailors-delight/";
+  "All photos for Tower 1-1002 at Edgewater — tap any image to view and scroll through the gallery.";
+const backHref = "/properties/red-sky-nights/";
 
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/RS${n}.jpeg`,
-    thumb: `${PHOTO_BASE}/thumb-RS${n}.webp`,
-    alt: `Sailor's Delight photo ${n}`,
+    full: `${PHOTO_BASE}/RSN${n}.jpeg`,
+    thumb: `${PHOTO_BASE}/thumb-RSN${n}.webp`,
+    alt: `Red Sky Nights photo ${n}`,
   };
 });
 ---
@@ -33,7 +33,7 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta name="description" content="Full photo gallery for Sailor's Delight." />
+    <meta name="description" content="Full photo gallery for Red Sky Nights." />
     <link rel="icon" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />
