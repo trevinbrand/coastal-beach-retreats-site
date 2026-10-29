@@ -1,0 +1,27 @@
+---
+const { p } = Astro.props;
+const name = p.name.split(" @ ")[0];
+const resort = p.id === "destin-diamond" ? "Sterling Sands · Unit 111" : p.resort;
+const bookHref = `${p.href}#details`;
+---
+
+<article class="stay-card">
+  <a class="stay-photo" href={p.href} aria-label={`Explore ${name}`}>
+    <img src={p.image} alt={`${name} vacation rental`} loading="lazy" width="800" height="533" />
+    <span class="stay-location">{p.city.replace(", FL", "")}</span>
+  </a>
+  <div class="stay-content">
+    <p class="stay-resort">{resort}</p>
+    <h3><a href={p.href}>{name}</a></h3>
+    <p class="stay-size">{p.sizeLine.replace("Sleeps 1-", "Sleeps ")}</p>
+    <p class="stay-description">{p.blurb}</p>
+    {p.noteBold && <p class="stay-note">Parking for up to two vehicles included</p>}
+    <div class="stay-actions">
+      <a class="stay-book" href={bookHref}>Check availability / Book <span aria-hidden="true">↗</span></a>
+      <div class="stay-secondary">
+        <a href={p.photosHref}>View photos</a>
+        <a href={p.detailsHref}>Property details <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</article>

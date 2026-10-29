@@ -2,7 +2,8 @@
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import HeroCarousel from "../components/HeroCarousel.astro";
-import PropertyBlock from "../components/PropertyBlock.astro";
+import PropertyBlock from "../components/HomepagePropertyCard.astro";
+import "../styles/homepage-preview.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import { properties } from "../data/properties.js";
 
@@ -80,10 +81,18 @@ const destinProps = properties.filter((p) =>
     <link rel="apple-touch-icon" href="/images/logo.png" />
   </head>
 
-  <body>
+  <body class="homepage-preview">
     <SiteHeader phone="(918) 734-3331" />
 
-    <HeroCarousel />
+    <div class="homeHero">
+      <HeroCarousel />
+      <div class="hero-copy">
+        <p class="eyebrow">Destin &middot; Okaloosa Island &middot; Panama City Beach</p>
+        <h2>A little closer to<br /><em>your happy place.</em></h2>
+        <p>Six coastal retreats. Beautiful Gulf views. Find a place to slow down, settle in, and make yourself at home.</p>
+        <a class="hero-cta" href="#properties">Explore our stays &rarr;</a>
+      </div>
+    </div>
 
     <main class="wrap">
       <section class="trustBar" aria-label="Why book with us">
@@ -99,7 +108,7 @@ const destinProps = properties.filter((p) =>
       <section class="browseBar" id="properties" aria-label="Browse properties">
         <div class="browseBarTop">
           <h1 class="srOnly">Destin, Okaloosa Island & Panama City Beach Vacation Rentals | Coastal Beach Retreats</h1>
-          <h2 class="section-title">Discover your next coastal escape</h2>
+          <h2 class="section-title">Find your next coastal escape</h2>
         </div>
 
         <div class="browseFilters" role="tablist" aria-label="Destination filters">
