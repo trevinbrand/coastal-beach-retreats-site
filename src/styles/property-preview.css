@@ -1,0 +1,47 @@
+body.property-preview .wrap { max-width: 1240px; padding: 0 28px 50px; }
+body.property-preview .titlebar { padding: 30px 0 10px; margin: 0 0 22px; }
+body.property-preview .back-to-stays { display: inline-block; color: #193e7f; font-size: 12px; text-decoration: none; margin-bottom: 28px; }
+body.property-preview .property-eyebrow { color: #058789; font-size: 11px; text-transform: uppercase; letter-spacing: .13em; font-weight: 700; margin: 0 0 12px; }
+body.property-preview .h1 { font-family: var(--font-heading); font-size: clamp(42px, 5vw, 60px); line-height: 1.1; color: #193e7f; margin: 0 0 10px; }
+body.property-preview .property-unit { color: #193e7f; font-size: 14px; font-weight: 600; margin: 0 0 9px; }
+body.property-preview .sub { color: #53645a; font-size: 15px; max-width: 730px; }
+body.property-preview .property-highlights { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+body.property-preview .property-highlights span { background: #edf2ef; border: 1px solid #dce5df; border-radius: 5px; padding: 8px 12px; color: #193e7f; font-size: 12px; font-weight: 600; }
+body.property-preview .collage { gap: 6px; border-radius: 8px; overflow: hidden; margin: 0 0 24px; }
+body.property-preview .big, body.property-preview .small { border: 0; }
+body.property-preview .smallGrid { gap: 6px; }
+body.property-preview .subnav { gap: 8px; padding: 0 0 24px; margin-bottom: 30px; border-bottom: 1px solid #dce5df; }
+body.property-preview .subnav a { color: #193e7f; background: #fff; border: 1px solid #dce5df; border-radius: 5px; padding: 11px 16px; font-size: 11px; letter-spacing: .04em; }
+body.property-preview .subnav a:hover { background: #193e7f; border-color: #193e7f; color: #fff; opacity: 1; }
+body.property-preview .below { gap: 40px; margin-bottom: 40px; }
+body.property-preview .property-intro { font-family: var(--font-nav); font-size: 26px; color: #193e7f; font-weight: 600; letter-spacing: -.03em; margin: 0 0 22px; }
+body.property-preview .metaLine { font-size: 14px; line-height: 1.65; margin: 12px 0; }
+body.property-preview .metaLabel { font-family: var(--font-nav); font-size: 14px; color: #058789; }
+body.property-preview .longDesc p { font-size: 15px; line-height: 1.85; color: #45534c; margin: 20px 0; }
+body.property-preview .longDesc strong { color: #193e7f; font-weight: 600; }
+body.property-preview .bookInner { border: 1px solid #dce5df; border-radius: 8px; background: #fff; box-shadow: 0 6px 24px #193e7f0a; padding: 25px; top: 120px; }
+body.property-preview .booking-eyebrow { color: #058789; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 10px; }
+body.property-preview .booking-heading { color: #193e7f; font-family: var(--font-nav); font-size: 22px; font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px; }
+body.property-preview .booking-helper { color: #58635e; font-size: 13px; margin: 0 0 20px; }
+body.property-preview .card { padding: 30px; border: 1px solid #dce5df; border-radius: 8px !important; box-shadow: none; margin-bottom: 24px; }
+body.property-preview .h2 { font-family: var(--font-nav); font-size: 25px; font-weight: 600; letter-spacing: -.025em; margin-bottom: 20px; }
+body.property-preview .amenities-table { border-color: #dce5df; }
+body.property-preview .amen-row { padding: 18px 0; border-color: #e7ece7; }
+body.property-preview .amen-label { color: #193e7f; font-size: 14px; }
+body.property-preview .amen-value { color: #45534c; font-size: 14px; }
+body.property-preview section[id] { scroll-margin-top: 125px; }
+@media (max-width: 980px) {
+  body.property-preview .below { gap: 25px; }
+  body.property-preview .bookInner { position: static; }
+}
+@media (max-width: 640px) {
+  body.property-preview .wrap { padding: 0 18px 30px; }
+  body.property-preview .titlebar { padding-top: 22px; }
+  body.property-preview .back-to-stays { margin-bottom: 22px; }
+  body.property-preview .property-eyebrow { font-size: 10px; }
+  body.property-preview .subnav { display: flex; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 16px; }
+  body.property-preview .subnav a { flex-shrink: 0; }
+  body.property-preview .card, body.property-preview .bookInner { padding: 22px; }
+  body.property-preview .property-highlights { gap: 6px; }
+  body.property-preview .property-highlights span { padding: 7px 9px; font-size: 11px; }
+}

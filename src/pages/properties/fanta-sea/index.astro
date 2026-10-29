@@ -9,6 +9,8 @@
  * NOTE: widget.js is loaded ONCE at the bottom.
  */
 import "../../../styles/global.css";
+import "../../../styles/homepage-preview.css";
+import "../../../styles/property-preview.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
@@ -62,13 +64,17 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
     <link rel="apple-touch-icon" href="/images/logo.png" />
   </head>
 
-  <body>
+  <body class="homepage-preview property-preview">
     <SiteHeader phone="(918) 734-3331" />
 
     <main class="wrap">
       <header class="titlebar">
-        <h1 class="h1">{pageTitle}</h1>
+        <a class="back-to-stays" href="/#properties">&larr; Explore all stays</a>
+        <p class="property-eyebrow">Okaloosa Island &middot; Waterscape Resort</p>
+        <h1 class="h1">Fanta Sea</h1>
+        <p class="property-unit">Unit A328</p>
         <p class="sub">{subtitle}</p>
+        <div class="property-highlights" aria-label="Property highlights"><span>1 bedroom + bunk nook</span><span>2 bathrooms</span><span>Sleeps up to 6</span></div>
       </header>
 
       <!-- PHOTO COLLAGE + MOBILE HERO SLIDER -->
@@ -157,6 +163,7 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
 
       <section class="below" id="details" aria-label="Details and booking">
         <div class="desc">
+          <h2 class="property-intro">Your place by the Gulf</h2>
           <div class="metaLine">
             <span class="metaLabel">Size –</span>
             <span>{sizeLine}</span>
@@ -250,6 +257,9 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
 
         <aside class="book">
           <div class="bookInner">
+            <p class="booking-eyebrow">Book direct with Coastal Beach Retreats</p>
+            <h2 class="booking-heading">Make yourself at home</h2>
+            <p class="booking-helper">Choose your dates below to check availability and pricing.</p>
             <div
               class="ownerrez-widget"
               data-propertyId={OR_PROPERTY_ID}

@@ -1,0 +1,19 @@
+body.site-page main { max-width: 1240px; margin: 0 auto; padding: 32px 28px 50px; }
+body.site-page .titlebar { margin: 0 0 28px; }
+body.site-page h1 { color: #193e7f; font-family: var(--font-heading); font-size: clamp(38px, 5vw, 52px); line-height: 1.2; margin: 8px 0 14px; }
+body.site-page h2 { color: #193e7f; font-family: var(--font-nav); font-weight: 600; letter-spacing: -.025em; }
+body.site-page .sub, body.site-page .page-sub, body.site-page .reviews-sub { color: #53645a; line-height: 1.7; }
+body.site-page .card, body.site-page .introCard, body.site-page .seoBlock { background: #fff; border: 1px solid #dce5df; border-radius: 8px !important; padding: 28px; margin-bottom: 24px; box-shadow: none; }
+body.site-page .galleryGrid { gap: 12px; }
+body.site-page .gItem { overflow: hidden; border-radius: 6px !important; }
+body.site-page .btnBack { display: inline-flex; align-items: center; color: #193e7f; background: #fff; border: 1px solid #dce5df; border-radius: 5px !important; padding: 11px 16px; text-decoration: none; font-size: 12px; }
+body.site-page .map-card { background: #fff; border: 1px solid #dce5df; border-radius: 8px !important; padding: 20px; box-shadow: none; }
+body.site-page .map-card strong { font-family: var(--font-nav); font-size: 17px; font-weight: 600; color: #193e7f; }
+body.site-page .map-card.active { background: #edf3f5; border-color: #193e7f; }
+body.site-page .map-card span { color: #53645a; font-size: 13px; }
+body.site-page .embed, body.site-page .map-frame iframe { border-radius: 8px !important; overflow: hidden; }
+@media (max-width: 640px) {
+  body.site-page main { padding: 24px 18px 30px; }
+  body.site-page .card, body.site-page .introCard, body.site-page .seoBlock { padding: 18px; }
+  body.site-page .galleryGrid { gap: 8px; }
+}

@@ -6,6 +6,8 @@
  * - Uses d1.jpg ... d21.jpg for full-size lightbox images (FULL QUALITY)
  */
 import "../../../../styles/global.css";
+import "../../../../styles/homepage-preview.css";
+import "../../../../styles/site-pages.css";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
 
@@ -40,7 +42,7 @@ const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
     <link rel="apple-touch-icon" href="/images/logo.png" />
   </head>
 
-  <body>
+  <body class="homepage-preview site-page">
     <SiteHeader phone="(918) 734-3331" />
 
     <main class="wrap">

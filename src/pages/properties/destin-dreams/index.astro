@@ -9,6 +9,8 @@
  * - OwnerRez widget still loads once at the bottom
  */
 import "../../../styles/global.css";
+import "../../../styles/homepage-preview.css";
+import "../../../styles/property-preview.css";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 
@@ -69,13 +71,17 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
     <link rel="apple-touch-icon" href="/images/logo.png" />
   </head>
 
-  <body>
+  <body class="homepage-preview property-preview">
     <SiteHeader phone="(918) 734-3331" />
 
     <main class="wrap">
       <header class="titlebar">
-        <h1 class="h1">{pageTitle}</h1>
+        <a class="back-to-stays" href="/#properties">&larr; Explore all stays</a>
+        <p class="property-eyebrow">Destin &middot; Sterling Shores</p>
+        <h1 class="h1">Destin Dreams</h1>
+        <p class="property-unit">Unit 311</p>
         <p class="sub">{subtitle}</p>
+        <div class="property-highlights" aria-label="Property highlights"><span>1 bedroom</span><span>1 bathroom</span><span>Sleeps up to 4</span></div>
       </header>
 
       <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO SLIDER (1 photo with arrows) -->
@@ -185,6 +191,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
       <section class="below" id="details" aria-label="Details and booking">
         <!-- LEFT -->
         <div class="desc">
+          <h2 class="property-intro">Your place by the Gulf</h2>
           <div class="metaLine">
             <span class="metaLabel">Size –</span>
             <span>{sizeLine}</span>
@@ -273,6 +280,9 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
         <!-- RIGHT: booking widget -->
         <aside class="book">
           <div class="bookInner">
+            <p class="booking-eyebrow">Book direct with Coastal Beach Retreats</p>
+            <h2 class="booking-heading">Make yourself at home</h2>
+            <p class="booking-helper">Choose your dates below to check availability and pricing.</p>
             <div
               class="ownerrez-widget"
               data-propertyId={OR_PROPERTY_ID}
