@@ -39,8 +39,9 @@ body.property-preview section[id] { scroll-margin-top: 125px; }
   body.property-preview .titlebar { padding-top: 22px; }
   body.property-preview .back-to-stays { margin-bottom: 22px; }
   body.property-preview .property-eyebrow { font-size: 10px; }
-  body.property-preview .subnav { display: flex; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 16px; }
-  body.property-preview .subnav a { flex-shrink: 0; }
+  body.property-preview .subnav { display: flex; flex-wrap: wrap; padding-bottom: 16px; }
+  body.property-preview .subnav a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; box-sizing: border-box; }
+  body.property-preview .collage .arrow { width: 44px; height: 44px; }
   body.property-preview .card, body.property-preview .bookInner { padding: 22px; }
   body.property-preview .property-highlights { gap: 6px; }
   body.property-preview .property-highlights span { padding: 7px 9px; font-size: 11px; }

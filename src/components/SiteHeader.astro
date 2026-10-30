@@ -280,6 +280,14 @@ const propertyGroups = [
       if (e.key === "Escape") closeMenu();
     });
 
+    // Release the mobile modal when the desktop navigation becomes visible.
+    window.matchMedia("(min-width: 1101px)").addEventListener("change", (e) => {
+      if (e.matches && drawer.classList.contains("open")) {
+        closeMenu();
+        header.querySelector(".nav a")?.focus();
+      }
+    });
+
     // Accordion
     const accBtn = drawer.querySelector('[data-acc="props"]');
     const panel = drawer.querySelector('[data-panel="props"]');

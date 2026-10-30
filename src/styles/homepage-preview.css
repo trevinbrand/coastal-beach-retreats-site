@@ -73,13 +73,13 @@ body.homepage-preview .f { background: #fff; border-color: #e1e7e0; }
 @media (max-width: 720px) {
   body.homepage-preview .hdr .bar { padding: 8px 12px; gap: 8px; }
   body.homepage-preview .hdr .centerBrand img { width: clamp(145px, 40vw, 210px); }
-  body.homepage-preview .hdr .quote { font-size: 10px; padding: 11px 9px; }
+  body.homepage-preview .hdr .quote { font-size: 10px; padding: 11px 9px; min-height: 44px; box-sizing: border-box; }
   body.homepage-preview .wrap { padding: 0 18px 30px; }
   body.homepage-preview .hero-copy { left: 8%; }
   body.homepage-preview .hero-copy h2 { font-size: 39px; }
   body.homepage-preview .hero-copy p { font-size: 13px; max-width: 310px; }
   body.homepage-preview .hero-copy .eyebrow { font-size: 10px; }
-  body.homepage-preview .homeHero .arrow { margin: 0 6px; width: 26px; height: 32px; }
+  body.homepage-preview .homeHero .arrow { margin: 0 6px; width: 44px; height: 44px; }
   body.homepage-preview .trustItem { font-size: 11px; }
   body.homepage-preview .trustBarInner { gap: 6px; }
   body.homepage-preview .browseBar { padding-top: 32px; }
