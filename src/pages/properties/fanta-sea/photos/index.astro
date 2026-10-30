@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/fanta-sea/photos/index.astro
  * Full Photos page for Fanta Sea
  * - Uses thumb-fs1.webp ... thumb-fs34.webp for gallery thumbnails
- * - Uses fs1.jpg ... fs34.jpg for full-size lightbox images
+ * - Uses fs1.webp ... fs34.webp for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import "../../../../styles/homepage-preview.css";
@@ -22,7 +22,7 @@ const backHref = "/properties/fanta-sea/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/fs${n}.jpg`,
+    full: `${PHOTO_BASE}/fs${n}.webp`,
     thumb: `${PHOTO_BASE}/thumb-fs${n}.webp`,
     alt: `Fanta Sea photo ${n}`,
   };

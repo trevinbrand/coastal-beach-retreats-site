@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/destin-dreams/photos/index.astro
  * Full Photos page for Destin Dreams
  * - Uses thumb-d1.webp ... thumb-d21.webp for gallery thumbnails
- * - Uses d1.jpg ... d21.jpg for full-size lightbox images (FULL QUALITY)
+ * - Uses d1.webp ... d21.webp for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import "../../../../styles/homepage-preview.css";
@@ -22,7 +22,7 @@ const backHref = "/properties/destin-dreams/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/d${n}.jpeg`,      // ✅ matches your actual files
+    full: `${PHOTO_BASE}/d${n}.webp`,      // ✅ matches your actual files
     thumb: `${PHOTO_BASE}/thumb-d${n}.webp`,
     alt: `Destin Dreams photo ${n}`,
   };

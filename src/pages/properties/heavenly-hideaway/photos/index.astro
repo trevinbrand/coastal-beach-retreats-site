@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/heavenly-hideaway/photos/index.astro
  * Full Photos page for Heavenly Hideaway
  * - Uses thumb-h1.webp ... thumb-h35.webp for gallery thumbnails
- * - Uses h1.jpeg ... h35.jpeg for full-size lightbox images
+ * - Uses h1.webp ... h35.webp for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import "../../../../styles/homepage-preview.css";
@@ -22,7 +22,7 @@ const backHref = "/properties/heavenly-hideaway/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/h${n}.jpeg`,
+    full: `${PHOTO_BASE}/h${n}.webp`,
     thumb: `${PHOTO_BASE}/thumb-h${n}.webp`,
     alt: `Heavenly Hideaway photo ${n}`,
   };

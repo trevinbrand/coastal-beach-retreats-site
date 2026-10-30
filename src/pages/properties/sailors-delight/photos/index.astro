@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/sailors-delight/photos/index.astro
  * Full Photos page for Sailor's Delight
  * - Uses thumb-RS1.webp ... thumb-RS47.webp for gallery thumbnails
- * - Uses RS1.jpeg ... RS47.jpeg for full-size lightbox images
+ * - Uses RS1.webp ... RS47.webp for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import "../../../../styles/homepage-preview.css";
@@ -22,7 +22,7 @@ const backHref = "/properties/sailors-delight/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/RS${n}.jpeg`,
+    full: `${PHOTO_BASE}/RS${n}.webp`,
     thumb: `${PHOTO_BASE}/thumb-RS${n}.webp`,
     alt: `Sailor's Delight photo ${n}`,
   };

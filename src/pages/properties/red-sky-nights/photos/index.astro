@@ -3,7 +3,7 @@
  * FILE: src/pages/properties/red-sky-nights/photos/index.astro
  * Full Photos page for Red Sky Nights
  * - Uses thumb-RSN1.webp ... thumb-RSN45.webp for gallery thumbnails
- * - Uses RSN1.jpeg ... RSN45.jpeg for full-size lightbox images
+ * - Uses RSN1.webp ... RSN45.webp for full-size lightbox images
  */
 import "../../../../styles/global.css";
 import "../../../../styles/homepage-preview.css";
@@ -22,7 +22,7 @@ const backHref = "/properties/red-sky-nights/";
 const galleryPhotos = Array.from({ length: PHOTO_COUNT }, (_, i) => {
   const n = i + 1;
   return {
-    full: `${PHOTO_BASE}/RSN${n}.jpeg`,
+    full: `${PHOTO_BASE}/RSN${n}.webp`,
     thumb: `${PHOTO_BASE}/thumb-RSN${n}.webp`,
     alt: `Red Sky Nights photo ${n}`,
   };
