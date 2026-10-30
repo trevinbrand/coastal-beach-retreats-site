@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../components/SeoHead.astro";
 import "../../styles/global.css";
 import "../../styles/homepage-preview.css";
 import "../../styles/site-pages.css";
@@ -11,11 +12,8 @@ import SiteFooter from "../../components/SiteFooter.astro";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Guest Reviews | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Read verified guest reviews for Coastal Beach Retreats vacation rentals."
-    />
+    <SeoHead />
+
     <link rel="icon" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />

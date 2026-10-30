@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../components/SeoHead.astro";
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import HeroCarousel from "../components/HeroCarousel.astro";
@@ -38,44 +39,8 @@ const destinProps = properties.filter((p) =>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <SeoHead />
 
-    <title>Destin & Panama City Beach Vacation Rentals | Coastal Beach Retreats</title>
-
-    <meta
-      name="description"
-      content="Browse beachfront vacation rentals in Destin, Okaloosa Island, and Panama City Beach. Coastal Beach Retreats offers professionally managed Gulf-front condos with direct booking."
-    />
-    <meta name="robots" content="index, follow" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Destin & Panama City Beach Vacation Rentals | Coastal Beach Retreats" />
-    <meta
-      property="og:description"
-      content="Browse beachfront vacation rentals in Destin, Okaloosa Island, and Panama City Beach. Professionally managed Gulf-front condos available to book direct."
-    />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Destin & Panama City Beach Vacation Rentals | Coastal Beach Retreats" />
-    <meta
-      name="twitter:description"
-      content="Browse beachfront vacation rentals in Destin, Okaloosa Island, and Panama City Beach. Professionally managed Gulf-front condos available to book direct."
-    />
-
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "LodgingBusiness",
-        "name": "Coastal Beach Retreats",
-        "telephone": "+1-918-734-3331",
-        "email": "coastalbeachretreats@gmail.com",
-        "areaServed": [
-          "Destin, Florida",
-          "Okaloosa Island, Florida",
-          "Panama City Beach, Florida"
-        ],
-        "description": "Professionally managed beachfront vacation rentals in Destin, Okaloosa Island, and Panama City Beach."
-      }
-    </script>
     <link rel="icon" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />

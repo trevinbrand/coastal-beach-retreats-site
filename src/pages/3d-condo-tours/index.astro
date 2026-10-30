@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../components/SeoHead.astro";
 import "../../styles/global.css";
 import "../../styles/homepage-preview.css";
 import "../../styles/site-pages.css";
@@ -19,46 +20,13 @@ const tours = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-    <title>3D Condo Tours in Panama City Beach | Coastal Beach Retreats</title>
-
-    <meta
-      name="description"
-      content="Explore interactive 3D condo tours from Coastal Beach Retreats. Walk through our Panama City Beach vacation rental with a virtual Matterport tour before you book."
-    />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://coastalbeachretreats.com/3d-condo-tours/" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="3D Condo Tours in Panama City Beach | Coastal Beach Retreats" />
-    <meta
-      property="og:description"
-      content="Take an interactive 3D virtual tour of our vacation rental before booking. Explore Sailor's Delight with a Matterport walkthrough from Coastal Beach Retreats."
-    />
-    <meta property="og:url" content="https://coastalbeachretreats.com/3d-condo-tours/" />
-    <meta property="og:site_name" content="Coastal Beach Retreats" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="3D Condo Tours in Panama City Beach | Coastal Beach Retreats" />
-    <meta
-      name="twitter:description"
-      content="Explore our vacation rental with an interactive Matterport 3D condo tour before you book."
-    />
+    <SeoHead />
 
     <link rel="icon" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png" />
     <link rel="apple-touch-icon" href="/images/logo.png" />
 
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "3D Condo Tours in Panama City Beach | Coastal Beach Retreats",
-        "url": "https://coastalbeachretreats.com/3d-condo-tours/",
-        "description": "Explore interactive 3D condo tours from Coastal Beach Retreats. Walk through our Panama City Beach vacation rental with a virtual Matterport tour before you book."
-      }
-    </script>
   </head>
 
   <body class="homepage-preview site-page">

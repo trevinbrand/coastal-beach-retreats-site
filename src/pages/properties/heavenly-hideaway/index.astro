@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/heavenly-hideaway/index.astro
  * UPDATED FOR FASTER PHOTO LOADING:
@@ -53,11 +54,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Heavenly Hideaway at Edgewater Tower 1-1106 is a deluxe Gulf-front Panama City Beach condo with panoramic Gulf and lagoon views, beach gear, resort amenities, and parking for up to two vehicles included."
-    />
+    <SeoHead />
 
     <!-- ✅ Preload first/top hero image -->
     <link rel="preload" as="image" href={photosTop[0].src} />

@@ -15,3 +15,10 @@
 # Astro-generated assets have content hashes in their filenames.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Keep temporary Cloudflare Pages addresses out of search after launch.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:deployment.:project.pages.dev/*
+  X-Robots-Tag: noindex

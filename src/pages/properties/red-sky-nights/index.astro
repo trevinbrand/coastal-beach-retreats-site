@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/red-sky-nights/index.astro
  * UPDATED FOR FASTER PHOTO LOADING:
@@ -53,11 +54,7 @@ const OR_CALENDAR_WIDGET_ID = "a473169ad4d64e4f88ee8ad0d1668898";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Red Sky Nights at Edgewater Tower 1-1002 is a deluxe tenth-floor Panama City Beach condo with Gulf and lagoon views, beach gear, full resort amenities, walkable dining, and parking for up to two vehicles included."
-    />
+    <SeoHead />
 
     <!-- ✅ Preload first/top hero image -->
     <link rel="preload" as="image" href={photosTop[0].src} />

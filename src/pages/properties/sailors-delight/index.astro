@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/sailors-delight/index.astro
  * UPDATED FOR FASTER PHOTO LOADING:
@@ -53,11 +54,7 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Sailor's Delight at Edgewater Tower 1-911 is a ninth-floor Panama City Beach condo with Gulf and lagoon views, beach gear, full resort amenities, walkable dining, and parking for up to two vehicles included."
-    />
+    <SeoHead />
 
     <!-- ✅ Preload first/top hero image -->
     <link rel="preload" as="image" href={photosTop[0].src} />

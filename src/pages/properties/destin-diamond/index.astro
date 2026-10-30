@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/destin-diamond/index.astro
  * UPDATED FOR FASTER PHOTO LOADING:
@@ -53,11 +54,7 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Destin Diamond at Sterling Sands 111 is a remodeled Gulf-front condo in Destin, Florida with beachfront views, direct beach access, heated pool, hot tub, complimentary beach gear, and a prime location near top attractions."
-    />
+    <SeoHead />
 
     <!-- ✅ Preload first/top hero image -->
     <link rel="preload" as="image" href={photosTop[0].src} />

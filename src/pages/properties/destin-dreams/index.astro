@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/destin-dreams/index.astro
  * UPDATED FOR FASTER PHOTO LOADING:
@@ -57,11 +58,7 @@ const OR_CALENDAR_WIDGET_ID = "d583f4999c3f487eb9e7036f05e66d5a";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{pageTitle} | Coastal Beach Retreats</title>
-    <meta
-      name="description"
-      content="Destin Dreams at Sterling Shores 311 is a stylish Destin vacation rental with Gulf views, private beach access, lagoon pool, beachside pool, fitness center, included beach gear, and a prime location near top Destin attractions."
-    />
+    <SeoHead />
 
     <!-- ✅ Preload first/top hero image -->
     <link rel="preload" as="image" href={photosTop[0].src} />
