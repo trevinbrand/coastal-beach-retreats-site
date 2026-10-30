@@ -3,7 +3,7 @@ export const properties = [
     id: "heavenly-hideaway",
     name: "Heavenly Hideaway @ Edgewater Tower 1-1106 Panama City Beach, FL",
     href: "/properties/heavenly-hideaway/",
-    sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-10",
+    sizeLine: "Deluxe 2 Bedrooms + Bunk Nook • 2 Bathrooms • Sleeps 1-10",
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This eleventh-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled, features impressive floor-to-ceiling windows, tasteful décor, and elegant quartz countertops throughout the kitchen to create a warm, inviting atmosphere and an open layout perfect for close friends or family.",
@@ -20,7 +20,7 @@ export const properties = [
     id: "sailors-delight",
     name: "Sailor's Delight @ Edgewater Tower 1-911 Panama City Beach, FL",
     href: "/properties/sailors-delight/",
-    sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-9",
+    sizeLine: "Deluxe 2 Bedrooms + Bunk Nook • 2 Bathrooms • Sleeps 1-9",
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This ninth-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled and features nautical navy and white decor and an open layout perfect for close friends or family.",
@@ -37,7 +37,7 @@ export const properties = [
     id: "red-sky-nights",
     name: "Red Sky Nights @ Edgewater Tower 1-1002 Panama City Beach, FL",
     href: "/properties/red-sky-nights/",
-    sizeLine: "2 Bedrooms • 2 Bathrooms • Sleeps 1-9",
+    sizeLine: "Deluxe 2 Bedrooms + Bunk Nook • 2 Bathrooms • Sleeps 1-9",
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This tenth-floor condo at the one-and-only Edgewater Beach & Golf Resort features an ocean-themed interior and an open layout perfect for close friends or family.",
