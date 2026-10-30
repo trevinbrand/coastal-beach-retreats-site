@@ -1,0 +1,42 @@
+body.homepage-preview .collection-eyebrow {
+  color: #058789;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+body.homepage-preview .browseBar { padding-top: 55px; padding-bottom: 40px; }
+body.homepage-preview .groupHeader { padding-left: 17px; border-left: 3px solid #058789; }
+body.homepage-preview .groupEyebrow { font-size: 10px; line-height: 1.7; letter-spacing: .09em; }
+body.homepage-preview .city-heading { font-size: clamp(23px, 2.5vw, 29px); line-height: 1.3; }
+body.homepage-preview .propGroup { margin-bottom: 52px; }
+body.homepage-preview .stay-photo img { height: 260px; }
+body.homepage-preview .stay-card { transition: box-shadow .2s, transform .2s; }
+body.homepage-preview .stay-card:hover { box-shadow: 0 12px 30px #193e7f13; transform: translateY(-3px); }
+body.homepage-preview .reviewsSection { padding-top: 45px; }
+body.homepage-preview .reviews-title { font-size: 29px; margin-top: 0; }
+body.homepage-preview .home-next-step {
+  margin-top: 42px;
+  padding: 35px 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  background: #edf1f8;
+  border: 1px solid #193e7f16;
+  border-radius: 8px;
+}
+body.homepage-preview .home-next-step h2 { color: #193e7f; font: 600 30px/1.25 var(--font-heading); margin: 0 0 10px; }
+body.homepage-preview .home-next-step p:not(.collection-eyebrow) { color: #53645a; font-size: 13px; margin: 0; }
+body.homepage-preview .home-next-step a { display: flex; align-items: center; gap: 24px; flex-shrink: 0; background: #193e7f; color: #fff; text-decoration: none; border-radius: 5px; padding: 14px 20px; font-size: 13px; font-weight: 700; }
+@media (max-width: 720px) {
+  body.homepage-preview .browseBar { padding-top: 35px; padding-bottom: 30px; }
+  body.homepage-preview .groupHeader { padding-left: 13px; }
+  body.homepage-preview .stay-photo img { height: 245px; }
+  body.homepage-preview .home-next-step { padding: 26px; flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.homepage-preview .stay-card { transition: none; }
+  body.homepage-preview .stay-card:hover { transform: none; }
+}

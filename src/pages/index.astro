@@ -4,6 +4,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import HeroCarousel from "../components/HeroCarousel.astro";
 import PropertyBlock from "../components/HomepagePropertyCard.astro";
 import "../styles/homepage-preview.css";
+import "../styles/homepage-polish.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import { properties } from "../data/properties.js";
 
@@ -128,8 +129,8 @@ const destinProps = properties.filter((p) =>
         <!-- PCB -->
         <section class="section propGroup" data-group="pcb" id="panama-city-beach-vacation-rentals">
           <div class="groupHeader">
-            <p class="groupEyebrow">Panama City Beach</p>
-            <h2 class="city-heading">Panama City Beach Vacation Rentals at Edgewater Beach and Golf Resort</h2>
+            <p class="groupEyebrow">Edgewater Beach &amp; Golf Resort &middot; 3 stays</p>
+            <h2 class="city-heading">Panama City Beach vacation rentals</h2>
             <p class="groupHelper">
               Browse Gulf-front condo rentals in the heart of Panama City Beach.
             </p>
@@ -147,8 +148,8 @@ const destinProps = properties.filter((p) =>
         <!-- DESTIN -->
         <section class="section propGroup" data-group="destin" id="destin-vacation-rentals">
           <div class="groupHeader">
-            <p class="groupEyebrow">Destin / Okaloosa Island</p>
-            <h2 class="city-heading">Destin & Okaloosa Island Beachfront Vacation Rentals</h2>
+            <p class="groupEyebrow">Sterling Shores &middot; Sterling Sands &middot; Waterscape &middot; 3 stays</p>
+            <h2 class="city-heading">Destin &amp; Okaloosa Island vacation rentals</h2>
             <p class="groupHelper">
               Explore beachfront condos across Sterling Shores, Sterling Sands, and Waterscape.
             </p>
@@ -182,6 +183,7 @@ const destinProps = properties.filter((p) =>
 
       <!-- REVIEWS -->
       <section class="section reviewsSection" id="reviews">
+        <p class="collection-eyebrow">Memories made here</p>
         <h2 class="reviews-title">Guest Reviews</h2>
         <hr class="rule" />
 
@@ -190,6 +192,14 @@ const destinProps = properties.filter((p) =>
           data-widget-type="Reviews - Reviews"
           data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
         ></div>
+      </section>
+      <section class="home-next-step" aria-label="Plan your beach stay">
+        <div>
+          <p class="collection-eyebrow">Your next beach chapter</p>
+          <h2>Good days start with a getaway.</h2>
+          <p>Have your dates in mind? See what&rsquo;s available and start planning your stay.</p>
+        </div>
+        <a href="/availability/">Find your dates <span aria-hidden="true">&rarr;</span></a>
       </section>
     </main>
 
