@@ -40,6 +40,12 @@ body.homepage-preview .browseFilters .filterBtn.is-active {
 body.homepage-preview .browseFilters .filterBtn:hover { color: #193e7f; }
 body.homepage-preview .browseFilters .filterBtn:focus-visible { outline: 2px solid #058789; outline-offset: 4px; }
 body.homepage-preview .filterCount { color: #058789; font-size: 11px; font-weight: 600; }
+body.homepage-preview .trustItem { font-size: 13px; }
+body.homepage-preview .stay-resort { font-size: 11px; }
+body.homepage-preview .stay-size { display: grid; gap: 3px; font-size: 13px; }
+body.homepage-preview .stay-secondary a { font-size: 12px; }
+body.homepage-preview .seoCard .seoTitle,
+body.homepage-preview .seoCard .seoText { max-width: 72ch; margin-left: auto; margin-right: auto; }
 body.homepage-preview .groupHeader { padding-left: 17px; border-left: 3px solid #058789; }
 body.homepage-preview .groupEyebrow { font-size: 10px; line-height: 1.7; letter-spacing: .09em; }
 body.homepage-preview .city-heading { font-size: clamp(23px, 2.5vw, 29px); line-height: 1.3; }
@@ -64,8 +70,9 @@ body.homepage-preview .home-next-step h2 { color: #193e7f; font: 600 30px/1.25 v
 body.homepage-preview .home-next-step p:not(.collection-eyebrow) { color: #53645a; font-size: 13px; margin: 0; }
 body.homepage-preview .home-next-step a { display: flex; align-items: center; gap: 24px; flex-shrink: 0; background: #193e7f; color: #fff; text-decoration: none; border-radius: 5px; padding: 14px 20px; font-size: 13px; font-weight: 700; }
 @media (max-width: 720px) {
-  body.homepage-preview .browseFilters { gap: 0 20px; }
-  body.homepage-preview .browseFilters .filterBtn { font-size: 12px; min-height: 48px; padding: 14px 0; }
+  body.homepage-preview .browseFilters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 8px; max-width: 560px; }
+  body.homepage-preview .browseFilters .filterBtn { justify-content: center; gap: 6px; font-size: 12px; min-height: 68px; padding: 12px 0; white-space: normal; text-wrap: balance; }
+  body.homepage-preview .homeHero .scroll-down { display: none; }
   body.homepage-preview .browseBar { padding-top: 35px; padding-bottom: 30px; }
   body.homepage-preview .groupHeader { padding-left: 13px; }
   body.homepage-preview .stay-photo img { height: 245px; }

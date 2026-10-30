@@ -3,6 +3,7 @@ const { p } = Astro.props;
 const name = p.name.split(" @ ")[0];
 const resort = p.id === "destin-diamond" ? "Sterling Sands · Unit 111" : p.resort;
 const bookHref = `${p.href}#details`;
+const [bedrooms, ...otherDetails] = p.sizeLine.replace("Sleeps 1-", "Sleeps ").split(" • ");
 ---
 
 <article class="stay-card">
@@ -13,7 +14,7 @@ const bookHref = `${p.href}#details`;
   <div class="stay-content">
     <p class="stay-resort">{resort}</p>
     <h3><a href={p.href}>{name}</a></h3>
-    <p class="stay-size">{p.sizeLine.replace("Sleeps 1-", "Sleeps ")}</p>
+    <p class="stay-size"><span>{bedrooms}</span><span>{otherDetails.join(" • ")}</span></p>
     <p class="stay-description">{p.blurb}</p>
     {p.noteBold && <p class="stay-note">Parking for up to two vehicles included</p>}
     <div class="stay-actions">
