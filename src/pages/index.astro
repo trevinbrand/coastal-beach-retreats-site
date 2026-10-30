@@ -77,15 +77,15 @@ const destinProps = properties.filter((p) =>
           <h2 class="section-title">Find your next coastal escape</h2>
         </div>
 
-        <div class="browseFilters" role="tablist" aria-label="Destination filters">
+        <div class="browseFilters" role="group" aria-label="Destination filters">
           <button class="filterBtn is-active" type="button" data-filter="all" aria-pressed="true">
-            All
+            All stays <span class="filterCount">{String(properties.length).padStart(2, "0")}</span>
           </button>
           <button class="filterBtn" type="button" data-filter="pcb" aria-pressed="false">
             Panama City Beach
           </button>
           <button class="filterBtn" type="button" data-filter="destin" aria-pressed="false">
-            Destin / Okaloosa Island
+            Destin &amp; Okaloosa Island
           </button>
         </div>
       </section>
