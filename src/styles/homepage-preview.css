@@ -45,7 +45,7 @@ body.homepage-preview .stay-photo:hover img { transform: scale(1.035); }
 body.homepage-preview .stay-location { position: absolute; left: 14px; bottom: 14px; background: #ffffffee; padding: 6px 10px; font-size: 11px; font-weight: 700; color: #193e7f; border-radius: 4px; }
 body.homepage-preview .stay-content { flex: 1; display: flex; flex-direction: column; padding: 23px; }
 body.homepage-preview .stay-resort { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #617267; margin: 0 0 8px; }
-body.homepage-preview .stay-content h3 { font: 700 24px/1.2 var(--font-nav); letter-spacing: -.04em; margin: 0 0 12px; }
+body.homepage-preview .stay-content h3 { font: 700 30px/1.2 var(--font-heading); letter-spacing: normal; margin: 0 0 12px; }
 body.homepage-preview .stay-content h3 a { color: #193e7f; text-decoration: none; }
 body.homepage-preview .stay-size { font-size: 12px; font-weight: 600; color: #058789; margin: 0 0 14px; }
 body.homepage-preview .stay-description { font-size: 14px; color: #58635e; line-height: 1.7; margin: 0 0 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
