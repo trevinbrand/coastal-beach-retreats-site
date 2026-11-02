@@ -9,6 +9,7 @@
  * ✅ Brand graphic is visually off-centered on desktop
  */
 
+import "../styles/reference-header.css";
 const { phone = "(918) 734-3331" } = Astro.props;
 const telHref = `tel:${phone.replace(/[^0-9]/g, "")}`;
 
@@ -99,7 +100,7 @@ const propertyGroups = [
     <!-- RIGHT -->
     <div class="right">
       <a class="contact" href={telHref}>{phone}</a>
-      <a class="quote" href="/quote/">QUOTE / PRICING</a>
+      <a class="quote" href="/quote/">Quote / Pricing</a>
     </div>
   </div>
 
@@ -285,13 +286,6 @@ const propertyGroups = [
       if (e.key === "Escape") closeMenu();
     });
 
-    // Release the mobile modal when the desktop navigation becomes visible.
-    window.matchMedia("(min-width: 1101px)").addEventListener("change", (e) => {
-      if (e.matches && drawer.classList.contains("open")) {
-        closeMenu();
-        header.querySelector(".nav a")?.focus();
-      }
-    });
 
     // Accordion
     const accBtn = drawer.querySelector('[data-acc="props"]');
