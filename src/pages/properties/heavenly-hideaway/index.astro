@@ -1,4 +1,5 @@
 ---
+import StayInclusions from "../../../components/StayInclusions.astro";
 import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/heavenly-hideaway/index.astro
@@ -181,6 +182,14 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       </nav>
 
       <!-- DETAILS + BOOKING WIDGET (MATCHES SCREENSHOT) -->
+      <StayInclusions items={[
+        "Parking for up to two vehicles",
+        "6 beach chairs",
+        "Beach umbrella",
+        "8 beach towels",
+        "Tommy Bahama shoulder cooler",
+      ]} />
+
       <section class="below" id="details" aria-label="Details and booking">
         <!-- LEFT: size + amenities + description -->
         <div class="desc">

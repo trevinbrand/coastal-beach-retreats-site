@@ -1,4 +1,5 @@
 ---
+import StayInclusions from "../../../components/StayInclusions.astro";
 import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/fanta-sea/index.astro
@@ -158,6 +159,14 @@ const OR_CALENDAR_WIDGET_ID = "4c14755058f04893a35ffd79fc0ebf19";
         <a href="#amenities">AMENITIES</a>
         <a href="#reviews">REVIEWS</a>
       </nav>
+
+      <StayInclusions items={[
+        "6 beach chairs",
+        "Beach umbrella",
+        "6 beach towels",
+        "Shoulder-strap cooler",
+        "Beach wagon",
+      ]} />
 
       <section class="below" id="details" aria-label="Details and booking">
         <div class="desc">

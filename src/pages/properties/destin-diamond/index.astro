@@ -1,4 +1,5 @@
 ---
+import StayInclusions from "../../../components/StayInclusions.astro";
 import SeoHead from "../../../components/SeoHead.astro";
 /**
  * FILE: src/pages/properties/destin-diamond/index.astro
@@ -156,6 +157,12 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         <a href="#amenities">AMENITIES</a>
         <a href="#reviews">REVIEWS</a>
       </nav>
+
+      <StayInclusions items={[
+        "4 beach chairs",
+        "4 beach towels",
+        "Shoulder-strap cooler",
+      ]} />
 
       <section class="below" id="details" aria-label="Details and booking">
         <div class="desc">
