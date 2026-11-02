@@ -16,7 +16,7 @@ const [bedrooms, ...otherDetails] = p.sizeLine.replace("Sleeps 1-", "Sleeps ").s
     <h3><a href={p.href}>{name}</a></h3>
     <p class="stay-size"><span>{bedrooms}</span><span>{otherDetails.join(" • ")}</span></p>
     <p class="stay-description">{p.blurb}</p>
-    {p.noteBold && <p class="stay-note">Parking for up to two vehicles included</p>}
+    {p.noteBold && <p class="stay-note">{p.noteBold}</p>}
     <div class="stay-actions">
       <a class="stay-book" href={bookHref}>Check availability / Book <span aria-hidden="true">↗</span></a>
       <div class="stay-secondary">

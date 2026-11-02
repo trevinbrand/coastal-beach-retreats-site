@@ -7,7 +7,7 @@ export const properties = [
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This eleventh-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled, features impressive floor-to-ceiling windows, tasteful décor, and elegant quartz countertops throughout the kitchen to create a warm, inviting atmosphere and an open layout perfect for close friends or family.",
-    noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
+    noteBold: "Parking for your first two vehicles is included. Additional vehicles require a separate paid parking pass.",
     photosHref: "/properties/heavenly-hideaway/photos/",
     availabilityHref: "/properties/heavenly-hideaway/#availability",
     detailsHref: "/properties/heavenly-hideaway/",
@@ -23,7 +23,7 @@ export const properties = [
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This ninth-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled and features nautical navy and white decor and an open layout perfect for close friends or family.",
-    noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
+    noteBold: "Parking for your first two vehicles is included. Additional vehicles require a separate paid parking pass.",
     photosHref: "/properties/sailors-delight/photos/",
     availabilityHref: "/properties/sailors-delight/#availability",
     detailsHref: "/properties/sailors-delight/",
@@ -39,7 +39,7 @@ export const properties = [
     amenitiesLine: "Internet • Gulf-front • Gulf-view • Hot Tub",
     blurb:
       "This tenth-floor condo at the one-and-only Edgewater Beach & Golf Resort features an ocean-themed interior and an open layout perfect for close friends or family.",
-    noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
+    noteBold: "Parking for your first two vehicles is included. Additional vehicles require a separate paid parking pass.",
     photosHref: "/properties/red-sky-nights/photos/",
     availabilityHref: "/properties/red-sky-nights/#availability",
     detailsHref: "/properties/red-sky-nights/",

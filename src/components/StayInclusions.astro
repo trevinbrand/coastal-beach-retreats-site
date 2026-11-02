@@ -1,8 +1,9 @@
 ---
 interface Props {
   items: string[];
+  note?: string;
 }
-const { items } = Astro.props;
+const { items, note } = Astro.props;
 ---
 
 <section class="stay-inclusions" aria-labelledby="stay-inclusions-heading">
@@ -10,6 +11,7 @@ const { items } = Astro.props;
   <ul>
     {items.map((item) => <li>{item}</li>)}
   </ul>
+  {note && <p>{note}</p>}
 </section>
 
 <style>
@@ -39,4 +41,5 @@ const { items } = Astro.props;
     line-height: 1.6;
   }
   li::marker { color: #058789; }
+  p { margin: 16px 0 0; color: #45534c; font-size: 14px; line-height: 1.6; }
 </style>
