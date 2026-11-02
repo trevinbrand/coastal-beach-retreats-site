@@ -80,17 +80,19 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
 
       <!-- PHOTO COLLAGE + MOBILE HERO SLIDER -->
       <section class="collage" id="photos" aria-label="Photo preview">
-        <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-          <img
-            id="heroImg"
-            src={photosTop[0].src}
-            alt={photosTop[0].alt}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            width="1200"
-            height="800"
-          />
+        <div class="hero-preview">
+          <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
+            <img
+              id="heroImg"
+              src={photosTop[0].src}
+              alt={photosTop[0].alt}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1200"
+              height="800"
+            />
+          </a>
 
           <button class="arrow left" type="button" aria-label="Previous photo" data-arrow="prev">‹</button>
           <button class="arrow right" type="button" aria-label="Next photo" data-arrow="next">›</button>
@@ -99,9 +101,9 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
             <span class="cam" aria-hidden="true">📷</span>
             {PHOTO_COUNT}
           </span>
-        </a>
+        </div>
 
-        <div class="smallGrid" aria-hidden="true">
+        <div class="smallGrid">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img
               src={photosTop[1].src}
@@ -590,8 +592,8 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
         if (!photos.length) return;
 
         const heroImg = document.getElementById("heroImg");
-        const bigLink = heroImg?.closest("a.big");
-        if (!heroImg || !bigLink) return;
+        const heroPreview = heroImg?.closest(".hero-preview");
+        if (!heroImg || !heroPreview) return;
 
         let idx = 0;
 
@@ -607,8 +609,8 @@ const OR_CALENDAR_WIDGET_ID = "733bba48b6304b9bb9e95adc2394298a";
           setPhoto(idx + (dir === "next" ? 1 : -1));
         }
 
-        const prevBtn = bigLink.querySelector('button[data-arrow="prev"]');
-        const nextBtn = bigLink.querySelector('button[data-arrow="next"]');
+        const prevBtn = heroPreview.querySelector('button[data-arrow="prev"]');
+        const nextBtn = heroPreview.querySelector('button[data-arrow="next"]');
 
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));

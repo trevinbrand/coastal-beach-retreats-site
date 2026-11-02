@@ -83,17 +83,19 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
       <!-- PHOTO COLLAGE (desktop/tablet) + MOBILE HERO SLIDER (1 photo with arrows) -->
       <section class="collage" id="photos" aria-label="Photo preview">
         <!-- BIG LEFT (always visible; becomes the ONLY photo on mobile) -->
-        <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
-          <img
-            id="heroImg"
-            src={photosTop[0].src}
-            alt={photosTop[0].alt}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            width="1600"
-            height="900"
-          />
+        <div class="hero-preview">
+          <a class="big" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
+            <img
+              id="heroImg"
+              src={photosTop[0].src}
+              alt={photosTop[0].alt}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1600"
+              height="900"
+            />
+          </a>
 
           <!-- ✅ Mobile arrows (only visible on mobile) -->
           <button
@@ -118,10 +120,10 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
             <span class="cam" aria-hidden="true">📷</span>
             {PHOTO_COUNT}
           </span>
-        </a>
+        </div>
 
         <!-- RIGHT GRID (hidden on mobile) -->
-        <div class="smallGrid" aria-hidden="true">
+        <div class="smallGrid">
           <a class="small" href={PHOTOS_PAGE_HREF} aria-label="View all photos">
             <img
               src={photosTop[1].src}
@@ -611,8 +613,8 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
         if (!photos.length) return;
 
         const heroImg = document.getElementById("heroImg");
-        const bigLink = heroImg?.closest("a.big");
-        if (!heroImg || !bigLink) return;
+        const heroPreview = heroImg?.closest(".hero-preview");
+        if (!heroImg || !heroPreview) return;
 
         let idx = 0;
 
@@ -628,8 +630,8 @@ const amenitiesLine = ["Internet", "Oceanfront", "Hot Tub"];
           setPhoto(idx + (dir === "next" ? 1 : -1));
         }
 
-        const prevBtn = bigLink.querySelector('button[data-arrow="prev"]');
-        const nextBtn = bigLink.querySelector('button[data-arrow="next"]');
+        const prevBtn = heroPreview.querySelector('button[data-arrow="prev"]');
+        const nextBtn = heroPreview.querySelector('button[data-arrow="next"]');
 
         prevBtn?.addEventListener("click", (e) => onArrow(e, "prev"));
         nextBtn?.addEventListener("click", (e) => onArrow(e, "next"));

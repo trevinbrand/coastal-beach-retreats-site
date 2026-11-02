@@ -9,6 +9,9 @@ body.property-preview .property-highlights { display: flex; gap: 10px; flex-wrap
 body.property-preview .property-highlights span { background: #edf2ef; border: 1px solid #dce5df; border-radius: 5px; padding: 8px 12px; color: #193e7f; font-size: 12px; font-weight: 600; }
 body.property-preview .collage { gap: 6px; border-radius: 8px; overflow: hidden; margin: 0 0 24px; }
 body.property-preview .big, body.property-preview .small { border: 0; }
+body.property-preview .hero-preview { position: relative; min-width: 0; }
+body.property-preview .hero-preview .arrow:focus-visible,
+body.property-preview .collage a:focus-visible { outline: 3px solid #058789; outline-offset: -4px; }
 body.property-preview .smallGrid { gap: 6px; }
 body.property-preview .subnav { gap: 8px; padding: 0 0 24px; margin-bottom: 30px; border-bottom: 1px solid #dce5df; }
 body.property-preview .subnav a { color: #193e7f; background: #fff; border: 1px solid #dce5df; border-radius: 5px; padding: 11px 16px; font-size: 11px; letter-spacing: .04em; }
