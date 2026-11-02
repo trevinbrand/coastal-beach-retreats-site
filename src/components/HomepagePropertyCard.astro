@@ -2,6 +2,14 @@
 const { p } = Astro.props;
 const name = p.name.split(" @ ")[0];
 const resort = p.id === "destin-diamond" ? "Sterling Sands · Unit 111" : p.resort;
+const edgewaterDescriptions: Record<string, string> = {
+  'heavenly-hideaway': 'Floor-to-ceiling windows bring the Gulf into view in this bright eleventh-floor retreat. A remodeled kitchen with quartz countertops and soft coastal décor make it an inviting place to unwind.',
+  'sailors-delight': 'Nautical navy and white décor give this ninth-floor condo its seaside character. Gather in the open living area, enjoy the Gulf views, and settle into an easygoing getaway with family or friends.',
+  'red-sky-nights': 'Ocean-inspired touches set a relaxed mood in this tenth-floor condo. An open layout keeps everyone connected, while the Gulf-front setting brings a little coastal scenery to your time together.',
+};
+const description = edgewaterDescriptions[p.id] ?? p.blurb
+  .replace(' at the one-and-only Edgewater Beach & Golf Resort', '')
+  .replace('Sterling Shores Resort ', '');
 const bookHref = `${p.href}#details`;
 const [bedrooms, ...otherDetails] = p.sizeLine.replace("Sleeps 1-", "Sleeps ").split(" • ");
 ---
@@ -12,18 +20,18 @@ const [bedrooms, ...otherDetails] = p.sizeLine.replace("Sleeps 1-", "Sleeps ").s
     <p class="stay-resort">{resort}</p>
   </header>
   <a class="stay-photo" href={p.href} aria-label={`Explore ${name}`}>
-    <img src={p.image} alt={`${name} vacation rental`} loading="lazy" width="800" height="533" />
+    <img src={p.image.replace(/\.jpg$/, ".webp")} alt={`${name} vacation rental`} loading="lazy" width="800" height="533" />
     <span class="stay-location">{p.city.replace(", FL", "")}</span>
   </a>
   <div class="stay-content">
     <p class="stay-size"><span>{bedrooms}</span><span>{otherDetails.join(" • ")}</span></p>
-    <p class="stay-description">{p.blurb}</p>
-    {p.noteBold && <p class="stay-note">{p.noteBold}</p>}
+    <p class="stay-description">{description}</p>
+
     <div class="stay-actions">
-      <a class="stay-book" href={bookHref}>Check availability / Book <span aria-hidden="true">↗</span></a>
+      <a class="stay-book" href={p.href}>Explore property <span aria-hidden="true">↗</span></a>
       <div class="stay-secondary">
         <a href={p.photosHref}>View photos</a>
-        <a href={p.detailsHref}>Property details <span aria-hidden="true">→</span></a>
+        <a href={bookHref}>Check dates <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>

@@ -1,11 +1,13 @@
 ---
 import SeoHead from "../components/SeoHead.astro";
+
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import HeroCarousel from "../components/HeroCarousel.astro";
 import PropertyBlock from "../components/HomepagePropertyCard.astro";
 import "../styles/homepage-preview.css";
 import "../styles/homepage-polish.css";
+import "../styles/homepage-refinement.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import { properties } from "../data/properties.js";
 
@@ -47,7 +49,7 @@ const destinProps = properties.filter((p) =>
     <link rel="apple-touch-icon" href="/images/logo.png" />
   </head>
 
-  <body class="homepage-preview">
+  <body class="homepage-preview refinement-preview">
     <SiteHeader phone="(918) 734-3331" />
 
     <div class="homeHero">
@@ -86,7 +88,7 @@ const destinProps = properties.filter((p) =>
         <section class="section propGroup" data-group="pcb" id="panama-city-beach-vacation-rentals">
           <div class="groupHeader">
             <p class="groupEyebrow">Edgewater Beach &amp; Golf Resort &middot; 3 properties</p>
-            <h2 class="city-heading">Panama City Beach vacation rentals</h2>
+            <h2 class="city-heading">Panama City Beach</h2>
           </div>
 
           <div class="groupProps">
@@ -101,8 +103,8 @@ const destinProps = properties.filter((p) =>
         <!-- DESTIN -->
         <section class="section propGroup" data-group="destin" id="destin-vacation-rentals">
           <div class="groupHeader">
-            <p class="groupEyebrow">Sterling Shores &middot; Sterling Sands &middot; Waterscape &middot; 3 properties</p>
-            <h2 class="city-heading">Destin &amp; Okaloosa Island vacation rentals</h2>
+            <p class="groupEyebrow">Three resorts &middot; 3 properties</p>
+            <h2 class="city-heading">Destin &amp; Okaloosa Island</h2>
           </div>
 
           <div class="groupProps">
@@ -113,22 +115,6 @@ const destinProps = properties.filter((p) =>
             ))}
           </div>
         </section>
-      </section>
-
-      <section class="seoContent section" aria-label="Beachfront vacation rental information">
-        <div class="seoCard">
-          <h2 class="seoTitle">About Our Beachfront Vacation Rentals</h2>
-          <p class="seoText">
-            Coastal Beach Retreats offers professionally managed beachfront vacation rentals along Florida’s Emerald Coast,
-            including Destin, Okaloosa Island, and Panama City Beach. Whether you are planning a family beach trip,
-            couples getaway, or Gulf-front vacation with resort amenities, our condos are designed to make booking direct simple.
-          </p>
-          <p class="seoText">
-            Guests can browse condos in top beachfront resorts with easy beach access, pools, and convenient locations near local
-            dining, shopping, and attractions. Start by viewing <a href="/#properties">all vacation rentals</a>, explore the
-            <a href="/map/">property map</a>, or check <a href="/availability/">availability</a> for your travel dates.
-          </p>
-        </div>
       </section>
 
       <!-- REVIEWS -->
@@ -143,6 +129,22 @@ const destinProps = properties.filter((p) =>
           data-widgetId="4bf99f90fcf54552a13fd7315759dbca"
         ></div>
       </section>
+      <section class="seoContent section" aria-label="Beachfront vacation rental information">
+        <div class="seoCard">
+          <h2 class="seoTitle">About Our Beachfront Vacation Rentals</h2>
+          <p class="seoText">
+            Coastal Beach Retreats offers professionally managed beachfront vacation rentals along Florida’s Emerald Coast,
+            including Destin, Okaloosa Island, and Panama City Beach. Whether you are planning a family beach trip,
+            couples getaway, or Gulf-front vacation with resort amenities, our condos are designed to make booking direct simple.
+          </p>
+          <p class="seoText">
+            Guests can browse condos in top beachfront resorts with easy beach access, pools, and convenient locations near local
+            dining, shopping, and attractions. Start by viewing <a href="#properties">all vacation rentals</a>, explore the
+            <a href="/map/">property map</a>, or check <a href="/availability/">availability</a> for your travel dates.
+          </p>
+        </div>
+      </section>
+
       <section class="home-next-step" aria-label="Plan your beach stay">
         <div>
           <p class="collection-eyebrow">Your next beach chapter</p>

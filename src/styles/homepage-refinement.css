@@ -1,0 +1,61 @@
+/* Homepage card hierarchy, spacing, and section refinements. */
+body.refinement-preview .wrap { max-width: 1280px; }
+body.refinement-preview .hero-copy { max-width: 660px; }
+body.refinement-preview .hero-copy p { max-width: 450px; font-size: 17px; line-height: 1.7; }
+body.refinement-preview .hero-cta { padding: 13px 22px; font-size: 15px; }
+body.refinement-preview .browseBar { padding-top: 32px; padding-bottom: 34px; }
+body.refinement-preview .welcome-heading img { width: min(100%, 510px); }
+body.refinement-preview .browseFilters { margin-top: 10px; }
+body.refinement-preview .groupHeader { border-left: 0; padding-left: 0; margin-bottom: 23px; }
+body.refinement-preview .groupEyebrow { font-size: 10px; letter-spacing: .1em; margin-bottom: 7px; }
+body.refinement-preview .city-heading { font-size: clamp(25px, 2.7vw, 34px); }
+body.refinement-preview .groupProps { gap: 26px; }
+body.refinement-preview .stay-card { box-shadow: none; border: 1px solid #dfe5e0; }
+body.refinement-preview .stay-card:hover { transform: none; box-shadow: 0 7px 20px #193e7f0a; }
+body.refinement-preview .stay-heading { order: -1; padding: 20px 21px 16px; }
+body.refinement-preview .stay-heading h3 { font-size: 32px; margin-bottom: 7px; }
+body.refinement-preview .stay-resort { text-transform: none; letter-spacing: .015em; font-size: 12px; margin: 0; }
+body.refinement-preview .stay-photo img { height: auto; aspect-ratio: 1.45; }
+body.refinement-preview .stay-location { font-size: 10px; padding: 5px 8px; left: 12px; bottom: 12px; }
+body.refinement-preview .stay-content { padding: 20px 21px 22px; }
+body.refinement-preview .stay-size { font-size: 12px; line-height: 1.65; min-height: 60px; gap: 4px; margin-bottom: 12px; }
+body.refinement-preview .stay-description { font-size: 13px; line-height: 1.75; display: block; overflow: visible; margin-bottom: 19px; }
+body.refinement-preview .stay-book { font-size: 13px; padding: 13px 15px; }
+body.refinement-preview .stay-secondary { padding-top: 16px; }
+body.refinement-preview .stay-secondary a { font-size: 12px; }
+body.refinement-preview .propGroup { margin-bottom: 48px; }
+body.refinement-preview .reviewsSection { padding: 18px 0 36px; }
+body.refinement-preview .reviews-title { font-size: 30px; }
+body.refinement-preview .reviewsSection .rule { margin-bottom: 23px; }
+body.refinement-preview .seoContent { padding-top: 12px; }
+body.refinement-preview .seoCard { padding: 32px 40px; background: #eef2ed; }
+body.refinement-preview .seoCard .seoTitle { font-size: 24px; margin-bottom: 16px; }
+body.refinement-preview .seoCard .seoText { font-size: 14px; line-height: 1.85; max-width: 80ch; }
+body.refinement-preview .home-next-step { margin-top: 32px; background: #193e7f; padding: 34px 36px; }
+body.refinement-preview .home-next-step h2 { color: white; font-size: 34px; }
+body.refinement-preview .home-next-step .collection-eyebrow { color: #cae6e1; }
+body.refinement-preview .home-next-step p:not(.collection-eyebrow) { color: #edf3f5; line-height: 1.7; }
+body.refinement-preview .home-next-step a { color: #193e7f; background: white; }
+@media (min-width: 1000px) { body.refinement-preview .groupProps { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 720px) {
+  body.refinement-preview .hero-copy p { font-size: 14px; max-width: 290px; }
+  body.refinement-preview .hero-copy h2 { font-size: clamp(32px,8.7vw,42px); }
+  body.refinement-preview .hero-cta { font-size: 13px; padding: 12px 18px; }
+  body.refinement-preview .wrap { padding-inline: 18px; }
+  body.refinement-preview .browseBar { padding-top: 28px; padding-bottom: 28px; }
+  body.refinement-preview .browseFilters { gap: 10px; margin-top: 8px; }
+  body.refinement-preview .browseFilters .filterBtn { font-size: 11px; min-height: 58px; }
+  body.refinement-preview .city-heading { font-size: 25px; }
+  body.refinement-preview .groupEyebrow { font-size: 9px; }
+  body.refinement-preview .groupProps { gap: 25px; }
+  body.refinement-preview .stay-size { min-height: 0; }
+  body.refinement-preview .stay-heading { padding: 18px 20px 15px; }
+  body.refinement-preview .stay-content { padding: 18px 20px 21px; }
+  body.refinement-preview .propGroup { margin-bottom: 35px; }
+  body.refinement-preview .seoCard { padding: 26px 21px; }
+  body.refinement-preview .seoCard .seoTitle { font-size: 22px; }
+  body.refinement-preview .seoCard .seoText { font-size: 13px; text-align: left; }
+  body.refinement-preview .home-next-step { padding: 27px 23px; }
+  body.refinement-preview .home-next-step h2 { font-size: 30px; }
+}
+
