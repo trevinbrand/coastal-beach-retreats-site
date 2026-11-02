@@ -8,10 +8,9 @@ export const properties = [
     blurb:
       "This eleventh-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled, features impressive floor-to-ceiling windows, tasteful décor, and elegant quartz countertops throughout the kitchen to create a warm, inviting atmosphere and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
-    photosHref: "/properties/heavenly-hideaway/#photos",
+    photosHref: "/properties/heavenly-hideaway/photos/",
     availabilityHref: "/properties/heavenly-hideaway/#availability",
     detailsHref: "/properties/heavenly-hideaway/",
-    inquireHref: "/contact/?property=heavenly-hideaway",
     image: "/images/props/heavenly-1106.jpg",
     city: "Panama City Beach, FL",
     resort: "Edgewater Beach & Golf Resort"
@@ -25,10 +24,9 @@ export const properties = [
     blurb:
       "This ninth-floor condo at the one-and-only Edgewater Beach & Golf Resort is completely remodeled and features nautical navy and white decor and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
-    photosHref: "/properties/sailors-delight/#photos",
+    photosHref: "/properties/sailors-delight/photos/",
     availabilityHref: "/properties/sailors-delight/#availability",
     detailsHref: "/properties/sailors-delight/",
-    inquireHref: "/contact/?property=sailors-delight",
     image: "/images/props/sailors.jpg",
     city: "Panama City Beach, FL",
     resort: "Edgewater Beach & Golf Resort"
@@ -42,10 +40,9 @@ export const properties = [
     blurb:
       "This tenth-floor condo at the one-and-only Edgewater Beach & Golf Resort features an ocean-themed interior and an open layout perfect for close friends or family.",
     noteBold: "The nightly rate covers parking for up to two vehicles during your visit.",
-    photosHref: "/properties/red-sky-nights/#photos",
+    photosHref: "/properties/red-sky-nights/photos/",
     availabilityHref: "/properties/red-sky-nights/#availability",
     detailsHref: "/properties/red-sky-nights/",
-    inquireHref: "/contact/?property=red-sky-nights",
     image: "/images/props/redsky.jpg",
     city: "Panama City Beach, FL",
     resort: "Edgewater Beach & Golf Resort"
@@ -59,10 +56,9 @@ export const properties = [
     blurb:
       "Unwind in this stylish Sterling Shores Resort third-floor condo, featuring a private balcony with breathtaking Gulf views, a modern kitchen, and upscale resort amenities including a lagoon-style pool, private beach, fitness center, and a seasonal poolside bar.",
     noteBold: "",
-    photosHref: "/properties/destin-dreams/#photos",
+    photosHref: "/properties/destin-dreams/photos/",
     availabilityHref: "/properties/destin-dreams/#availability",
     detailsHref: "/properties/destin-dreams/",
-    inquireHref: "/contact/?property=destin-dreams",
     image: "/images/props/destindreams-v2.jpg",
     city: "Destin, FL",
     resort: "Sterling Shores Resort"
@@ -76,10 +72,9 @@ export const properties = [
     blurb:
       "Destin Diamond offers a bright, coastal escape designed for relaxation and comfort, with modern finishes and easy access to Destin’s world-famous beaches, dining, and shopping.",
     noteBold: "",
-    photosHref: "/properties/destin-diamond/#photos",
+    photosHref: "/properties/destin-diamond/photos/",
     availabilityHref: "/properties/destin-diamond/#availability",
     detailsHref: "/properties/destin-diamond/",
-    inquireHref: "/contact/?property=destin-diamond",
     image: "/images/props/destin-diamond/dd1.jpg",
     city: "Destin, FL",
     resort: ""
@@ -94,10 +89,9 @@ export const properties = [
       "Fanta Sea is a cheerful, beachy getaway perfect for families and friends, offering comfortable living spaces, coastal charm, and a prime location on Okaloosa Island close to the Gulf.",
     noteBold: "",
     // ✅ lock ALL link targets to the same page so the homepage can't accidentally send you elsewhere
-    photosHref: "/properties/fanta-sea/#photos",
+    photosHref: "/properties/fanta-sea/photos/",
     availabilityHref: "/properties/fanta-sea/#availability",
     detailsHref: "/properties/fanta-sea/",
-    inquireHref: "/contact/?property=fanta-sea",
     image: "/images/props/fanta-sea/fs1.jpg",
     city: "Fort Walton Beach, FL",
     resort: "Waterscape Resort"
