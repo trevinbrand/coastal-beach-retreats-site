@@ -212,13 +212,16 @@ const propertyGroups = [
           <span class="txt">Reviews</span>
         </a>
 
-        <a class="mLink" href={telHref}>
+        <a class="mLink mobile-contact" href={telHref}>
           <span class="ico" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M6.5 3h3l1.2 5-2 1.2c1.2 2.5 3.3 4.6 5.8 5.8l1.2-2 5 1.2v3c0 1.1-.9 2-2 2C10.3 21.2 2.8 13.7 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="txt">Shelly(Owner):{phone}</span>
+          <span class="txt mobile-contact-text">
+            <span class="mobile-contact-label">Contact Shelly &middot; Owner</span>
+            <span class="mobile-contact-number">{phone}</span>
+          </span>
         </a>
       </div>
     </div>
@@ -677,6 +680,10 @@ const propertyGroups = [
     .ico svg{ width: 22px; height: 22px; display:block; }
 
     .txt{ flex: 1; }
+    .mobile-contact { margin-top: 16px; }
+    .mobile-contact-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .mobile-contact-label { color: #53645a; font-size: 12px; font-weight: 500; line-height: 1.4; }
+    .mobile-contact-number { color: #193e7f; font-size: 18px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
 
     /* Accordion */
     .mAccordion{
