@@ -40,7 +40,6 @@ body.homepage-preview .browseFilters .filterBtn.is-active {
 body.homepage-preview .browseFilters .filterBtn:hover { color: #193e7f; }
 body.homepage-preview .browseFilters .filterBtn:focus-visible { outline: 2px solid #058789; outline-offset: 4px; }
 body.homepage-preview .filterCount { color: #058789; font-size: 11px; font-weight: 600; }
-body.homepage-preview .trustItem { font-size: 13px; }
 body.homepage-preview .stay-resort { font-size: 11px; }
 body.homepage-preview .stay-size { display: grid; gap: 3px; font-size: 13px; }
 body.homepage-preview .stay-secondary a { font-size: 12px; }
