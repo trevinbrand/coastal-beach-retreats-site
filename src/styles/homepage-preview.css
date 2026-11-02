@@ -78,7 +78,7 @@ body.homepage-preview .f { background: #fff; border-color: #e1e7e0; }
   body.homepage-preview .hero-copy { left: 8%; }
   body.homepage-preview .hero-copy h2 { font-size: 39px; }
   body.homepage-preview .hero-copy p { font-size: 13px; max-width: 310px; }
-  body.homepage-preview .hero-copy .eyebrow { font-size: 10px; }
+  body.homepage-preview .hero-copy .eyebrow { font-size: clamp(8px, 2.1vw, 10px); letter-spacing: .08em; }
   body.homepage-preview .homeHero .arrow { margin: 0 6px; width: 44px; height: 44px; }
   body.homepage-preview .trustItem { font-size: 11px; }
   body.homepage-preview .trustBarInner { gap: 6px; }
