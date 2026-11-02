@@ -7,7 +7,7 @@ body.homepage-preview .hdr { background: #fff; color: #193e7f; border-bottom: 1p
 body.homepage-preview .hdr::after { display: none; }
 body.homepage-preview .hdr .bar { box-sizing: border-box; max-width: 1320px; padding: 12px 24px; grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; min-height: 92px; }
 body.homepage-preview .hdr .centerBrand { position: static; transform: none; grid-column: 1; grid-row: 1; justify-self: start; }
-body.homepage-preview .hdr .centerBrand img { width: 300px; max-width: 100%; max-height: none; height: auto; object-fit: contain; }
+body.homepage-preview .hdr .centerBrand img { width: 110px; max-width: 100%; max-height: none; height: auto; object-fit: contain; }
 body.homepage-preview .hdr .left { grid-column: 2; grid-row: 1; margin-right: 0; justify-self: center; }
 body.homepage-preview .hdr .right { grid-column: 3; grid-row: 1; justify-self: end; }
 body.homepage-preview .hdr .nav { gap: 6px; }
@@ -61,7 +61,7 @@ body.homepage-preview .f { background: #fff; border-color: #e1e7e0; }
 @media (max-width: 1200px) {
   body.homepage-preview .hdr .bar { gap: 16px; padding-inline: 20px; }
   body.homepage-preview .hdr .link { padding: 10px 5px; font-size: 14px; }
-  body.homepage-preview .hdr .centerBrand img { width: 250px; }
+  body.homepage-preview .hdr .centerBrand img { width: 110px; }
 }
 @media (max-width: 1100px) {
   body.homepage-preview .hdr .bar { grid-template-columns: auto 1fr auto; padding: 10px 20px; min-height: 76px; }
@@ -73,8 +73,8 @@ body.homepage-preview .f { background: #fff; border-color: #e1e7e0; }
   body.homepage-preview .stay-heading { order: -1; padding: 20px 23px 14px; }
   body.homepage-preview .stay-heading .stay-resort { margin-bottom: 0; }
   body.homepage-preview .stay-content { padding-top: 23px; }
-  body.homepage-preview .hdr .bar { padding: 8px 12px; gap: 8px; }
-  body.homepage-preview .hdr .centerBrand img { width: clamp(145px, 40vw, 210px); }
+  body.homepage-preview .hdr .bar { padding: 8px 12px; gap: 8px; min-height: 100px; }
+  body.homepage-preview .hdr .centerBrand img { width: 116px; height: 84px; max-width: 100%; max-height: 84px; object-fit: contain; }
   body.homepage-preview .hdr .quote { font-size: 10px; padding: 11px 9px; min-height: 44px; box-sizing: border-box; }
   body.homepage-preview .wrap { padding: 0 18px 30px; }
   body.homepage-preview .hero-copy { left: 8%; }

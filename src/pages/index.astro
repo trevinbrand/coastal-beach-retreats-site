@@ -64,7 +64,9 @@ const destinProps = properties.filter((p) =>
       <section class="browseBar" id="properties" aria-label="Browse properties">
         <div class="browseBarTop">
           <h1 class="srOnly">Destin, Okaloosa Island & Panama City Beach Vacation Rentals | Coastal Beach Retreats</h1>
-          <h2 class="section-title">Find your next coastal escape</h2>
+          <h2 class="welcome-heading">
+            <img src="/images/coastal-beach.png" alt="Welcome to Coastal Beach Retreats" width="781" height="181" />
+          </h2>
         </div>
 
         <div class="browseFilters" role="group" aria-label="Destination filters">
@@ -213,6 +215,9 @@ const destinProps = properties.filter((p) =>
         margin-bottom: 18px;
         text-align: center;
       }
+
+      .welcome-heading { margin: 0; }
+      .welcome-heading img { display: block; width: min(100%, 560px); height: auto; margin: 0 auto; }
 
       .srOnly {
         position: absolute;
