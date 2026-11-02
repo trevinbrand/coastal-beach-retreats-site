@@ -43,7 +43,6 @@ const slides = [
       </button>
     </div>
 
-    <a href="#properties" class="scroll-down" aria-label="Scroll to property listings">↓</a>
   </div>
 
   <script is:inline>
@@ -194,26 +193,6 @@ const slides = [
       transform: scale(0.95);
     }
 
-    .scroll-down {
-      position: absolute;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      z-index: 5;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.45);
-      color: #fff;
-      text-decoration: none;
-      font-size: 22px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-
     @media (max-width: 640px) {
       .arrow {
         width: 36px;
@@ -221,11 +200,6 @@ const slides = [
         font-size: 22px;
       }
 
-      .scroll-down {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
     }
   </style>
 </section>
