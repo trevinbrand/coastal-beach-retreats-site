@@ -6,7 +6,7 @@ body.refinement-preview .hero-cta { padding: 13px 22px; font-size: 15px; }
 body.refinement-preview .browseBar { padding-top: 32px; padding-bottom: 34px; }
 body.refinement-preview .welcome-heading img { width: min(100%, 510px); }
 body.refinement-preview .browseFilters { margin-top: 10px; }
-body.refinement-preview .groupHeader { border-left: 0; padding-left: 0; margin-bottom: 23px; }
+body.refinement-preview .groupHeader { border-left: 3px solid #058789; padding-left: 17px; margin-bottom: 23px; }
 body.refinement-preview .groupEyebrow { font-size: 10px; letter-spacing: .1em; margin-bottom: 7px; }
 body.refinement-preview .city-heading { font-size: clamp(25px, 2.7vw, 34px); }
 body.refinement-preview .groupProps { gap: 26px; }
@@ -38,6 +38,7 @@ body.refinement-preview .home-next-step p:not(.collection-eyebrow) { color: #edf
 body.refinement-preview .home-next-step a { color: #193e7f; background: white; }
 @media (min-width: 1000px) { body.refinement-preview .groupProps { grid-template-columns: repeat(3,minmax(0,1fr)); } }
 @media (max-width: 720px) {
+  body.refinement-preview .groupHeader { padding-left: 13px; }
   body.refinement-preview .hero-copy p { font-size: 14px; max-width: 290px; }
   body.refinement-preview .hero-copy h2 { font-size: clamp(32px,8.7vw,42px); }
   body.refinement-preview .hero-cta { font-size: 13px; padding: 12px 18px; }
