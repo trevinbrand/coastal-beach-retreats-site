@@ -65,7 +65,8 @@ const slides = [
         b.addEventListener("click", () => show(idx + Number(b.dataset.dir)))
       );
 
-      const timer = setInterval(() => show(idx + 1), 6000);
+      // Keep the Gulf-view living room as the main image; arrows and swipes
+      // let guests explore the other photos at their own pace.
 
       let startX = 0;
       let startY = 0;

@@ -1,8 +1,10 @@
 /* Homepage card hierarchy, spacing, and section refinements. */
 body.refinement-preview .wrap { max-width: 1280px; }
-body.refinement-preview .hero-copy { max-width: 660px; }
-body.refinement-preview .hero-copy p { max-width: 450px; font-size: 17px; line-height: 1.7; }
-body.refinement-preview .hero-cta { padding: 13px 22px; font-size: 15px; }
+body.refinement-preview .homeHero::after { background: linear-gradient(90deg, rgba(9,32,43,.72) 0%, rgba(9,32,43,.48) 36%, rgba(9,32,43,.12) 66%, transparent 100%); }
+body.refinement-preview .hero-copy { max-width: 620px; }
+body.refinement-preview .hero-copy h2 { margin: 0 0 20px; }
+body.refinement-preview .hero-copy p { max-width: 410px; font-size: 17px; line-height: 1.7; margin: 0 0 23px; }
+body.refinement-preview .hero-cta { padding: 13px 22px; font-size: 15px; margin-top: 0; }
 body.refinement-preview .browseBar { padding-top: 32px; padding-bottom: 34px; }
 body.refinement-preview .welcome-heading img { width: min(100%, 510px); }
 body.refinement-preview .browseFilters { margin-top: 10px; }
